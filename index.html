@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carnet du Japon</title>
+<meta name="theme-color" content="#EDEFEA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12151B" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japon">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Zen+Old+Mincho:wght@700&display=swap">
+<style>
+:root {
+  --paper: #EDEFEA;
+  --surface: #FAFBF8;
+  --ink: #1B2230;
+  --muted: #586172;
+  --line: #D3D7CE;
+  --hanko: #B8322A;
+  --hanko-soft: rgba(184, 50, 42, .1);
+  --tokyo: #2D4A7E;
+  --kanazawa: #9A6E14;
+  --kyoto: #8A2C44;
+  --osaka: #1B7268;
+  --nara: #557230;
+  --fuji: #66548F;
+  --escape: #84553A;
+  --travel: #5F6776;
+  --c: var(--ink);
+  --radius-s: 6px;
+  --radius-l: 14px;
+  --scale: 1;
+  --f-display: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #12151B; --surface: #1B1F27; --ink: #E6E7E1; --muted: #A2A9B6; --line: #2E3440;
+    --hanko: #E2574C; --hanko-soft: rgba(226, 87, 76, .14);
+    --tokyo: #8EA8E0; --kanazawa: #D9AE52; --kyoto: #E07C93; --osaka: #5CC2B4; --nara: #9EC26A; --fuji: #B3A2E0; --escape: #D49A77; --travel: #A3AAB8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #12151B; --surface: #1B1F27; --ink: #E6E7E1; --muted: #A2A9B6; --line: #2E3440;
+  --hanko: #E2574C; --hanko-soft: rgba(226, 87, 76, .14);
+  --tokyo: #8EA8E0; --kanazawa: #D9AE52; --kyoto: #E07C93; --osaka: #5CC2B4; --nara: #9EC26A; --fuji: #B3A2E0; --escape: #D49A77; --travel: #A3AAB8;
+  color-scheme: dark;
+}
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 64px); -webkit-text-size-adjust: 100%; font-size: calc(16px * var(--scale)); }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 1rem; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--paper); }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--c, var(--tokyo)); outline-offset: 2px; border-radius: 4px; }
+img { max-width: 100%; display: block; }
+.c-tokyo { --c: var(--tokyo); } .c-kanazawa { --c: var(--kanazawa); } .c-kyoto { --c: var(--kyoto); }
+.c-osaka { --c: var(--osaka); } .c-nara { --c: var(--nara); } .c-fuji { --c: var(--fuji); }
+.c-escape { --c: var(--escape); } .c-travel { --c: var(--travel); }
+
+/* En-tête */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--paper); border-bottom: 1px solid var(--line);
+}
+.top-in { max-width: 680px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 18px; }
+.top h1 { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; margin: 0; letter-spacing: .01em; }
+.clocks { display: flex; gap: 14px; font-size: .78rem; color: var(--muted); line-height: 1.25; text-align: right; }
+.clocks b { display: block; color: var(--ink); font-size: .95rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+.icon-btn { background: none; border: 0; padding: 8px; border-radius: 50%; cursor: pointer; color: var(--muted); display: grid; place-items: center; min-width: 40px; min-height: 40px; }
+.icon-btn:hover { color: var(--ink); }
+
+main { max-width: 680px; margin: 0 auto; padding: 18px 18px calc(110px + env(safe-area-inset-bottom, 0px)); }
+
+/* Navigation basse */
+.nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nav-in { max-width: 680px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); }
+.nav button {
+  background: none; border: 0; padding: 9px 2px 8px; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-size: .7rem; color: var(--muted); cursor: pointer; position: relative;
+}
+.nav button svg { width: 24px; height: 24px; }
+.nav button[aria-current="page"] { color: var(--ink); font-weight: 700; }
+.nav button[aria-current="page"]::before { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; background: var(--hanko); border-radius: 0 0 3px 3px; }
+
+/* Typo */
+h2.view-title { font-family: var(--f-display); font-size: 1.9rem; line-height: 1.2; margin: 6px 0 4px; font-weight: 700; }
+h3 { font-family: var(--f-display); font-size: 1.25rem; margin: 28px 0 10px; line-height: 1.3; }
+h4 { font-size: 1rem; margin: 0 0 4px; line-height: 1.35; }
+p { margin: 0 0 12px; }
+.muted { color: var(--muted); }
+.small { font-size: .85rem; }
+.jp { font-family: var(--f-display); }
+.lead { font-size: 1.05rem; max-width: 62ch; }
+.prose p { max-width: 64ch; }
+
+/* Chips et onglets */
+.scroller { display: flex; gap: 8px; overflow-x: auto; padding: 2px 18px 10px; margin: 0 -18px; scrollbar-width: none; scroll-snap-type: x proximity; }
+.scroller::-webkit-scrollbar { display: none; }
+.chip {
+  flex: 0 0 auto; border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px;
+  padding: 7px 14px; cursor: pointer; font-size: .92rem; white-space: nowrap; scroll-snap-align: start;
+  min-height: 40px; display: inline-flex; align-items: center; gap: 6px;
+}
+.chip .jp { font-size: .85rem; color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--c); border-color: var(--c); color: var(--surface); }
+.chip[aria-pressed="true"] .jp { color: inherit; opacity: .8; }
+.tabs { display: flex; gap: 2px; overflow-x: auto; margin: 0 -18px 18px; padding: 0 18px; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; background: none; border: 0; padding: 10px 12px; cursor: pointer; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -1px; white-space: nowrap; font-size: .95rem; min-height: 44px; }
+.tab[aria-selected="true"] { color: var(--ink); border-color: var(--c, var(--hanko)); font-weight: 700; }
+
+/* Cartes */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 16px; margin-bottom: 12px; }
+.card.flat { border-radius: var(--radius-s); }
+.stack > * + * { margin-top: 10px; }
+.row { display: flex; gap: 10px; align-items: center; }
+.row.wrap { flex-wrap: wrap; }
+.spread { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--surface); padding: 8px 14px; cursor: pointer; font-size: .9rem; min-height: 40px; text-decoration: none;
+}
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); font-weight: 700; }
+.btn.accent { background: var(--c); color: var(--surface); border-color: var(--c); font-weight: 700; }
+.btn.small { padding: 5px 11px; min-height: 34px; font-size: .82rem; }
+.btn.danger { color: var(--hanko); border-color: var(--hanko); }
+.btn svg { width: 18px; height: 18px; }
+
+/* Ville : bandeau */
+.city-head { position: relative; padding: 14px 0 4px; margin-bottom: 10px; overflow: hidden; }
+.city-head .kanji {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-family: var(--f-display); font-weight: 700;
+  font-size: 4.4rem; line-height: 1; color: var(--c); opacity: .16; pointer-events: none; white-space: nowrap;
+}
+.city-head h2, .city-head .city-dates { position: relative; }
+.city-head h2 { color: var(--c); font-size: 2.4rem; }
+.city-dates { font-size: .9rem; color: var(--muted); margin-bottom: 12px; }
+details.fold { border-top: 1px solid var(--line); }
+details.fold:last-of-type { border-bottom: 1px solid var(--line); }
+details.fold > summary { list-style: none; cursor: pointer; padding: 13px 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center; min-height: 48px; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::after { content: "+"; font-size: 1.3rem; color: var(--muted); font-weight: 400; }
+details.fold[open] > summary::after { content: "−"; }
+details.fold > div { padding-bottom: 14px; }
+
+/* Lieux */
+.place { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; }
+.place h4 { font-size: 1.05rem; }
+.place .jp-name { font-family: var(--f-display); color: var(--muted); font-size: .92rem; }
+.place .body { grid-column: 1 / -1; }
+.meta { font-size: .88rem; padding: 8px 10px; border-radius: var(--radius-s); background: var(--paper); margin-top: 8px; }
+.meta + .meta { margin-top: 6px; }
+.meta strong { display: block; font-size: .78rem; color: var(--muted); font-weight: 700; margin-bottom: 1px; }
+.meta.acc { border-left: 3px solid var(--c); }
+.place-actions { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+.stamp-btn { background: none; border: 0; padding: 0; cursor: pointer; width: 64px; height: 64px; border-radius: 50%; position: relative; }
+.stamp-btn .hint { position: absolute; inset: 0; display: grid; place-items: center; font-size: .66rem; color: var(--muted); text-align: center; line-height: 1.15; border: 1.5px dashed var(--line); border-radius: 50%; padding: 6px; }
+.stamp { width: 100%; height: 100%; display: block; }
+.stamp.pressed { animation: press .45s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes press { 0% { transform: scale(1.6) rotate(-14deg); opacity: 0; } 60% { opacity: 1; } 100% { transform: scale(1) rotate(0); } }
+@media (prefers-reduced-motion: reduce) { .stamp.pressed { animation: none; } }
+
+.list-plain { list-style: none; padding: 0; margin: 0; }
+.list-plain li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.list-plain li:last-child { border-bottom: 0; }
+.bul { padding-left: 1.1em; margin: 0; }
+.bul li { margin-bottom: 6px; }
+
+/* Hôtel */
+.hotel { border-left: 4px solid var(--c); }
+.hotel .addr-jp { font-family: var(--f-display); font-size: 1.05rem; }
+
+/* Planning */
+.day { display: grid; grid-template-columns: 58px 1fr; gap: 0 12px; position: relative; }
+.day-date { text-align: center; padding-top: 12px; }
+.day-date .dn { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; line-height: 1; display: block; }
+.day-date .dw { font-size: .75rem; color: var(--muted); display: block; margin-top: 3px; }
+.day-card { border-left: 4px solid var(--c); background: var(--surface); border-radius: 0 var(--radius-l) var(--radius-l) 0; margin-bottom: 10px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.day-card > button { width: 100%; text-align: left; background: none; border: 0; padding: 12px 14px; cursor: pointer; display: block; }
+.day-card .city-tag { font-size: .78rem; color: var(--c); font-weight: 700; }
+.day-card h4 { font-size: 1.05rem; margin: 1px 0 0; }
+.day.today .day-date .dn { color: var(--hanko); }
+.day.today .day-card { box-shadow: 0 0 0 2px var(--hanko-soft); }
+.day.past { opacity: .72; }
+.badge { display: inline-block; font-size: .72rem; padding: 1px 8px; border-radius: 999px; background: var(--hanko-soft); color: var(--hanko); font-weight: 700; margin-left: 6px; vertical-align: 2px; }
+.day-body { padding: 0 14px 14px; }
+.sched { list-style: none; margin: 0; padding: 0; }
+.sched li { display: grid; grid-template-columns: 30px 50px 1fr; gap: 6px; align-items: start; padding: 8px 0; border-top: 1px solid var(--line); }
+.sched li.done .txt { text-decoration: line-through; color: var(--muted); }
+.sched .time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: .9rem; padding-top: 2px; }
+.sched input[type="checkbox"] { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--c); }
+.place-link { background: none; border: 0; padding: 0; color: var(--c); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font: inherit; text-align: left; }
+.tips { margin-top: 10px; font-size: .9rem; }
+.tips li { margin-bottom: 4px; }
+textarea, input[type="text"], input[type="number"], input[type="date"], select {
+  width: 100%; border: 1.5px solid var(--line); border-radius: var(--radius-s); background: var(--paper); padding: 10px 12px; min-height: 44px;
+}
+textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+label.field { display: block; margin-bottom: 12px; }
+label.field > span { display: block; font-size: .85rem; font-weight: 700; margin-bottom: 4px; }
+
+/* Aujourd'hui */
+.hero-day { padding: 6px 0 4px; }
+.hero-day .count { font-family: var(--f-display); font-size: 1rem; color: var(--muted); }
+.hero-day h2 { font-size: 2.1rem; margin: 2px 0 2px; }
+.hero-day .where { color: var(--c); font-weight: 700; }
+.daynav { display: flex; justify-content: space-between; margin: 10px 0 14px; }
+.conv { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+.conv input { text-align: right; font-variant-numeric: tabular-nums; font-size: 1.1rem; }
+.check { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.check input { width: 22px; height: 22px; margin-top: 1px; flex: 0 0 auto; accent-color: var(--hanko); }
+.check.done span { color: var(--muted); text-decoration: line-through; }
+.progress { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin: 8px 0 4px; }
+.progress > i { display: block; height: 100%; background: var(--hanko); }
+
+/* Phrases */
+.phrase { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.phrase .fr { font-weight: 700; }
+.phrase .ja { font-family: var(--f-display); font-size: 1.2rem; line-height: 1.4; }
+.phrase .ro { color: var(--muted); font-size: .9rem; font-style: italic; }
+.phrase .acts { grid-row: 1 / span 3; grid-column: 2; display: flex; flex-direction: column; gap: 6px; }
+
+/* Plein écran « Montrer » */
+.overlay { position: fixed; inset: 0; z-index: 50; background: var(--surface); display: flex; flex-direction: column; padding: calc(env(safe-area-inset-top, 0px) + 16px) 22px calc(env(safe-area-inset-bottom, 0px) + 22px); overflow-y: auto; }
+.overlay .close { align-self: flex-end; }
+.show-big { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 18px; text-align: center; }
+.show-big .ja { font-family: var(--f-display); font-weight: 700; font-size: clamp(2rem, 9vw, 3.6rem); line-height: 1.35; word-break: break-word; }
+.show-big .ja.long { font-size: clamp(1.6rem, 7vw, 2.6rem); }
+.show-big .sub { font-family: var(--f-display); font-size: 1.3rem; }
+.show-big .fr { color: var(--muted); }
+.sheet { position: fixed; inset: 0; z-index: 45; background: rgba(10, 12, 16, .45); display: flex; align-items: flex-end; justify-content: center; }
+.sheet-in { background: var(--surface); width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; border-radius: 18px 18px 0 0; padding: 18px 18px calc(env(safe-area-inset-bottom, 0px) + 18px); }
+.sheet-in h3 { margin-top: 0; }
+
+/* Carnet */
+.entry { border-left: 4px solid var(--c); }
+.entry .when { font-size: .82rem; color: var(--muted); }
+.entry .mood { font-size: 1.4rem; }
+.entry .text { white-space: pre-wrap; margin-top: 8px; }
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+.photos img, .photos .ph { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-s); background: var(--line); }
+.photo-thumb { position: relative; }
+.photo-thumb button { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,.6); color: #fff; border: 0; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; }
+.pick { display: flex; gap: 6px; flex-wrap: wrap; }
+.pick button { border: 1.5px solid var(--line); background: var(--paper); border-radius: 10px; padding: 6px 10px; font-size: 1.2rem; cursor: pointer; min-width: 44px; min-height: 44px; }
+.pick button[aria-pressed="true"] { border-color: var(--hanko); background: var(--hanko-soft); }
+.stamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 14px 10px; }
+.stamps .cell { text-align: center; font-size: .72rem; line-height: 1.25; color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; }
+.stamps .cell .slot { width: 72px; height: 72px; margin: 0 auto 4px; border-radius: 50%; border: 1.5px dashed var(--line); display: grid; place-items: center; }
+.stamps .cell .slot.on { border: 0; }
+.stamps .cell .slot .jp { font-size: 1rem; color: var(--line); }
+.stamp-count { font-family: var(--f-display); font-size: 2.6rem; line-height: 1; color: var(--hanko); font-weight: 700; min-width: 1.2em; text-align: center; }
+.exp { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.exp .amt { font-variant-numeric: tabular-nums; font-weight: 700; text-align: right; }
+.exp .sub { font-size: .8rem; color: var(--muted); }
+.total { display: flex; justify-content: space-between; font-family: var(--f-display); font-size: 1.3rem; font-weight: 700; padding: 12px 0; }
+
+.toast { position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 999px; font-size: .9rem; z-index: 60; max-width: 90vw; text-align: center; }
+.empty { text-align: center; padding: 26px 10px; color: var(--muted); }
+.empty .jp { font-size: 2.2rem; color: var(--line); display: block; margin-bottom: 6px; }
+.food { display: grid; grid-template-columns: auto 1fr; gap: 0 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.food .ja { font-family: var(--f-display); font-size: 1.15rem; grid-row: 1 / span 2; min-width: 4.5em; }
+.words { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.words div { background: var(--paper); border-radius: var(--radius-s); padding: 8px 10px; }
+.words .ja { font-family: var(--f-display); font-size: 1.2rem; display: block; }
+.era { display: grid; grid-template-columns: 92px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.era .yr { font-size: .8rem; color: var(--muted); }
+.era h4 { font-family: var(--f-display); font-size: 1.05rem; }
+.tel { font-family: var(--f-display); font-size: 1.5rem; font-weight: 700; color: var(--hanko); text-decoration: none; }
+
+/* Impression du carnet */
+@media print {
+  .top, .nav, .no-print { display: none !important; }
+  .book-open main { display: none !important; }
+  body { background: #fff; color: #000; }
+  main { padding: 0; max-width: none; }
+  .overlay { position: static; padding: 0; }
+  .entry { break-inside: avoid; }
+}
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="ink" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4"/></filter></defs></svg>
+<header class="top"><div class="top-in">
+  <h1 id="title">Aujourd’hui</h1>
+  <div class="row">
+    <div class="clocks" aria-label="Heures locales"><div>Tokyo<b id="clk-jp">--:--</b></div><div>Paris<b id="clk-fr">--:--</b></div></div>
+    <button class="icon-btn" id="settings-btn" data-act="goto" data-tab="book" data-ctab="settings" aria-label="Réglages"></button>
+  </div>
+</div></header>
+<main id="main"></main>
+<nav class="nav" aria-label="Sections"><div class="nav-in">
+  <button data-act="tab" data-tab="today" data-icon="today" data-label="Aujourd’hui"></button>
+  <button data-act="tab" data-tab="plan" data-icon="plan" data-label="Planning"></button>
+  <button data-act="tab" data-tab="cities" data-icon="city" data-label="Villes"></button>
+  <button data-act="tab" data-tab="japan" data-icon="japan" data-label="Japon"></button>
+  <button data-act="tab" data-tab="book" data-icon="book" data-label="Carnet"></button>
+</div></nav>
+<script>
+const JAPAN = {
+  essentials: [
+    { t: "Décalage horaire", b: "En novembre, le Japon a 8 heures d’avance sur la France (pas d’heure d’été là-bas). Quand il est midi à Tokyo, il est 4 h à Paris. L’horloge en haut de l’appli affiche les deux." },
+    { t: "Météo en novembre", b: "C’est l’automne et la saison des feuillages rouges (kōyō). Tokyo, Kyoto et Osaka tournent autour de 10 à 18 °C, avec des matinées fraîches. Kanazawa est plus humide, prévoir de quoi se protéger de la pluie. À Kawaguchiko, au pied du Fuji, il peut faire près de 0 °C la nuit : pull chaud, bonnet et gants. Le soleil se couche tôt, vers 16 h 30 à 16 h 45." },
+    { t: "Argent", b: "La carte bancaire passe presque partout dans les villes, mais gardez du liquide pour les petits restaurants, les temples, les marchés et les distributeurs de boissons. Les distributeurs des konbini 7-Eleven et de la poste japonaise acceptent les cartes étrangères. Pas de pourboire au Japon : en laisser peut même gêner." },
+    { t: "Cartes de transport IC", b: "Une carte Suica ou Pasmo se recharge et sert dans les trains, métros, bus, konbini et distributeurs. Sur iPhone, on peut ajouter une Suica directement dans l’app Cartes (Wallet). On passe la carte à l’entrée et à la sortie, le bon tarif est débité automatiquement." },
+    { t: "Achats détaxés (nouveau)", b: "Depuis le 1er novembre 2026, le système a changé : dans les boutiques détaxées, vous payez désormais le prix TTC, et la taxe de 10 % vous est remboursée au départ, après contrôle à la douane de l’aéroport. Gardez les articles intacts dans le bagage à main si possible, présentez votre passeport (original, pas de copie) et prévoyez du temps en plus à Haneda le 28/11. Le seuil est de 5 000 ¥ d’achats par boutique et par jour." },
+    { t: "Électricité", b: "Courant à 100 V et prises de type A (deux fiches plates, comme aux États-Unis). Il faut un adaptateur. Les chargeurs de téléphone et d’ordinateur acceptent presque tous 100–240 V." },
+    { t: "Internet", b: "Une eSIM à installer avant le départ est la solution la plus simple. Le wifi gratuit existe dans les gares et konbini, mais il est souvent capricieux. Cette appli, elle, fonctionne sans réseau." },
+    { t: "Eau et poubelles", b: "L’eau du robinet est potable. Les poubelles publiques sont très rares : gardez un petit sac pour vos déchets, et jetez-les au konbini ou à l’hôtel. Le tri est très suivi." },
+    { t: "Visit Japan Web", b: "Remplissez les formulaires d’immigration et de douane en ligne avant d’atterrir, pour obtenir des QR codes à présenter à l’arrivée. C’est bien plus rapide que les fiches papier." },
+    { t: "Jour férié du 23 novembre", b: "Le lundi 23/11 est Kinrō Kansha no Hi, la fête du travail et de la gratitude. Comme c’est un lundi, les Japonais ont un week-end de trois jours : trains vers le Fuji et sites touristiques seront bondés. Réservez transports et places à l’avance." }
+  ],
+  history: [
+    { era: "Préhistoire", years: "jusqu’à 300 av. J.-C.", b: "La culture Jōmon, connue pour ses poteries parmi les plus anciennes du monde, puis la culture Yayoi, qui apporte la riziculture et le métal depuis le continent." },
+    { era: "Nara", years: "710–794", b: "Première capitale permanente à Nara, sur le modèle chinois. Le bouddhisme devient religion d’État : c’est l’époque du Grand Bouddha du Tōdai-ji." },
+    { era: "Heian", years: "794–1185", b: "La capitale s’installe à Heian-kyō, l’actuelle Kyoto, pour plus de mille ans. La cour impériale raffine l’art, la poésie et l’écriture japonaise. Le Byōdō-in d’Uji date de cette époque." },
+    { era: "Kamakura", years: "1185–1333", b: "Les samouraïs prennent le pouvoir réel. Le premier shogunat s’installe à Kamakura, et le bouddhisme zen se diffuse. Le Grand Bouddha de Kamakura est fondu au XIIIe siècle." },
+    { era: "Muromachi et Sengoku", years: "1336–1603", b: "Le shogunat revient à Kyoto (on y construit le Kinkaku-ji et le Ginkaku-ji), puis un siècle de guerres civiles entre seigneurs. Le pays est réunifié par Oda Nobunaga, Toyotomi Hideyoshi (château d’Osaka) et Tokugawa Ieyasu." },
+    { era: "Edo", years: "1603–1868", b: "Les Tokugawa gouvernent depuis Edo, l’actuelle Tokyo. Deux siècles et demi de paix et de fermeture presque totale au monde extérieur. Kabuki, estampes ukiyo-e et culture urbaine fleurissent. Kanazawa prospère sous le clan Maeda." },
+    { era: "Meiji à Shōwa", years: "1868–1989", b: "L’empereur est restauré, la capitale devient Tokyo et le pays se modernise à toute vitesse. Viennent ensuite l’expansion militaire, la défaite de 1945 puis le « miracle économique »." },
+    { era: "Heisei et Reiwa", years: "depuis 1989", b: "Après l’éclatement de la bulle financière, le Japon devient une puissance culturelle mondiale (jeux vidéo, manga, gastronomie). L’ère Reiwa a commencé en 2019 avec l’empereur Naruhito." }
+  ],
+  culture: [
+    { t: "Sanctuaire ou temple ?", b: "Un sanctuaire (jinja) est shintō : on le reconnaît à son torii, le portique, souvent vermillon. Un temple (tera, -ji) est bouddhiste, avec une grande porte et souvent de l’encens. Beaucoup de Japonais pratiquent les deux sans contradiction." },
+    { t: "Prier au sanctuaire", b: "On se rince les mains puis la bouche à la fontaine (temizuya), on jette une pièce, puis deux saluts, deux claquements de mains, une prière silencieuse et un dernier salut. Au temple, on joint les mains sans claquer." },
+    { t: "Goshuin", b: "Les temples et sanctuaires calligraphient à la main un sceau de visite dans un carnet spécial, le goshuinchō (environ 500 ¥ le sceau). C’est un magnifique souvenir du voyage. On l’achète sur place dans les grands temples." },
+    { t: "Chaussures", b: "On les retire dans les maisons, les ryokan, certains restaurants et certaines salles de temples. Si vous voyez une marche et des chaussons, c’est le signal. Des chaussettes sans trou, c’est utile !" },
+    { t: "Dans les transports", b: "On parle doucement, on ne téléphone pas, et on fait la queue sur les marques au sol. Sur les escalators, on se tient à gauche à Tokyo et à droite à Osaka." },
+    { t: "À table", b: "On ne plante jamais ses baguettes dans le riz et on ne passe pas de nourriture de baguettes à baguettes (deux gestes liés aux funérailles). Aspirer bruyamment ses nouilles est normal. On dit « itadakimasu » avant le repas et « gochisōsama » après." },
+    { t: "Onsen", b: "On se lave entièrement assis aux douches avant d’entrer dans le bain, nu, sans maillot. La petite serviette ne va pas dans l’eau. Les tatouages peuvent être refusés : les bains privatifs (kashikiri) règlent la question." },
+    { t: "Saluer et remercier", b: "Une légère inclinaison de la tête suffit pour un visiteur. On tend et reçoit les objets (carte, monnaie) des deux mains. La monnaie se pose dans le petit plateau à la caisse." },
+    { t: "Manger en marchant", b: "C’est mal vu dans beaucoup d’endroits, en particulier à Asakusa, Kyoto et Nara. On consomme debout près du stand où l’on a acheté." }
+  ],
+  phraseGroups: [
+    { g: "Bases", items: [
+      ["Bonjour", "こんにちは", "Konnichiwa"],
+      ["Merci beaucoup", "ありがとうございます", "Arigatō gozaimasu"],
+      ["Excusez-moi / Pardon", "すみません", "Sumimasen"],
+      ["Oui / Non", "はい / いいえ", "Hai / Iie"],
+      ["Je ne comprends pas", "わかりません", "Wakarimasen"],
+      ["Parlez-vous anglais ?", "英語を話せますか？", "Eigo o hanasemasu ka ?"],
+      ["Je suis français(e)", "フランス人です", "Furansu-jin desu"],
+      ["Pouvez-vous l’écrire ?", "書いてもらえますか？", "Kaite moraemasu ka ?"],
+      ["Puis-je prendre une photo ?", "写真を撮ってもいいですか？", "Shashin o totte mo ii desu ka ?"]
+    ]},
+    { g: "Restaurant", items: [
+      ["Une table pour deux, s’il vous plaît", "二人です", "Futari desu"],
+      ["Celui-ci, s’il vous plaît", "これをお願いします", "Kore o onegai shimasu"],
+      ["Qu’est-ce que vous recommandez ?", "おすすめは何ですか？", "Osusume wa nan desu ka ?"],
+      ["L’addition, s’il vous plaît", "お会計お願いします", "O-kaikei onegai shimasu"],
+      ["Je suis allergique à…", "…のアレルギーがあります", "… no arerugī ga arimasu"],
+      ["Sans viande, s’il vous plaît", "肉なしでお願いします", "Niku nashi de onegai shimasu"],
+      ["C’était délicieux", "おいしかったです", "Oishikatta desu"],
+      ["Carte bancaire acceptée ?", "カードは使えますか？", "Kādo wa tsukaemasu ka ?"]
+    ]},
+    { g: "Transports", items: [
+      ["Où est la gare ?", "駅はどこですか？", "Eki wa doko desu ka ?"],
+      ["Ce train va-t-il à… ?", "この電車は…に行きますか？", "Kono densha wa … ni ikimasu ka ?"],
+      ["À cette adresse, s’il vous plaît", "この住所までお願いします", "Kono jūsho made onegai shimasu"],
+      ["Un billet pour…", "…までの切符をください", "… made no kippu o kudasai"],
+      ["Où sont les consignes ?", "コインロッカーはどこですか？", "Koin rokkā wa doko desu ka ?"],
+      ["Arrêtez-vous ici, s’il vous plaît", "ここで止めてください", "Koko de tomete kudasai"]
+    ]},
+    { g: "Achats", items: [
+      ["Combien ça coûte ?", "いくらですか？", "Ikura desu ka ?"],
+      ["Détaxe possible ?", "免税できますか？", "Menzei dekimasu ka ?"],
+      ["Un sac, s’il vous plaît", "袋をお願いします", "Fukuro o onegai shimasu"],
+      ["Je regarde seulement", "見ているだけです", "Mite iru dake desu"]
+    ]},
+    { g: "Accessibilité", items: [
+      ["Y a-t-il un ascenseur ?", "エレベーターはありますか？", "Erebētā wa arimasu ka ?"],
+      ["Peut-on entrer en fauteuil roulant ?", "車椅子で入れますか？", "Kurumaisu de hairemasu ka ?"],
+      ["Y a-t-il des marches ?", "段差はありますか？", "Dansa wa arimasu ka ?"],
+      ["Une rampe, s’il vous plaît", "スロープをお願いします", "Surōpu o onegai shimasu"],
+      ["Où sont les toilettes accessibles ?", "多目的トイレはどこですか？", "Tamokuteki toire wa doko desu ka ?"],
+      ["J’ai des difficultés à marcher", "歩くのが難しいです", "Aruku no ga muzukashii desu"],
+      ["Y a-t-il un endroit pour s’asseoir ?", "座れる場所はありますか？", "Suwareru basho wa arimasu ka ?"],
+      ["Aidez-moi à monter dans le train, s’il vous plaît", "乗車の手伝いをお願いします", "Jōsha no tetsudai o onegai shimasu"],
+      ["Je descends à la gare de…", "…駅で降ります", "… eki de orimasu"],
+      ["Peut-on emprunter un fauteuil roulant ?", "車椅子を借りられますか？", "Kurumaisu o kariraremasu ka ?"],
+      ["Y a-t-il une réduction handicap ?", "障害者割引はありますか？", "Shōgaisha waribiki wa arimasu ka ?"]
+    ]},
+    { g: "Urgences", items: [
+      ["Au secours !", "助けて！", "Tasukete !"],
+      ["Appelez une ambulance", "救急車を呼んでください", "Kyūkyūsha o yonde kudasai"],
+      ["Je suis malade", "具合が悪いです", "Guai ga warui desu"],
+      ["J’ai perdu mon passeport", "パスポートをなくしました", "Pasupōto o nakushimashita"],
+      ["Où est l’hôpital ?", "病院はどこですか？", "Byōin wa doko desu ka ?"],
+      ["Où est la pharmacie ?", "薬局はどこですか？", "Yakkyoku wa doko desu ka ?"]
+    ]}
+  ],
+  access: [
+    { t: "Le bon réflexe en gare", b: "Présentez-vous au guichet ou au portillon avec personnel (le passage large), dites votre destination. Le personnel vous accompagne jusqu’au quai, installe une rampe pour monter, et téléphone à la gare d’arrivée pour qu’un agent vous attende à la descente avec la rampe. Comptez 10 à 15 minutes de marge, surtout pour le premier trajet." },
+    { t: "Ascenseurs et itinéraires", b: "La très grande majorité des gares de Tokyo, Kyoto et Osaka ont des ascenseurs, mais pas forcément à toutes les sorties. Suivez le pictogramme エレベーター. Dans les grandes gares (Tokyo, Shinjuku, Kyoto, Osaka-Umeda), le trajet en ascenseur peut être long : prévoyez du temps." },
+    { t: "Shinkansen", b: "Chaque rame dispose de places pour fauteuil roulant (souvent avec une place accompagnant adjacente) et de grandes toilettes accessibles. Ces places se réservent au guichet JR (midori no madoguchi) ou en ligne, de préférence plusieurs jours à l’avance. Le personnel installe la rampe au départ et à l’arrivée." },
+    { t: "Toilettes accessibles", b: "Cherchez 多目的トイレ (tamokuteki toire) ou みんなのトイレ (minna no toire), « toilettes pour tous ». On en trouve dans les gares, centres commerciaux, grands sites touristiques et souvent dans les konbini récents." },
+    { t: "Taxis", b: "Les taxis « UD » (universal design), modèles hauts type monospace noir, peuvent accueillir un fauteuil via une rampe arrière. On peut en héler un dans la rue ou les réserver via l’appli GO ou Uber. Les chauffeurs aident volontiers mais parlent peu anglais : montrez l’adresse en japonais (bouton « Montrer » dans l’appli)." },
+    { t: "Temples, sanctuaires et jardins", b: "Les grands sites ont souvent un parcours accessible, mais le gravier, les seuils en bois et les escaliers sont fréquents. Beaucoup prêtent gratuitement des fauteuils roulants à l’entrée : il suffit de demander. Pour chaque lieu de l’appli, une note d’accessibilité donne les points d’attention connus." },
+    { t: "Réductions", b: "De nombreux musées, temples et attractions accordent une réduction (障害者割引, shōgaisha waribiki) aux personnes handicapées et souvent à un accompagnant. Une carte d’invalidité étrangère (CMI) est fréquemment acceptée, mais pas partout. Ayez-la toujours sur vous." },
+    { t: "Hôtels et ryokan", b: "Les hôtels modernes proposent des chambres « universal room » (ユニバーサルルーム). Les ryokan traditionnels ont souvent des marches, des tatamis et des futons au sol : vérifiez à l’avance. Les bains privatifs (kashikiri) permettent de profiter d’un onsen à son rythme." },
+    { t: "Vol avec Air France", b: "Le service d’assistance Saphir se demande au moins 48 heures avant le départ, pour l’aller comme pour le retour. Pensez à le confirmer pour le 28/11 au départ de Haneda Terminal 3." },
+    { t: "Ressources utiles", b: "Le site Accessible Japan (accessible-japan.com) détaille l’accessibilité de nombreux lieux, hôtels et gares. L’office du tourisme japonais (japan.travel) a une page dédiée au tourisme accessible. Tokyo et Kyoto publient des cartes « sans barrière »." }
+  ],
+  food: [
+    ["Rāmen", "ラーメン", "Nouilles de blé dans un bouillon (shōyu, miso, shio ou tonkotsu au porc). On commande souvent via un distributeur de tickets à l’entrée."],
+    ["Udon", "うどん", "Grosses nouilles de blé, chaudes ou froides, très réconfortantes."],
+    ["Soba", "そば", "Nouilles de sarrasin, servies froides avec une sauce à tremper ou chaudes en bouillon."],
+    ["Tonkatsu", "とんかつ", "Côtelette de porc panée, servie avec du chou râpé et une sauce épaisse."],
+    ["Okonomiyaki", "お好み焼き", "Galette garnie de chou, viande ou fruits de mer, cuite sur plaque. La spécialité d’Osaka."],
+    ["Takoyaki", "たこ焼き", "Boulettes de pâte au poulpe, brûlantes à l’intérieur. Soufflez dessus !"],
+    ["Kushikatsu", "串カツ", "Brochettes panées et frites d’Osaka. Règle d’or : on ne trempe jamais deux fois dans la sauce commune."],
+    ["Yakitori", "焼き鳥", "Brochettes de poulet grillées au charbon, en sauce (tare) ou au sel (shio)."],
+    ["Gyūdon", "牛丼", "Bol de riz au bœuf mijoté, rapide et bon marché (chaînes Yoshinoya, Sukiya, Matsuya)."],
+    ["Kaiseki", "懐石", "Repas gastronomique en nombreux petits plats de saison, typique des ryokan et de Kyoto."],
+    ["Onigiri", "おにぎり", "Boule de riz enveloppée d’algue, garnie de saumon, thon-mayo ou prune salée. Le meilleur en-cas des konbini."],
+    ["Oden", "おでん", "Pot-au-feu japonais d’hiver (œufs, radis, tofu…) qu’on trouve même dans les konbini en novembre."],
+    ["Unagi", "うなぎ", "Anguille grillée laquée sur du riz. Cher mais mémorable."],
+    ["Hōtō", "ほうとう", "Larges nouilles mijotées au miso et au potiron : LA spécialité de Kawaguchiko, parfaite par temps froid."],
+    ["Yudōfu", "湯豆腐", "Tofu mijoté dans un bouillon léger, spécialité végétarienne de Kyoto (quartier du Nanzen-ji)."],
+    ["Kaisendon", "海鮮丼", "Bol de riz couvert de poissons et fruits de mer crus. Incontournable au marché d’Ōmichō à Kanazawa."],
+    ["Matcha", "抹茶", "Thé vert en poudre. Uji est sa capitale : glaces, parfaits, soba et pâtisseries au matcha partout."],
+    ["Wagyū", "和牛", "Bœuf japonais très persillé (Kobe, Ōmi, Matsusaka…). Souvent proposé en brochette sur les marchés."],
+    ["Mochi", "餅", "Pâte de riz gluant, souvent fourrée de pâte de haricot rouge (anko). Mâchez bien."],
+    ["Taiyaki", "たい焼き", "Gaufre en forme de poisson, fourrée d’anko ou de crème."]
+  ],
+  foodWords: [
+    ["Bœuf", "牛", "gyū"], ["Porc", "豚", "buta"], ["Poulet", "鶏", "tori"], ["Poisson", "魚", "sakana"],
+    ["Crevette", "えび", "ebi"], ["Œuf", "卵", "tamago"], ["Végétarien", "ベジタリアン", "bejitarian"],
+    ["Épicé", "辛い", "karai"], ["Grande portion", "大盛り", "ōmori"], ["Gratuit", "無料", "muryō"],
+    ["Eau", "水", "mizu"], ["Thé vert", "お茶", "o-cha"], ["Bière", "ビール", "bīru"], ["Saké", "日本酒", "nihonshu"]
+  ],
+  emergency: [
+    { t: "Police", n: "110", b: "Vol, agression, objet perdu grave." },
+    { t: "Ambulance et pompiers", n: "119", b: "Urgence médicale ou incendie. L’ambulance est gratuite." },
+    { t: "Japan Visitor Hotline (JNTO)", n: "050-3816-2787", b: "Assistance en anglais 24 h/24 pour les touristes : urgences, catastrophes, conseils." },
+    { t: "Ambassade de France à Tokyo", n: "03-5798-6000", b: "Perte de passeport, situation grave. 4-11-44 Minami-Azabu, Minato-ku." }
+  ],
+  prep: [
+    "Passeports valides et copies numériques",
+    "Formulaires Visit Japan Web remplis (QR codes enregistrés)",
+    "Assurance voyage et carte européenne d’invalidité si concerné",
+    "Assistance Air France Saphir demandée (aller et retour) si besoin",
+    "eSIM installée et testée",
+    "Adaptateur de prise type A",
+    "Un peu de yens en liquide pour l’arrivée",
+    "Suica ajoutée au Wallet (iPhone) ou carte à acheter à Haneda",
+    "Billets Skytree réservés pour le créneau du coucher de soleil (8/11)",
+    "Shinkansen Ueno → Kanazawa réservé (Kagayaki, places réservées uniquement)",
+    "Billets Nintendo Museum (11 h, 12/11) confirmés",
+    "Billets teamLab Biovortex (13/11) réservés",
+    "Billets Universal Studios + accès Super Nintendo World (17/11)",
+    "Billets teamLab Planets (20/11) réservés",
+    "Transport Tokyo → Kawaguchiko réservé (23/11, jour férié !)",
+    "Chaussures confortables déjà portées",
+    "Chaussettes sans trou (temples, ryokan)",
+    "Pull chaud, bonnet et gants pour le Fuji",
+    "Petit sac pour les déchets",
+    "Médicaments dans leur boîte d’origine avec l’ordonnance"
+  ]
+};
+
+const CITIES = [];
+
+CITIES.push({
+  id: "tokyo", n: "Tokyo", jp: "東京", color: "tokyo",
+  dates: "7–10/11 puis 19–23/11 et 24–28/11",
+  intro: "La plus grande métropole du monde, avec 37 millions d’habitants dans l’agglomération. Tokyo n’a pas un centre mais une constellation de quartiers qui ont chacun leur personnalité : le vieux Tokyo populaire d’Ueno et Asakusa, l’électronique et les mangas d’Akihabara, les gratte-ciel de Shinjuku, la jeunesse de Shibuya. On passe d’une ruelle à lanternes à une tour de verre en deux minutes.",
+  hist: "Edo n’était qu’un village de pêcheurs quand Tokugawa Ieyasu y installa son gouvernement en 1603. Au XVIIIe siècle, c’était déjà l’une des plus grandes villes du monde. Rebaptisée Tokyo, « capitale de l’Est », en 1868, elle a été rasée deux fois au XXe siècle : par le grand séisme du Kantō en 1923, puis par les bombardements de 1945. C’est pour cela que le bâti est récent, et que les rares vestiges anciens sont si précieux.",
+  season: "Fin novembre, les ginkgos virent au jaune d’or et les érables au rouge dans les jardins. L’allée des ginkgos de Meiji Jingu Gaien et le jardin Shinjuku Gyoen sont superbes à votre seconde visite. Les illuminations de Noël commencent dès la mi-novembre (Roppongi, Marunouchi).",
+  transport: "Le réseau mêle JR (la ligne circulaire Yamanote, en vert) et deux compagnies de métro (Tokyo Metro et Toei). Une carte Suica marche partout. Google Maps donne les itinéraires exacts, avec les numéros de quai et les meilleures voitures pour les sorties.",
+  hotel: { n: "Hotel Crown Hills Ueno Premier", jp: "ホテルクラウンヒルズ上野プレミア", addr: "2-16-1 Higashi-Ueno, Taito-ku, Tokyo 110-0015", addrJp: "〒110-0015 東京都台東区東上野2-16-1", note: "4 min à pied de la gare JR d’Ueno, tout près d’Okachimachi. Check-in à partir de 15 h, check-out 10 h. Pour le séjour du 19 au 23/11 et du 24 au 28/11, ajoutez votre hôtel avec le bouton Modifier." },
+  quarters: [
+    {
+      id: "ueno", n: "Ueno", jp: "上野",
+      intro: "Votre camp de base. Un grand parc plein de musées, un marché populaire bruyant sous les voies ferrées, et la gare d’où partent les trains vers le nord du pays.",
+      hist: "Le parc occupe l’ancien domaine du temple Kan’ei-ji, temple protecteur des Tokugawa. En 1868, les derniers fidèles du shogun y livrèrent bataille contre les troupes impériales. Le site devint en 1873 l’un des tout premiers parcs publics du Japon. Après-guerre, Ameyoko était un marché noir où l’on vendait bonbons (ame) et surplus américains.",
+      places: [
+        { id: "ueno-park", n: "Parc d’Ueno", jp: "上野恩賜公園", st: "上野", d: "Grand parc avec l’étang Shinobazu couvert de lotus fanés en automne, le petit temple Benten-dō sur son île, et le sanctuaire Tōshō-gū à la feuille d’or. Parfait pour une première promenade le jour de l’arrivée.", h: "Ouvert de 5 h à 23 h, gratuit.", a: "Allées larges et goudronnées, quelques pentes douces depuis la gare. Accès par l’entrée côté gare JR (sortie Park) pour éviter les escaliers de la sortie Shinobazu." },
+        { id: "ameyoko", n: "Ameyoko", jp: "アメ横", st: "飴横", d: "Rue-marché de 400 m entre Ueno et Okachimachi : poissons, fruits coupés, épices, baskets, izakaya en plein air. Très animé le soir, idéal pour un premier dîner sans façon.", h: "Boutiques de 10 h à 20 h environ, bars plus tard.", a: "Rue plate mais bondée le week-end. Les stands ont souvent une petite marche." },
+        { id: "tnm", n: "Musée national de Tokyo", jp: "東京国立博物館", st: "博物", d: "Le plus ancien et le plus grand musée du Japon : sabres, armures, kimonos, estampes, statues bouddhiques. Une heure dans le bâtiment principal (Honkan) donne un formidable résumé de l’art japonais.", h: "Fermé le lundi. Généralement de 9 h 30 à 17 h.", a: "Accessible, avec ascenseurs et prêt de fauteuils roulants." }
+      ],
+      eat: ["Izakaya en terrasse sous les voies à Ameyoko", "Tonkatsu dans les petits restaurants de la rue", "Fruits coupés en brochette sur le marché"],
+      tips: ["Le jour de l’arrivée, restez éveillés jusqu’à 21 h pour vaincre le décalage horaire : une balade dans le parc et à Ameyoko est idéale.", "La gare d’Ueno est immense : la sortie « Park » mène directement au parc."],
+      acc: "Quartier plutôt plat. La gare JR d’Ueno est équipée d’ascenseurs mais ses couloirs sont longs. L’hôtel est mieux desservi par Okachimachi pour un trajet court."
+    },
+    {
+      id: "asakusa", n: "Asakusa et Sumida", jp: "浅草・墨田", 
+      intro: "L’âme du vieux Tokyo, avec ses artisans, ses temples et ses pousse-pousse, face à la Skytree futuriste de l’autre côté de la rivière Sumida.",
+      hist: "Selon la légende, deux frères pêcheurs remontèrent en 628 une statuette de Kannon dans leurs filets : le Sensō-ji fut construit pour l’abriter. C’est le plus ancien temple de Tokyo. À l’époque Edo, Asakusa était le quartier des plaisirs : théâtres kabuki, spectacles de rue, maisons de thé. Détruit en 1945, le temple a été reconstruit à l’identique.",
+      places: [
+        { id: "sensoji", n: "Sensō-ji", jp: "浅草寺", st: "浅草寺", d: "On entre par la porte Kaminarimon et son immense lanterne rouge, on remonte l’allée marchande Nakamise jusqu’au grand bâtiment principal et à la pagode à cinq étages. Tirez un omikuji (oracle à 100 ¥) : si la prédiction est mauvaise, on l’attache sur place pour la laisser au temple.", h: "Bâtiment principal ouvert de 6 h 30 à 17 h en hiver, gratuit. L’enceinte reste accessible et illuminée le soir. Prévoir 1 à 2 h.", a: "Allée Nakamise plate. Le bâtiment principal a un ascenseur sur le côté droit (face au temple). Venir tôt le dimanche : la foule rend la circulation difficile vers 11 h." },
+        { id: "nakamise", n: "Nakamise-dōri", jp: "仲見世通り", st: "仲見世", d: "250 m de petites boutiques depuis l’époque Edo : biscuits de riz (senbei), ningyō-yaki (gâteaux fourrés en forme de lanterne), éventails, souvenirs. Mangez sur place, pas en marchant.", h: "Boutiques de 10 h à 18 h environ.", a: "Rue plate, très fréquentée en milieu de journée." },
+        { id: "sumida-park", n: "Parc Sumida", jp: "隅田公園", st: "隅田", d: "Promenade le long de la rivière avec vue sur la Skytree et le siège d’Asahi orné de sa célèbre « flamme dorée ». La passerelle Sumida River Walk relie Asakusa au côté Skytree.", h: "Accès libre.", a: "Promenade plate et goudronnée. La passerelle a des accès en pente." },
+        { id: "skytree", n: "Tokyo Skytree", jp: "東京スカイツリー", st: "天望", d: "La plus haute tour du monde (634 m). Le pont d’observation à 350 m offre un panorama sur toute la plaine du Kantō, et le Fuji par temps clair. Le coucher du soleil est vers 16 h 40 début novembre : arrivez vers 16 h pour voir le jour, l’or puis les lumières de la ville.", h: "Généralement de 10 h à 22 h. Réservez le créneau en ligne.", a: "Entièrement accessible, ascenseurs ultrarapides. Comptoir prioritaire pour les visiteurs en fauteuil." },
+        { id: "mukojima", n: "Mukōjima Hyakka-en", jp: "向島百花園", st: "百花", d: "Petit jardin de l’époque Edo pensé par des lettrés, plus sauvage que les grands jardins. En novembre, les feuilles commencent à rougir mais le pic est plutôt fin novembre. À garder si vous avez du temps, sinon pas indispensable.", h: "De 9 h à 17 h, petit droit d’entrée.", a: "Chemins de terre et gravier étroits, accès en fauteuil limité." }
+      ],
+      eat: ["Melon pan géant de Kagetsudō", "Ningyō-yaki sur Nakamise", "Tempura dans les restaurants historiques autour du temple", "Dango et mochi chez les artisans"],
+      tips: ["Arrivez au Sensō-ji vers 8 h : l’ambiance du matin, avec les fidèles et l’encens, n’a rien à voir avec la foule de midi.", "Revenez dans l’enceinte à la nuit tombée : le temple illuminé est magique et presque désert.", "La rue Kappabashi, toute proche, est le paradis des ustensiles de cuisine et des faux plats en cire."],
+      acc: "Asakusa est plat. Le métro Asakusa (ligne Ginza) a un ascenseur à la sortie 1 côté Kaminarimon, à vérifier sur place. La Skytree et sa gare sont entièrement accessibles."
+    },
+    {
+      id: "akihabara", n: "Akihabara et Kanda", jp: "秋葉原・神田",
+      intro: "La « ville électrique » des jeux vidéo, des mangas et des figurines, à deux pas d’un des plus vieux sanctuaires de Tokyo où les geeks viennent faire bénir leurs ordinateurs.",
+      hist: "Après-guerre, un marché noir de pièces radio s’installe près de la gare. Il devient le grand bazar de l’électroménager dans les années 1960, puis de l’informatique, avant d’être conquis par la culture otaku dans les années 2000. Le sanctuaire Kanda Myōjin, lui, a 1 300 ans : il protège l’ancien Edo et sa grande fête est l’une des trois plus importantes de Tokyo.",
+      places: [
+        { id: "kanda-myojin", n: "Sanctuaire Kanda Myōjin", jp: "神田明神", st: "神田", d: "Sanctuaire vermillon et or dédié notamment à Ebisu, dieu du commerce. On y vend des amulettes de protection pour les appareils électroniques ! Il apparaît dans l’anime Love Live!, d’où les nombreux fans.", h: "Accès libre, bureau des amulettes de 9 h à 17 h environ.", a: "Une rampe permet d’éviter le grand escalier côté Ochanomizu : entrer par la porte principale Zuishinmon sur l’avenue Hongō-dōri." },
+        { id: "electric-town", n: "Akihabara Electric Town", jp: "秋葉原電気街", st: "電気街", d: "Grands magasins d’électronique (Yodobashi), immeubles entiers de jeux rétro (Super Potato), figurines (Radio Kaikan, Mandarake), salles d’arcade (GiGO) et machines à capsules gashapon par centaines. Le dimanche, la rue Chūō-dōri est souvent piétonne.", h: "Boutiques en général de 10 h à 20 h.", a: "Rue principale plate. Les boutiques de jeux rétro sont souvent sur plusieurs étages étroits, avec de petits ascenseurs." },
+        { id: "chabara", n: "Marché Chabara Aki-Oka", jp: "ちゃばら", st: "茶原", d: "Halle gourmande sous les voies ferrées : produits régionaux de tout le Japon, thés, sauces, saké, petites épiceries fines. Juste à côté, l’arcade d’artisans 2k540 Aki-Oka Artisan présente céramistes, maroquiniers et créateurs.", h: "Horaires variables selon les boutiques, plutôt de 11 h à 19 h.", a: "Halle de plain-pied." },
+        { id: "yushima-seido", n: "Yushima Seidō", jp: "湯島聖堂", st: "聖堂", d: "Temple confucéen sombre et silencieux, presque secret, à 5 min du sanctuaire. Une parenthèse calme entre deux boutiques.", h: "Généralement de 9 h 30 à 16 h.", a: "Escaliers et gravier." }
+      ],
+      eat: ["Rāmen et curry japonais très bon marché", "Un maid café pour l’expérience (kitsch assumé)", "Amazake, boisson sucrée au riz, à la boutique du sanctuaire"],
+      tips: ["Le budget fond vite chez les gashapon : fixez-vous une limite !", "Beaucoup de grands magasins pratiquent la détaxe : passeport sur vous."],
+      acc: "La gare JR d’Akihabara a des ascenseurs. Le quartier est plat, mais les petites boutiques sont souvent à l’étage. Yodobashi Akiba est entièrement accessible."
+    },
+    {
+      id: "toyosu-roppongi", n: "Toyosu et Roppongi", jp: "豊洲・六本木",
+      intro: "Une journée art et lumières : les installations immersives de teamLab sur les terres gagnées sur la baie, puis le quartier cosmopolite des musées et des panoramas.",
+      hist: "Toyosu est un terre-plein industriel reconverti, où se trouve depuis 2018 le nouveau marché aux poissons de Tokyo. Roppongi, ancien quartier militaire, devint après-guerre celui des expatriés et de la vie nocturne, avant de se réinventer en « triangle de l’art » avec Roppongi Hills (2003) et Tokyo Midtown.",
+      places: [
+        { id: "teamlab-planets", n: "teamLab Planets", jp: "チームラボプラネッツ", st: "光", d: "On visite pieds nus, dans l’eau jusqu’aux genoux par endroits, au milieu d’orchidées suspendues, de carpes de lumière et d’univers de miroirs. Des shorts sont prêtés. Évitez les jupes : le sol est souvent en miroir.", h: "Créneau horaire réservé à l’avance. Prévoir 1 h 30 à 2 h.", a: "Une partie du parcours se fait dans l’eau et sur des sols mous. Les visiteurs en fauteuil peuvent accéder à de nombreuses œuvres mais pas à toutes : demandez à l’accueil le parcours adapté." },
+        { id: "toyosu-market", n: "Marché de Toyosu", jp: "豊洲市場", st: "市場", d: "Le successeur du célèbre marché de Tsukiji. On peut voir la criée au thon tôt le matin depuis des galeries vitrées, et manger des sushis d’une fraîcheur incomparable dans les restaurants du marché.", h: "Fermé le dimanche, les jours fériés et certains mercredis. Restaurants le matin jusqu’en début d’après-midi.", a: "Bâtiments modernes avec ascenseurs." },
+        { id: "roppongi-hills", n: "Roppongi Hills et Tokyo City View", jp: "六本木ヒルズ", st: "六本木", d: "La grande araignée de Louise Bourgeois au pied de la tour Mori, le Musée d’art Mori au 53e étage, et l’observatoire Tokyo City View avec vue sur la tour de Tokyo. L’allée Keyakizaka s’illumine pour Noël dès novembre.", h: "Musée et observatoire ouverts tard le soir (souvent jusqu’à 22 h).", a: "Entièrement accessible depuis le métro Roppongi (sortie 1C par ascenseur)." },
+        { id: "azabudai", n: "Azabudai Hills", jp: "麻布台ヒルズ", st: "麻布台", d: "Le nouveau quartier aux toits végétalisés ondulants, où se trouve teamLab Borderless (à ne pas confondre avec Planets). Bel endroit pour flâner entre deux visites.", h: "Accès libre aux espaces extérieurs.", a: "Métro Kamiyachō relié par ascenseur." },
+        { id: "tokyo-tower", n: "Tour de Tokyo et Zōjō-ji", jp: "東京タワー・増上寺", st: "増上", d: "La tour rouge et blanche de 1958 domine le grand temple Zōjō-ji, temple familial des Tokugawa. Ses centaines de petites statues jizō coiffées de bonnets rouges sont émouvantes. Superbe vue du temple sur la tour illuminée au crépuscule.", h: "Enceinte du temple en accès libre.", a: "Le Zōjō-ji a des allées goudronnées, le bâtiment principal un escalier avec rampe sur le côté." }
+      ],
+      eat: ["Sushis au marché de Toyosu", "Restaurants internationaux de Roppongi", "Food halls des tours (Roppongi Hills, Azabudai)"],
+      tips: ["Réservez teamLab Planets le matin, puis rejoignez Roppongi en début d’après-midi par la ligne Yurikamome puis le métro.", "Montez à Tokyo City View au coucher du soleil (vers 16 h 30) pour voir la tour de Tokyo s’allumer."],
+      acc: "Quartiers récents, très bien équipés en ascenseurs. La ligne Yurikamome (automatique) est entièrement accessible."
+    },
+    {
+      id: "shinjuku", n: "Shinjuku", jp: "新宿",
+      intro: "Gratte-ciel, néons et la gare la plus fréquentée du monde (3,5 millions de passagers par jour), mais aussi un des plus beaux jardins de Tokyo et des ruelles d’après-guerre.",
+      hist: "Shinjuku signifie « nouvelle étape » : c’était un relais sur la route du Kōshū à l’époque Edo. Après le séisme de 1923, la ville se déplace vers l’ouest et Shinjuku explose. Dans les années 1960, il devient le quartier de la contre-culture et des artistes, puis celui des tours de bureaux et de la mairie de Tokyo.",
+      places: [
+        { id: "gyoen", n: "Jardin Shinjuku Gyoen", jp: "新宿御苑", st: "御苑", d: "Ancien jardin impérial mêlant styles japonais, anglais et français. Fin novembre, érables rouges et platanes dorés en font l’un des meilleurs spots de feuillage de la capitale. Il y a aussi une serre tropicale.", h: "Fermé le lundi. En hiver, de 9 h à 16 h (dernière entrée 15 h 30). Entrée payante.", a: "Allées larges et goudronnées, prêt de fauteuils roulants à l’entrée. Accès sans marche par la porte Shinjuku." },
+        { id: "tocho", n: "Observatoire de la mairie de Tokyo", jp: "東京都庁", st: "都庁", d: "Les deux observatoires au 45e étage de la mairie sont gratuits, avec vue sur le Fuji par temps clair en matinée. Le soir, une projection lumineuse anime la façade.", h: "Gratuit, en général de 9 h 30 à 22 h (fermetures alternées selon la tour).", a: "Entièrement accessible, ascenseurs directs." },
+        { id: "omoide", n: "Omoide Yokochō", jp: "思い出横丁", st: "思出", d: "La « ruelle des souvenirs » : une soixantaine de minuscules comptoirs à brochettes, enfumés et éclairés de lanternes, nés du marché noir d’après-guerre. Quelques places seulement par bar.", h: "Le soir, à partir de 17 h environ.", a: "Ruelles très étroites et tabourets hauts : peu adapté à un fauteuil." },
+        { id: "golden-gai", n: "Golden Gai", jp: "ゴールデン街", st: "金街", d: "Six ruelles et près de 200 bars minuscules de 5 à 10 places, chacun avec sa déco et son thème. Certains facturent un droit d’entrée (otōshi ou cover charge).", h: "Le soir, plutôt après 20 h.", a: "Bars souvent à l’étage par des escaliers raides." },
+        { id: "kabukicho", n: "Kabukichō et Godzilla", jp: "歌舞伎町", st: "歌舞伎", d: "Le quartier des néons, avec la tête de Godzilla qui dépasse de l’hôtel Gracery. Animé et sans danger pour les touristes, mais ignorez les rabatteurs.", h: "Le soir.", a: "Rues plates." }
+      ],
+      eat: ["Yakitori à Omoide Yokochō", "Rāmen au niboshi (sardine séchée) dans le quartier", "Depachika (sous-sols gourmands) d’Isetan"],
+      tips: ["Dans la gare, suivez les panneaux jaunes de sortie (Ouest, Est, Sud) bien avant d’arriver : on s’y perd facilement.", "Le Gyoen ferme tôt : faites-le le matin, Shibuya l’après-midi et Shinjuku le soir."],
+      acc: "La gare de Shinjuku est un labyrinthe mais équipée d’ascenseurs. Demandez au personnel la sortie avec ascenseur adaptée à votre destination."
+    },
+    {
+      id: "shibuya", n: "Shibuya et Harajuku", jp: "渋谷・原宿",
+      intro: "Le carrefour le plus célèbre du monde, la mode de rue de Harajuku, et la forêt sacrée du sanctuaire Meiji, à deux pas l’une de l’autre.",
+      hist: "Shibuya s’est développé autour de sa gare au début du XXe siècle. Le chien Hachikō, qui attendit son maître décédé à la gare chaque jour pendant près de dix ans (1925-1935), en est devenu le symbole. Harajuku doit sa forêt au sanctuaire Meiji, édifié en 1920 en l’honneur de l’empereur Meiji : 100 000 arbres y furent offerts par tout le Japon.",
+      places: [
+        { id: "crossing", n: "Carrefour de Shibuya", jp: "渋谷スクランブル交差点", st: "交差点", d: "Jusqu’à 3 000 personnes traversent à chaque feu vert. Pour la vue d’en haut, le Starbucks et la passerelle de la gare (Shibuya Mark City) sont des classiques.", h: "Accès libre, impressionnant surtout le soir.", a: "Passages piétons larges. Foule dense aux heures de pointe." },
+        { id: "shibuya-sky", n: "Shibuya Sky", jp: "渋谷スカイ", st: "渋天", d: "Toit-terrasse à ciel ouvert au sommet du Shibuya Scramble Square (230 m), avec vue directe sur le carrefour et la ville. Le coucher du soleil se réserve très à l’avance.", h: "Réservation horaire en ligne recommandée.", a: "Accessible par ascenseur jusqu’au toit. Les objets (sacs, chapeaux) doivent rester en consigne." },
+        { id: "hachiko", n: "Statue de Hachikō", jp: "ハチ公像", st: "ハチ公", d: "Le point de rendez-vous le plus connu de Tokyo, devant la gare.", h: "Accès libre.", a: "Sur la place, plat." },
+        { id: "meiji-jingu", n: "Sanctuaire Meiji", jp: "明治神宮", st: "明治", d: "On traverse une forêt dense sous d’immenses torii en cyprès jusqu’au sanctuaire. Le week-end, on croise souvent des mariages shintō. En novembre, des familles viennent avec leurs enfants en kimono pour la fête Shichi-Go-San (enfants de 3, 5 et 7 ans).", h: "Du lever au coucher du soleil, gratuit.", a: "Grandes allées de gravier fin, praticables mais fatigantes en fauteuil (environ 10 min de marche). Pas d’escalier jusqu’au sanctuaire." },
+        { id: "takeshita", n: "Takeshita-dōri et Omotesandō", jp: "竹下通り・表参道", st: "原宿", d: "La rue de la mode kawaii et des crêpes géantes, puis l’avenue Omotesandō, les « Champs-Élysées de Tokyo », bordée de boutiques d’architectes.", h: "Boutiques de 10 h à 20 h environ.", a: "Takeshita-dōri est en légère pente et très étroite le week-end. Omotesandō est large et plate." },
+        { id: "gaien-ginkgo", n: "Allée des ginkgos de Meiji Jingu Gaien", jp: "明治神宮外苑いちょう並木", st: "銀杏", d: "Une double rangée de 146 ginkgos qui virent au jaune d’or éclatant fin novembre, parmi les images les plus célèbres de l’automne à Tokyo. Le pic tombe généralement pendant votre seconde semaine à Tokyo.", h: "Accès libre. Station Aoyama-itchōme.", a: "Large trottoir plat." }
+      ],
+      eat: ["Crêpes de Takeshita-dōri", "Food court du sous-sol de Shibuya Scramble Square", "Tonkatsu au Maisen d’Omotesandō, une institution"],
+      tips: ["Combinez Meiji (le matin, quand c’est calme), Harajuku et Omotesandō à pied, puis Shibuya en fin de journée.", "Le samedi 21/11, la foule sera énorme à Takeshita-dōri vers 14 h : passez-y tôt."],
+      acc: "Les gares de Shibuya et Harajuku ont des ascenseurs, mais Shibuya est en travaux permanents : suivez les panneaux. Le quartier est vallonné (Shibuya veut dire « vallée »)."
+    },
+    {
+      id: "yanaka", n: "Yanaka et Nezu", jp: "谷中・根津",
+      intro: "Le Tokyo d’avant, épargné par les bombardements : maisons en bois, chats, artisans, et une soixantaine de temples. Idée parfaite pour votre dimanche « temples et sanctuaires » du 22/11, à côté de votre premier hôtel.",
+      hist: "Après le grand incendie de 1657, de nombreux temples d’Edo se réinstallèrent à Yanaka. Le quartier fut miraculeusement épargné par le séisme de 1923 et par les bombardements de 1945, d’où son atmosphère unique, appelée Yanesen (Yanaka, Nezu, Sendagi).",
+      places: [
+        { id: "nezu-jinja", n: "Sanctuaire Nezu", jp: "根津神社", st: "根津", d: "Un des plus beaux sanctuaires de Tokyo, avec ses bâtiments laqués de 1706 et un petit tunnel de torii vermillon, comme une mini Fushimi Inari.", h: "Accès libre, de 6 h à 17 h environ.", a: "Le sanctuaire principal est de plain-pied avec du gravier. Le tunnel de torii a des marches." },
+        { id: "yanaka-ginza", n: "Yanaka Ginza", jp: "谷中銀座", st: "谷中", d: "Rue commerçante rétro avec croquettes, gâteaux et petits magasins. On descend le célèbre escalier « Yūyake Dandan », d’où l’on admire le coucher du soleil.", h: "Boutiques de 10 h à 18 h environ.", a: "Accès plat par la station Sendagi pour éviter l’escalier Yūyake Dandan." },
+        { id: "yanaka-cemetery", n: "Cimetière de Yanaka", jp: "谷中霊園", st: "霊園", d: "Un cimetière arboré, paisible, où reposent le dernier shogun Tokugawa Yoshinobu et de nombreux artistes. L’allée centrale s’embrase en automne.", h: "Accès libre.", a: "Allée centrale goudronnée." },
+        { id: "rikugien", n: "Jardin Rikugi-en", jp: "六義園", st: "六義", d: "Jardin de promenade de 1702 inspiré de poèmes célèbres. De fin novembre à début décembre, les érables sont illuminés le soir : un spectacle magnifique, à deux stations de Nezu.", h: "De 9 h à 17 h, ouverture prolongée lors des illuminations d’automne. Entrée payante.", a: "Allées principales praticables, quelques passages en gravier et petites pentes." },
+        { id: "gotokuji", n: "Gōtoku-ji (option)", jp: "豪徳寺", st: "豪徳", d: "Le temple des maneki-neko, les chats porte-bonheur : des centaines de chats blancs à la patte levée. Plus loin, à l’ouest de Shibuya, mais très original.", h: "De 6 h à 17 h environ, gratuit.", a: "Gravier et quelques marches." }
+      ],
+      eat: ["Menchi-katsu (croquettes de viande) à Yanaka Ginza", "Taiyaki dans les petites pâtisseries du quartier", "Petits cafés dans des maisons anciennes"],
+      tips: ["Le dimanche 22/11 : Nezu le matin, Yanaka à pied, puis Rikugi-en illuminé le soir.", "Si vous voulez des grands sanctuaires, Meiji est l’autre option, mais vous l’aurez sans doute vu la veille."],
+      acc: "Quartier vallonné aux rues étroites. Le métro Nezu (ligne Chiyoda) a un ascenseur. Prévoir un taxi pour relier les points hauts."
+    }
+  ]
+});
+
+CITIES.push({
+  id: "kanazawa", n: "Kanazawa", jp: "金沢", color: "kanazawa",
+  dates: "10–11/11",
+  intro: "La « petite Kyoto » de la côte de la mer du Japon, épargnée par la guerre. Kanazawa produit 99 % de la feuille d’or du pays : on en met jusque sur les glaces. Un jardin parmi les trois plus beaux du Japon, des quartiers de geishas, des maisons de samouraïs et un musée d’art contemporain spectaculaire.",
+  hist: "De 1583 à 1868, Kanazawa fut le fief du clan Maeda, le plus riche du Japon après les Tokugawa. Soupçonnés par le shogun, les Maeda investirent leur fortune dans les arts plutôt que dans l’armée : laque, céramique Kutani, soie Kaga-yūzen, théâtre nō. La ville ne fut jamais bombardée, et son centre historique est resté intact.",
+  season: "Dès le 1er novembre, les jardiniers installent les yukitsuri sur les pins du Kenroku-en : des cordes tendues en parapluie depuis un mât pour protéger les branches du poids de la neige. C’est l’emblème de l’hiver à Kanazawa, et vous arrivez juste quand le spectacle est complet. C’est aussi l’ouverture de la saison du crabe des neiges (début novembre).",
+  transport: "La gare est connue pour sa porte Tsuzumi-mon en bois et son dôme de verre. Les bus Kanazawa Loop Bus et Hokutetsu desservent les sites. Votre hôtel est près du marché Ōmichō, à 15 minutes à pied du Kenroku-en.",
+  hotel: { n: "LINNAS Kanazawa", jp: "LINNAS 金沢", addr: "1-2-8 Owari-chō, Kanazawa, Ishikawa 920-0902", addrJp: "〒920-0902 石川県金沢市尾張町1-2-8", tel: "076-222-7333", note: "À 4 min à pied du marché Ōmichō. Arrivée de 15 h à 22 h selon votre réservation (certains sites indiquent une réception fermant à 18 h : à confirmer avec l’hôtel). Départ avant 10 h." },
+  quarters: [
+    {
+      id: "kenrokuen", n: "Kenroku-en et château", jp: "兼六園・金沢城",
+      intro: "Le cœur de Kanazawa : le jardin légendaire, l’enceinte du château des Maeda et le musée circulaire d’art contemporain, tous voisins.",
+      hist: "Kenroku-en signifie « jardin des six qualités combinées » : étendue, recueillement, art humain, antiquité, eaux vives et vues panoramiques. Les Maeda l’ont aménagé pendant près de deux siècles. Il fut ouvert au public en 1874.",
+      places: [
+        { id: "kenroku", n: "Jardin Kenroku-en", jp: "兼六園", st: "兼六園", d: "Lanterne Kotoji aux deux pieds inégaux posée sur l’eau, étang Kasumiga-ike, plus ancienne fontaine du Japon fonctionnant par gravité, et les fameux pins sous leurs cordes yukitsuri. Les feuillages d’érable y sont à leur meilleur début à mi-novembre.", h: "D’octobre à février, de 8 h à 17 h. Entrée payante. Prévoir environ 2 h.", a: "Le jardin prête des fauteuils roulants. La plupart des allées sont praticables (terre battue et gravier fin), avec des pentes. L’entrée Mayumizaka a des marches : préférer l’entrée Katsurazaka ou celle de Renchimon." },
+        { id: "castle", n: "Parc du château de Kanazawa", jp: "金沢城公園", st: "金沢城", d: "Les tours et la porte Ishikawa-mon, reconstruites selon les techniques anciennes, avec les murs de pierre aux styles variés. Le parc est gratuit, la visite intérieure des bâtiments est payante.", h: "Parc de 8 h à 17 h en hiver.", a: "Grandes allées goudronnées et en gravier, pentes. L’intérieur des tours reconstruites a des marches." },
+        { id: "21c", n: "Musée d’art contemporain du XXIe siècle", jp: "金沢21世紀美術館", st: "二十一", d: "Un bâtiment circulaire en verre, ouvert de tous côtés. Son œuvre star, la « Piscine » de Leandro Erlich, donne l’illusion de gens marchant au fond de l’eau. Les espaces gratuits sont déjà passionnants.", h: "Fermé le lundi (le mardi 10/11 est donc bon). De 10 h à 18 h. La vue d’en dessous de la Piscine demande un billet horaire, souvent complet en milieu de journée.", a: "Entièrement de plain-pied et accessible. Seul l’accès sous la Piscine se fait par escalier." },
+        { id: "suzuki", n: "Musée D.T. Suzuki (option)", jp: "鈴木大拙館", st: "大拙", d: "Musée méditatif consacré au penseur du zen, avec un bassin miroir dont les ondulations rythment le silence. Petit, mais bouleversant de calme.", h: "Fermé le lundi, de 9 h 30 à 17 h.", a: "Plain-pied, accessible." }
+      ],
+      eat: ["Glace à la feuille d’or près du jardin", "Thé matcha et wagashi dans la maison de thé Shigure-tei du Kenroku-en"],
+      tips: ["Arrivés à Kanazawa vers 13 h, déposez les bagages à l’hôtel (même avant 15 h, ils les gardent souvent) puis filez au Kenroku-en avant sa fermeture à 17 h.", "Le musée du XXIe siècle reste ouvert jusqu’à 18 h : faites-le après le jardin."],
+      acc: "Le trio jardin, château et musée est proche mais en hauteur par rapport à l’hôtel. Un taxi (environ 10 min) évite la montée."
+    },
+    {
+      id: "omicho", n: "Ōmichō et centre", jp: "近江町・中心部",
+      intro: "Le quartier de votre hôtel, autour du « garde-manger de Kanazawa », le marché couvert vieux de 300 ans.",
+      hist: "Le marché Ōmichō approvisionne la ville depuis 1721. Kanazawa, entre mer et montagne, y vend les poissons de la mer du Japon, réputés parmi les meilleurs du pays.",
+      places: [
+        { id: "omicho-market", n: "Marché Ōmichō", jp: "近江町市場", st: "近江町", d: "170 stands de poissons, crabes, huîtres géantes, fruits et légumes de Kaga. On y mange un kaisendon (bol de poisson cru) au petit-déjeuner, ou des brochettes de fruits de mer grillés sur place.", h: "Généralement de 9 h à 17 h, certains stands ferment le mercredi. À faire le 11/11 au matin avant le train.", a: "Allées couvertes plates mais étroites et animées." },
+        { id: "oyama", n: "Sanctuaire Oyama", jp: "尾山神社", st: "尾山", d: "Sanctuaire dédié au fondateur des Maeda, avec une étonnante porte à vitraux colorés inspirée de l’architecture occidentale (1875).", h: "Accès libre.", a: "Escalier à l’entrée principale, accès latéral plus doux." },
+        { id: "nagamachi", n: "Quartier samouraï Nagamachi", jp: "長町武家屋敷跡", st: "長町", d: "Ruelles bordées de murs en terre jaune et de canaux. La maison Nomura ouvre un jardin intérieur exquis.", h: "Ruelles en accès libre. Maison Nomura payante.", a: "Ruelles plates. L’intérieur des maisons a des marches et des tatamis." }
+      ],
+      eat: ["Kaisendon au marché Ōmichō", "Nodoguro (perche rose grillée), poisson de luxe local", "Rāmen et curry de Kanazawa (curry épais servi avec une côtelette)", "Oden de Kanazawa, avec du crabe en saison"],
+      tips: ["Le 11/11 au matin, Ōmichō au petit-déjeuner puis Higashi Chaya, avant le train pour Kyoto en fin de matinée."],
+      acc: "Quartier plat autour de l’hôtel. Le marché est couvert, pratique s’il pleut."
+    },
+    {
+      id: "higashi", n: "Higashi Chaya", jp: "ひがし茶屋街",
+      intro: "Le plus grand des quartiers de geishas historiques de Kanazawa : des maisons de thé en bois à claire-voie, superbes au petit matin.",
+      hist: "Les maisons de thé (chaya) furent rassemblées ici en 1820. Les geishas y divertissaient l’élite par la danse, la musique et la conversation. Quelques-unes y travaillent encore aujourd’hui.",
+      places: [
+        { id: "higashi-chaya", n: "Rue principale de Higashi Chaya", jp: "ひがし茶屋街", st: "茶屋", d: "On flâne entre les façades en lattes de bois, les boutiques de feuille d’or et les salons de thé. La maison Shima, de 1820, se visite.", h: "Rues en accès libre, boutiques de 9 h à 18 h environ.", a: "Rues pavées plates. Les maisons de thé ont des marches et escaliers raides." },
+        { id: "hakuza", n: "Boutique Hakuza", jp: "箔座", st: "金箔", d: "Boutique de feuille d’or avec une petite salle de thé entièrement recouverte d’or. C’est ici qu’on goûte la glace recouverte d’une feuille d’or entière.", h: "De 9 h 30 à 18 h environ.", a: "Boutique de plain-pied." },
+        { id: "utatsuyama", n: "Rue des temples d’Utatsuyama", jp: "卯辰山寺院群", st: "卯辰", d: "Juste derrière, une colline semée de petits temples, plus calme et secrète.", h: "Accès libre.", a: "Pentes et escaliers." }
+      ],
+      eat: ["Glace à la feuille d’or", "Thé et wagashi dans une ancienne maison de thé"],
+      tips: ["Venez avant 9 h pour avoir les rues presque pour vous et faire de belles photos."],
+      acc: "À 10 min en bus ou taxi de la gare et de l’hôtel. Rues plates, intérieurs peu accessibles."
+    }
+  ]
+});
+
+CITIES.push({
+  id: "kyoto", n: "Kyoto", jp: "京都", color: "kyoto",
+  dates: "11–14/11",
+  intro: "Capitale impériale pendant plus de mille ans, Kyoto compte environ 1 600 temples, 400 sanctuaires et 17 sites classés à l’Unesco. C’est la ville des geishas (appelées geiko ici), des jardins zen, de la cérémonie du thé et de l’artisanat raffiné. Vous y arrivez au début de la grande saison des feuillages.",
+  hist: "Fondée en 794 sous le nom de Heian-kyō, « capitale de la paix et de la tranquillité », sur un plan en damier copié de la Chine. La cour impériale y a vécu jusqu’en 1868. La ville a souffert des guerres civiles, notamment la guerre d’Ōnin (1467-1477) qui la ravagea, mais fut épargnée par les bombardements de 1945, en partie grâce à sa valeur culturelle.",
+  season: "Les érables de Kyoto atteignent généralement leur pic entre la mi-novembre et le début décembre. Le 12 et le 13/11, les premiers sites colorés seront déjà beaux, surtout en hauteur et au nord. Beaucoup de temples proposent des ouvertures nocturnes illuminées d’automne, à partir de la mi-novembre environ (Kiyomizu-dera, Eikan-dō, Kōdai-ji).",
+  transport: "Les bus de Kyoto sont pratiques mais souvent bondés en automne. Le métro (deux lignes) et les trains JR, Keihan et Hankyū sont plus fiables. Pour les trajets courts à deux ou trois, le taxi est souvent une bonne affaire, surtout entre les temples.",
+  hotel: { n: "Hôtel à Kyoto (à compléter)", jp: "", addr: "", addrJp: "", note: "Ajoutez le nom et l’adresse de votre hôtel avec le bouton Modifier, pour pouvoir la montrer à un chauffeur de taxi." },
+  quarters: [
+    {
+      id: "uji", n: "Uji", jp: "宇治",
+      intro: "Petite ville au bord d’une rivière vive, capitale du thé vert matcha depuis 800 ans, avec un pavillon du Phénix qui figure sur les pièces de 10 ¥. Le musée Nintendo est juste à côté, à Ogura.",
+      hist: "Lieu de villégiature des aristocrates de Heian, Uji est le décor des derniers chapitres du Dit du Genji, premier roman du monde (XIe siècle). Le thé y est cultivé depuis le XIIIe siècle et la qualité de son matcha a été protégée par les shoguns.",
+      places: [
+        { id: "byodoin", n: "Byōdō-in", jp: "平等院", st: "平等院", d: "Le pavillon du Phénix (1053), reflété dans son étang, est l’un des plus beaux bâtiments du Japon. Le musée moderne Hōshōkan expose les phénix en bronze et les 52 bodhisattvas musiciens sculptés sur des nuages.", h: "Jardin de 8 h 30 à 17 h 30. L’intérieur du pavillon se visite par petits groupes avec un billet en supplément.", a: "Le jardin et le musée sont accessibles, prêt de fauteuils roulants. L’intérieur du pavillon du Phénix n’est pas accessible en fauteuil." },
+        { id: "koshoji", n: "Kōshō-ji", jp: "興聖寺", st: "興聖寺", d: "Temple zen fondé par Dōgen. On y accède par le Kotozaka, une montée d’environ 200 m bordée d’érables et d’un ruisseau, superbe quand les feuilles rougissent (pic plutôt fin novembre). Calme et peu connu.", h: "Généralement de 9 h à 17 h. La montée est gratuite, l’intérieur payant.", a: "Le Kotozaka est une longue pente en terre et pavés. Le temple a des seuils et des marches." },
+        { id: "ujigami", n: "Sanctuaire Ujigami", jp: "宇治上神社", st: "宇治上", d: "Le plus ancien sanctuaire shintō existant au Japon (vers 1060), classé à l’Unesco. Minuscule et paisible, sur l’autre rive.", h: "De 9 h à 16 h 30 environ, gratuit.", a: "Petite pente et gravier." },
+        { id: "nintendo", n: "Musée Nintendo", jp: "ニンテンドーミュージアム", st: "任天堂", d: "Dans une ancienne usine de cartes à jouer Nintendo : toute l’histoire de la marque, des cartes hanafuda de 1889 à la Switch, avec des jeux géants interactifs. Vous avez réservé à 11 h.", h: "Billet obligatoire à heure fixe. Station Ogura (ligne Kintetsu Kyoto), environ 5 min à pied.", a: "Bâtiment moderne et accessible." },
+        { id: "omotesando-uji", n: "Rue du thé d’Uji", jp: "平等院表参道", st: "宇治茶", d: "L’allée qui mène au Byōdō-in, bordée de maisons de thé centenaires. Matcha soba, parfaits, glaces, dango et dégustations.", h: "Boutiques de 9 h à 17 h environ.", a: "Rue plate et pavée." }
+      ],
+      eat: ["Parfait au matcha chez Nakamura Tōkichi", "Soba au thé vert (cha-soba)", "Glace matcha intense"],
+      tips: ["Ordre conseillé : Kōshō-ji et Byōdō-in tôt le matin, musée Nintendo à 11 h à Ogura (sur le chemin du retour vers Kyoto), puis Kiyomizu-dera l’après-midi et Gion au crépuscule.", "Depuis Kyoto : ligne JR Nara (environ 20 min) ou Keihan jusqu’à Uji."],
+      acc: "Uji est plat au bord de la rivière. La gare JR d’Uji a un ascenseur. Le musée Nintendo est accessible."
+    },
+    {
+      id: "higashiyama", n: "Higashiyama et Gion", jp: "東山・祇園",
+      intro: "Le Kyoto des cartes postales : le temple sur pilotis de Kiyomizu, les ruelles pavées qui descendent vers le quartier des geiko, et la grande pagode Yasaka.",
+      hist: "Gion s’est développé à l’époque Edo pour accueillir les pèlerins du sanctuaire Yasaka : maisons de thé, puis maisons de geiko. Aujourd’hui encore, des apprenties (maiko) et des geiko y vivent et y travaillent.",
+      places: [
+        { id: "kiyomizu", n: "Kiyomizu-dera", jp: "清水寺", st: "清水寺", d: "Fondé en 778, le temple de « l’eau pure » est célèbre pour sa grande terrasse en bois suspendue à 13 m au-dessus de la forêt, construite sans un seul clou. En contrebas, on boit l’eau de la cascade Otowa (une gorgée par vœu : longévité, réussite, amour). Ouverture nocturne illuminée en saison d’automne.", h: "Généralement de 6 h à 18 h, avec ouverture nocturne en saison. Entrée payante.", a: "La rue d’accès Kiyomizu-zaka est très pentue. Le temple indique un itinéraire avec pentes jusqu’à la grande terrasse ; la descente vers la cascade Otowa se fait par escaliers. Un taxi jusqu’au parking du temple évite la montée." },
+        { id: "ninenzaka", n: "Sannenzaka et Ninenzaka", jp: "三年坂・二年坂", st: "三年坂", d: "Ruelles pavées en escalier bordées de maisons traditionnelles, boutiques de céramique, d’encens et de pickles. Le Starbucks dans une maison en bois avec tatamis est célèbre.", h: "Boutiques de 9 h à 18 h.", a: "Nombreuses marches : non accessible en fauteuil. Contourner par la rue Higashiōji en taxi." },
+        { id: "yasaka-pagoda", n: "Pagode Yasaka (Hōkan-ji)", jp: "八坂の塔", st: "八坂塔", d: "La pagode à cinq étages qui surgit au bout de la ruelle, la photo la plus célèbre de Kyoto, surtout au crépuscule.", h: "Vue libre depuis la rue.", a: "Rue en pente pavée." },
+        { id: "yasaka-shrine", n: "Sanctuaire Yasaka", jp: "八坂神社", st: "八坂", d: "Sanctuaire au portail vermillon, au bout de l’avenue Shijō. Le soir, sa salle de danse est illuminée de centaines de lanternes.", h: "Ouvert 24 h/24, gratuit.", a: "Accès depuis la porte ouest par un escalier. L’entrée sud (côté Maruyama) est plus plate." },
+        { id: "hanamikoji", n: "Hanamikoji et Shirakawa", jp: "花見小路・白川", st: "祇園", d: "La rue principale des maisons de thé, et le canal Shirakawa bordé de saules. Avec un peu de chance, on aperçoit une maiko se rendant à un rendez-vous en début de soirée. Respectez-les : pas de photo forcée, pas de poursuite.", h: "Les ruelles privées sont interdites aux touristes (amendes) : restez dans les rues principales.", a: "Rues plates et pavées." },
+        { id: "pontocho", n: "Pontochō", jp: "先斗町", st: "先斗町", d: "Ruelle étroite parallèle à la rivière Kamo, éclairée de lanternes et bordée de restaurants. Parfait pour un dîner.", h: "Le soir.", a: "Ruelle plate mais très étroite. Restaurants souvent à l’étage." }
+      ],
+      eat: ["Yatsuhashi, pâtisseries à la cannelle", "Kaiseki ou obanzai (cuisine familiale de Kyoto) à Pontochō", "Thé et wagashi dans une maison de thé"],
+      tips: ["Descendre de Kiyomizu-dera vers Gion à pied, au coucher du soleil (vers 16 h 50), c’est l’un des plus beaux moments du voyage.", "La rue Ninenzaka est noire de monde l’après-midi : y passer tôt le matin si possible."],
+      acc: "Quartier très vallonné à l’est, plat à Gion. Utilisez les taxis pour monter à Kiyomizu-dera."
+    },
+    {
+      id: "fushimi", n: "Fushimi Inari", jp: "伏見稲荷",
+      intro: "Le sanctuaire des milliers de torii vermillon qui serpentent sur la montagne, et le quartier de saké de Fushimi tout proche.",
+      hist: "Fondé en 711, Fushimi Inari est le principal des 30 000 sanctuaires dédiés à Inari, divinité du riz, puis du commerce. Les quelque 10 000 torii sont des dons d’entreprises et de particuliers, le nom du donateur gravé au dos. Les renards (kitsune), messagers d’Inari, gardent le sanctuaire, souvent une clé de grenier dans la gueule.",
+      places: [
+        { id: "fushimi-inari", n: "Fushimi Inari Taisha", jp: "伏見稲荷大社", st: "稲荷", d: "Les Senbon Torii (« mille torii ») commencent juste derrière le sanctuaire principal. La boucle complète jusqu’au sommet du mont Inari prend 2 à 3 h. On peut faire demi-tour au carrefour Yotsutsuji, à mi-chemin, avec belle vue sur Kyoto. Très tôt le matin (7 h), c’est presque désert.", h: "Ouvert 24 h/24, gratuit. Gare JR Inari juste en face.", a: "La grande porte et le sanctuaire principal sont accessibles par pentes douces depuis la gare JR. Les Senbon Torii commencent par quelques marches, et la montée vers le sommet n’est faite que d’escaliers." },
+        { id: "fushimi-sake", n: "Quartier du saké de Fushimi (option)", jp: "伏見酒蔵", st: "酒蔵", d: "Entrepôts de bois noir le long d’un canal, avec dégustations au musée Gekkeikan Ōkura. L’eau souterraine de Fushimi est réputée pour un saké doux.", h: "Généralement de 9 h 30 à 16 h 30.", a: "Quartier plat." }
+      ],
+      eat: ["Inari-zushi (riz dans du tofu frit sucré, le plat préféré des renards)", "Kitsune udon (udon au tofu frit)", "Brochettes de moineau grillé, pour les curieux"],
+      tips: ["Partez de l’hôtel vers 6 h 30 pour être au sanctuaire vers 7 h : lumière dorée, peu de monde.", "Achetez une petite plaque en forme de renard (ema) pour y dessiner son visage et écrire un vœu."],
+      acc: "La gare JR Inari est de plain-pied face au sanctuaire. Le bas du sanctuaire est accessible, la montagne ne l’est pas."
+    },
+    {
+      id: "kyoto-station", n: "Gare de Kyoto", jp: "京都駅周辺",
+      intro: "Le quartier moderne autour de la gare futuriste, avec le nouveau grand musée teamLab et quelques temples majeurs à pied.",
+      hist: "La gare actuelle (1997), immense hall de verre et d’acier de Hiroshi Hara, fit scandale dans une ville si traditionnelle. Le sud de la gare, longtemps délaissé, se transforme avec le projet du quartier sud-est où a ouvert teamLab Biovortex en octobre 2025.",
+      places: [
+        { id: "biovortex", n: "teamLab Biovortex Kyoto", jp: "チームラボ バイオヴォルテックス 京都", st: "光渦", d: "Le plus grand musée teamLab du Japon : environ 10 000 m² et plus de 50 œuvres immersives où votre présence modifie les images. Il y a une « forêt athlétique » où l’on grimpe et saute. Prévoir environ 3 h.", h: "Généralement de 9 h à 21 h (dernière entrée 19 h 30). Billet horaire. À environ 7–10 min à pied de la sortie Hachijō (sud) de la gare de Kyoto.", a: "Le musée est annoncé comme accessible aux fauteuils roulants, mais certaines œuvres (sols mous, Forêt athlétique) le sont moins : demandez le parcours à l’accueil." },
+        { id: "toji", n: "Tō-ji", jp: "東寺", st: "東寺", d: "La plus haute pagode en bois du Japon (55 m), emblème de la ville. Grand marché aux puces le 21 de chaque mois (pas pendant votre séjour).", h: "De 8 h à 17 h environ.", a: "Enceinte plate en gravier." },
+        { id: "kyoto-tower", n: "Gare et tour de Kyoto", jp: "京都駅・京都タワー", st: "京駅", d: "Montez sur le toit de la gare par les escalators géants (Skyway et jardin en terrasse, gratuits) pour une vue sur la ville. Le sous-sol Porta et Isetan regorgent de nourriture.", h: "Gratuit.", a: "Ascenseurs jusqu’à la terrasse panoramique." }
+      ],
+      eat: ["Le « Ramen Kōji » au 10e étage de la gare : 8 enseignes de rāmen de tout le Japon", "Bentō de gare (ekiben) pour le train"],
+      tips: ["Le 13/11 : Fushimi Inari au lever du jour, temples du nord-est dans la journée, et teamLab en fin d’après-midi ou en soirée (dernière entrée 19 h 30)."],
+      acc: "La gare de Kyoto est entièrement accessible, mais immense : comptez du temps pour aller d’un bout à l’autre."
+    },
+    {
+      id: "kyoto-ne", n: "Nord-Est : Nanzen-ji et Chemin de la philosophie", jp: "南禅寺・哲学の道",
+      intro: "Le pied des montagnes de l’est, avec des temples zen, un canal bordé d’arbres et quelques-uns des plus beaux érables de Kyoto.",
+      hist: "Le Ginkaku-ji (pavillon d’argent) était la villa de retraite du shogun Ashikaga Yoshimasa, mécène de la cérémonie du thé, de l’art floral et du théâtre nō au XVe siècle. Le Chemin de la philosophie doit son nom au philosophe Nishida Kitarō, qui y méditait chaque jour.",
+      places: [
+        { id: "nanzenji", n: "Nanzen-ji", jp: "南禅寺", st: "南禅寺", d: "Immense temple zen avec une porte monumentale (Sanmon) et un aqueduc en briques de l’ère Meiji, inattendu au milieu de la forêt. Le jardin de pierre du Hōjō est célèbre.", h: "Enceinte gratuite. Bâtiments de 8 h 40 à 16 h 30 en hiver.", a: "Enceinte en gravier, accessible avec effort. La montée dans la porte Sanmon se fait par un escalier très raide." },
+        { id: "eikando", n: "Eikan-dō", jp: "永観堂", st: "永観堂", d: "Surnommé « le temple des érables », c’est l’un des plus célèbres spots de feuillage de Kyoto, avec une ouverture nocturne spectaculaire en saison. Son Bouddha regarde par-dessus son épaule, une représentation rare.", h: "Tarif majoré en saison d’automne. Ouverture nocturne vers la mi-novembre.", a: "Nombreux escaliers et galeries couvertes en bois avec marches." },
+        { id: "tetsugaku", n: "Chemin de la philosophie", jp: "哲学の道", st: "哲学", d: "Promenade de 2 km le long d’un canal, entre Nanzen-ji et Ginkaku-ji, bordée de cerisiers et d’érables, de petits cafés et de chats.", h: "Accès libre, environ 30 min à pied.", a: "Chemin de terre battue plat et étroit, praticable par temps sec." },
+        { id: "ginkakuji", n: "Ginkaku-ji", jp: "銀閣寺", st: "銀閣寺", d: "Le pavillon d’argent n’a jamais été recouvert d’argent, mais son jardin de mousse et son cône de sable blanc ratissé sont d’une grande poésie.", h: "Généralement de 9 h à 16 h 30 en hiver.", a: "Le circuit monte sur la colline par des escaliers. La partie basse (pavillon et jardin de sable) est en gravier." }
+      ],
+      eat: ["Yudōfu (tofu mijoté) autour du Nanzen-ji", "Cafés le long du Chemin de la philosophie"],
+      tips: ["Faites le chemin du sud vers le nord en partant du Nanzen-ji : le Ginkaku-ji, au bout, est la récompense.", "Pour le 13/11 : après Fushimi Inari, train Keihan jusqu’à Keage ou taxi jusqu’au Nanzen-ji."],
+      acc: "Quartier en pente douce au pied des collines. Le Chemin de la philosophie est plat. Les temples ont gravier et marches."
+    },
+    {
+      id: "kyoto-nw", n: "Nord-Ouest : Kinkaku-ji", jp: "金閣寺周辺",
+      intro: "Le pavillon d’or, le jardin de pierres le plus énigmatique du Japon et de grands temples zen, dans le nord-ouest de la ville.",
+      hist: "Le Kinkaku-ji fut construit en 1397 comme villa du shogun Ashikaga Yoshimitsu, puis transformé en temple. Le bâtiment actuel est une reconstruction de 1955 : l’original fut incendié en 1950 par un jeune moine, un drame qui a inspiré le roman de Mishima, Le Pavillon d’or.",
+      places: [
+        { id: "kinkakuji", n: "Kinkaku-ji", jp: "金閣寺", st: "金閣寺", d: "Deux étages couverts de feuille d’or se reflètent dans l’étang Kyōko-chi. Le parcours dure environ 40 minutes. Venir dès l’ouverture le samedi 14/11 pour éviter les groupes.", h: "De 9 h à 17 h, entrée payante.", a: "Le point de vue principal sur le pavillon est accessible. La suite du parcours comporte des pentes, du gravier et des marches, avec un itinéraire de contournement partiel." },
+        { id: "ryoanji", n: "Ryōan-ji", jp: "龍安寺", st: "龍安寺", d: "Le jardin sec le plus célèbre du monde : 15 pierres sur du gravier ratissé, disposées pour qu’on ne puisse jamais toutes les voir à la fois. À 20 minutes à pied du Kinkaku-ji.", h: "Généralement de 8 h 30 à 16 h 30 en hiver.", a: "On visite le jardin depuis la véranda en bois après avoir retiré ses chaussures. Des marches mènent au bâtiment." },
+        { id: "arashiyama", n: "Arashiyama (pour une journée libre)", jp: "嵐山", st: "嵐山", d: "La forêt de bambous, le jardin du Tenryū-ji, le pont Togetsukyō et les collines rouges en automne. À envisager pour une journée libre depuis Osaka (environ 1 h).", h: "Forêt de bambous en accès libre. Le Tenryū-ji ouvre vers 8 h 30.", a: "Le sentier de la forêt de bambous est goudronné et en légère pente. Le jardin du Tenryū-ji est assez praticable." }
+      ],
+      eat: ["Tofu et yuba (peau de lait de soja) près du Ryōan-ji"],
+      tips: ["Le 14/11 : laissez les bagages à l’hôtel ou en consigne à la gare de Kyoto, bus 205 ou taxi jusqu’au Kinkaku-ji, puis train pour Osaka en début d’après-midi.", "Les services « hands-free » de la gare de Kyoto envoient les valises directement à votre hôtel d’Osaka le jour même."],
+      acc: "Le Kinkaku-ji est mal desservi par le train : taxi conseillé depuis la gare (environ 25 min)."
+    }
+  ]
+});
+
+CITIES.push({
+  id: "osaka", n: "Osaka", jp: "大阪", color: "osaka",
+  dates: "14–19/11",
+  intro: "La deuxième métropole du Japon est son opposé joyeux de Tokyo : plus bruyante, plus drôle, plus directe. Ici, on dit « mōkarimakka ? » (« ça rapporte ? ») pour dire bonjour, et l’on vient surtout pour manger. Le mot d’ordre local, kuidaore, signifie « se ruiner à force de manger ».",
+  hist: "Osaka fut le grand port marchand du Japon. Toyotomi Hideyoshi y bâtit en 1583 le plus grand château du pays. À l’époque Edo, la ville devint la « cuisine du pays » où transitait tout le riz du Japon, et le centre du théâtre de marionnettes bunraku. Bourgeoise et commerçante plutôt que samouraï, elle a gardé un esprit populaire et irrévérencieux.",
+  season: "Les feuilles virent mi à fin novembre au parc du château et à Minoo, au nord. Les illuminations d’hiver (Midōsuji, Nakanoshima) commencent souvent vers la mi-novembre.",
+  transport: "Le métro (ligne Midōsuji, la rouge, du nord au sud) et la boucle JR Osaka Loop Line couvrent tout. Pour Kyoto, Nara, Kobe et Himeji, les trains partent de Namba, d’Umeda ou de la gare JR d’Osaka.",
+  hotel: { n: "Hôtel à Osaka (à compléter)", jp: "", addr: "", addrJp: "", note: "Ajoutez votre hôtel avec le bouton Modifier." },
+  quarters: [
+    {
+      id: "namba", n: "Namba et Dōtonbori", jp: "難波・道頓堀",
+      intro: "Le cœur festif d’Osaka : enseignes géantes, néons sur le canal et une street food partout.",
+      hist: "Le canal Dōtonbori fut creusé en 1615 par un marchand, Yasui Dōton. Les théâtres kabuki et bunraku s’installèrent sur ses rives, et les restaurants suivirent pour nourrir les spectateurs.",
+      places: [
+        { id: "dotonbori", n: "Dōtonbori", jp: "道頓堀", st: "道頓堀", d: "Le crabe mécanique géant, le coureur Glico les bras en l’air, les néons qui se reflètent dans le canal. C’est le Osaka de toutes les photos, surtout à la nuit tombée.", h: "Animé jusque tard le soir.", a: "Promenade le long du canal en partie plate, avec rampes. Les ruelles adjacentes sont très bondées le week-end." },
+        { id: "hozenji", n: "Hōzen-ji Yokochō", jp: "法善寺横丁", st: "法善寺", d: "Une ruelle pavée éclairée de lanternes, à deux pas de Dōtonbori, avec une statue de Fudō Myōō couverte de mousse. On l’asperge d’eau en faisant un vœu.", h: "Accès libre.", a: "Ruelle étroite et pavée." },
+        { id: "kuromon", n: "Marché Kuromon", jp: "黒門市場", st: "黒門", d: "Marché couvert de 600 m : brochettes de wagyū, oursins, huîtres, fraises géantes. Devenu très touristique et cher, mais amusant à parcourir.", h: "En général de 9 h à 17 h environ.", a: "Allée couverte plate." },
+        { id: "shinsaibashi", n: "Shinsaibashi-suji", jp: "心斎橋筋", st: "心斎橋", d: "Galerie marchande couverte de 600 m, idéale par temps de pluie, avec des grands magasins détaxés et un Don Quijote géant.", h: "De 11 h à 21 h environ.", a: "Couverte et plate." },
+        { id: "denden", n: "Den Den Town", jp: "でんでんタウン", st: "日本橋", d: "L’Akihabara d’Osaka : jeux rétro, figurines et électronique, moins bondé que son cousin de Tokyo.", h: "De 10 h à 20 h environ.", a: "Rues plates, boutiques souvent à l’étage." }
+      ],
+      eat: ["Takoyaki au bord du canal", "Okonomiyaki chez Mizuno ou Chibō", "Gyōza de Dōtonbori", "Cheesecake tremblotant chez Rikurō Ojisan"],
+      tips: ["Revenez à Dōtonbori une fois à la tombée de la nuit : c’est un autre monde.", "Les meilleurs takoyaki sont souvent dans les stands à file d’attente de locaux."],
+      acc: "Namba a de nombreux ascenseurs mais ses souterrains sont complexes. Repérez les sorties indiquées par un pictogramme fauteuil."
+    },
+    {
+      id: "shinsekai", n: "Shinsekai et Tennōji", jp: "新世界・天王寺",
+      intro: "Le « nouveau monde » rétro des années 1910 et sa tour Tsūtenkaku, face au plus haut gratte-ciel du Japon.",
+      hist: "Shinsekai fut construit en 1912 sur le modèle de New York (au sud) et de Paris (au nord) : la première tour Tsūtenkaku s’inspirait même de la tour Eiffel. Déclassé après-guerre, le quartier a gardé son ambiance populaire et kitsch.",
+      places: [
+        { id: "tsutenkaku", n: "Tour Tsūtenkaku", jp: "通天閣", st: "通天閣", d: "Tour de 103 m avec, au sommet, la statue de Billiken, dieu des choses telles qu’elles devraient être : on lui frotte la plante des pieds pour la chance. Un toboggan géant descend le long de la tour.", h: "De 10 h à 20 h environ.", a: "Ascenseurs jusqu’à l’observatoire." },
+        { id: "harukas", n: "Abeno Harukas 300", jp: "あべのハルカス", st: "ハルカス", d: "Le plus haut gratte-ciel du Japon (300 m), avec observatoire vitré à 360 degrés. Superbe au coucher du soleil.", h: "De 9 h à 22 h environ.", a: "Entièrement accessible." },
+        { id: "shitennoji", n: "Shitennō-ji", jp: "四天王寺", st: "四天王", d: "L’un des plus anciens temples bouddhistes du Japon, fondé en 593 par le prince Shōtoku. Reconstruit plusieurs fois à l’identique.", h: "Enceinte libre, bâtiments payants.", a: "Enceinte plate en gravier." }
+      ],
+      eat: ["Kushikatsu (brochettes frites) chez Daruma : ne jamais tremper deux fois dans la sauce !", "Fugu (poisson-globe) chez Zuboraya, si vous osez"],
+      tips: ["Shinsekai est plus authentique le soir, lumières allumées."],
+      acc: "Quartier plat, accès par les stations Dōbutsuen-mae et Ebisuchō."
+    },
+    {
+      id: "osakajo", n: "Château d’Osaka", jp: "大阪城",
+      intro: "Le donjon blanc et or dans son immense parc entouré de douves, symbole de la ville.",
+      hist: "Le château de Hideyoshi fut le plus grand du Japon, puis détruit en 1615 par les Tokugawa lors du siège d’Osaka. Le donjon actuel en béton (1931) abrite un musée sur Hideyoshi. Les murs de pierre, eux, sont d’origine, avec des blocs de plus de 100 tonnes.",
+      places: [
+        { id: "osaka-castle", n: "Donjon et parc du château", jp: "大阪城天守閣", st: "大阪城", d: "Musée sur l’histoire du château, panorama depuis le 8e étage. Le jardin Nishinomaru offre la meilleure vue sur le donjon et rougit en novembre.", h: "Donjon de 9 h à 17 h environ.", a: "Le donjon a un ascenseur jusqu’au 5e étage (le dernier niveau se fait à pied). Le parc a de longues pentes : l’entrée par la station Morinomiya ou Osaka Business Park est plus douce." }
+      ],
+      eat: ["Stands près du château, et le complexe Jo-Terrace à côté de la gare d’Osakajōkōen"],
+      tips: ["Prévoyez le matin pour profiter du parc dans la lumière douce, avant la foule."],
+      acc: "Parc vaste avec pentes et graviers par endroits. Des voiturettes touristiques (road train) relient parfois l’entrée au donjon."
+    },
+    {
+      id: "umeda", n: "Umeda", jp: "梅田",
+      intro: "Le quartier d’affaires et de shopping du nord, autour des gares d’Osaka et d’Umeda.",
+      hist: "Umeda était une zone de rizières marécageuses jusqu’à l’arrivée du chemin de fer en 1874. C’est aujourd’hui le principal pôle de transport et de commerce de l’ouest du Japon.",
+      places: [
+        { id: "sky-building", n: "Umeda Sky Building", jp: "梅田スカイビル", st: "空中庭園", d: "Deux tours reliées au sommet par un « jardin flottant » circulaire, avec un tapis de lumière au sol la nuit. Coucher de soleil spectaculaire.", h: "De 9 h 30 à 22 h 30 environ.", a: "Ascenseurs jusqu’au 35e étage, puis escalator vitré ou ascenseur jusqu’au sommet." },
+        { id: "hep-five", n: "Grande roue HEP Five", jp: "HEP FIVE観覧車", st: "観覧車", d: "Une grande roue rouge sur le toit d’un centre commercial.", h: "De 11 h à 23 h environ.", a: "Selon le personnel, accès aux nacelles possible avec aide." },
+        { id: "tenjinbashi", n: "Tenjinbashi-suji", jp: "天神橋筋商店街", st: "天神橋", d: "La plus longue galerie marchande couverte du Japon (2,6 km), bien plus locale que Shinsaibashi.", h: "Boutiques de 10 h à 20 h.", a: "Couverte et plate." }
+      ],
+      eat: ["Depachika des grands magasins Hankyū et Hanshin", "Izakaya sous les voies dans le passage Shin-Umeda Shokudōgai"],
+      tips: ["Le souterrain d’Umeda est un labyrinthe : fiez-vous aux couleurs des lignes."],
+      acc: "Gares et grands magasins très bien équipés, mais les distances souterraines sont longues."
+    },
+    {
+      id: "bay", n: "Baie d’Osaka et USJ", jp: "ベイエリア",
+      intro: "Le parc Universal Studios, l’un des plus grands aquariums du monde et la grande roue du port.",
+      hist: "Universal Studios Japan a ouvert en 2001. Son Super Nintendo World (2021) fut le premier au monde, avec Mario Kart en réalité augmentée et le château de Bowser.",
+      places: [
+        { id: "usj", n: "Universal Studios Japan", jp: "ユニバーサル・スタジオ・ジャパン", st: "USJ", d: "Super Nintendo World (Mario Kart, Yoshi, Donkey Kong Country), Wizarding World of Harry Potter, Minions, Jurassic Park… Le mardi 17/11 en semaine est un bon choix.", h: "Téléchargez l’appli officielle USJ : elle donne les temps d’attente et permet de récupérer l’accès horaire au Super Nintendo World s’il n’est pas inclus dans votre billet. Arrivez 30 à 45 min avant l’ouverture.", a: "Le parc propose un dispositif pour les visiteurs handicapés qui évite d’attendre dans la file : se présenter au Guest Services à l’entrée avec un justificatif. Location de fauteuils sur place. Certaines attractions demandent de pouvoir se transférer seul ou avec aide." },
+        { id: "kaiyukan", n: "Aquarium Kaiyukan", jp: "海遊館", st: "海遊館", d: "On descend en spirale autour d’un immense bassin central où nage un requin-baleine. Excellente activité pour un jour de pluie.", h: "De 10 h à 20 h environ.", a: "Entièrement accessible, en pente douce continue." },
+        { id: "tempozan", n: "Grande roue de Tempozan", jp: "天保山大観覧車", st: "天保山", d: "Une des plus grandes roues du monde, avec certaines nacelles au fond transparent. Vue sur le port et, le soir, sur les ponts illuminés.", h: "De 10 h à 22 h environ.", a: "Nacelle accessible aux fauteuils disponible, demander au personnel." }
+      ],
+      eat: ["Snacks Mario et Harry Potter dans le parc", "Musée-food court du rāmen et des takoyaki à Tempozan Marketplace"],
+      tips: ["Pour USJ, mangez à des heures décalées (11 h ou 14 h 30) pour éviter les queues.", "Le parc se rejoint via la gare JR Universal City (ligne JR Yumesaki)."],
+      acc: "Le parc est récent et globalement très accessible, de même que la gare d’Universal City."
+    },
+    {
+      id: "daytrips-osaka", n: "Idées pour les jours libres", jp: "日帰り",
+      intro: "Vous avez deux jours libres, le 15 et le 18/11. Voici des pistes à partir d’Osaka, selon vos envies et votre énergie.",
+      hist: "Osaka est au centre du Kansai : Kyoto, Nara, Kobe et Himeji sont toutes à moins d’une heure en train.",
+      places: [
+        { id: "minoo", n: "Parc de Minoo", jp: "箕面公園", st: "箕面", d: "Une gorge forestière au nord d’Osaka, avec une cascade de 33 m au bout d’un chemin de 3 km le long de la rivière. Un des meilleurs spots de feuillage du Kansai, avec ses fameuses feuilles d’érable frites en tempura (momiji tempura) vendues en chemin.", h: "Accès libre. Environ 30 min de train depuis Umeda (Hankyū).", a: "Le chemin est goudronné mais monte en continu sur 3 km, avec des passages raides." },
+        { id: "kobe", n: "Kobe", jp: "神戸", st: "神戸", d: "Ville portuaire cosmopolite à 25 min d’Osaka : bœuf de Kobe, quartier chinois, anciennes maisons de marchands étrangers à Kitano, et le front de mer de Harborland illuminé le soir.", h: "Trains JR, Hankyū ou Hanshin.", a: "Le front de mer est plat. Le quartier de Kitano est très pentu." },
+        { id: "himeji", n: "Château de Himeji", jp: "姫路城", st: "姫路城", d: "Le plus beau château original du Japon, surnommé « le héron blanc », classé à l’Unesco. Son jardin voisin Kōko-en rougit en novembre. Environ 1 h depuis Osaka (train JR rapide ou shinkansen).", h: "De 9 h à 17 h environ.", a: "Le parc et le jardin sont praticables. L’intérieur du donjon n’est fait que d’escaliers en bois très raides : non accessible en fauteuil." },
+        { id: "tofukuji", n: "Tōfuku-ji (Kyoto)", jp: "東福寺", st: "東福寺", d: "Le pont couvert Tsūten-kyō qui enjambe une vallée d’érables : l’un des spots de feuillage les plus spectaculaires de Kyoto. Pic généralement de mi à fin novembre, ce qui tombe bien pour le 18/11.", h: "Payant en saison, ouverture vers 8 h 30.", a: "Le pont et ses galeries ont des marches et la foule est dense en saison." },
+        { id: "kyoto-again", n: "Retour à Kyoto pour les illuminations", jp: "京都夜間特別拝観", st: "夜拝", d: "Le 18/11, les ouvertures nocturnes d’automne seront lancées : Kiyomizu-dera, Kōdai-ji ou Eikan-dō illuminés, à 30 min d’Osaka.", h: "Généralement de 17 h 30 à 21 h.", a: "Variable selon les temples." }
+      ],
+      eat: ["Bœuf de Kobe (réservez, et méfiez-vous des pièges à touristes)", "Momiji tempura à Minoo"],
+      tips: ["Proposition : le 15/11 (dimanche) château d’Osaka le matin, puis Shinsekai et Harukas pour le coucher du soleil. Le 18/11 : Himeji ou Kobe en journée.", "Gardez une journée calme : le rythme du voyage est soutenu."],
+      acc: "Consultez les notes de chaque lieu : Kobe (front de mer) et Kaiyukan sont les options les plus accessibles."
+    }
+  ]
+});
+
+CITIES.push({
+  id: "nara", n: "Nara", jp: "奈良", color: "nara",
+  dates: "16/11 (excursion)",
+  intro: "La première capitale permanente du Japon, aujourd’hui petite ville paisible où plus de 1 000 cerfs en liberté se promènent entre des temples gigantesques. Les cerfs, considérés comme messagers des dieux, saluent en inclinant la tête pour obtenir des biscuits.",
+  hist: "De 710 à 784, Nara (alors Heijō-kyō) fut la capitale impériale. L’empereur Shōmu y fit fondre en 752 un Bouddha de bronze de 15 m, au prix de la quasi-totalité du bronze du pays, pour protéger le Japon des épidémies. Selon la légende, la divinité du sanctuaire Kasuga arriva à Nara sur un cerf blanc, d’où le statut sacré de ces animaux.",
+  season: "Le parc de Nara et le jardin Isui-en sont superbes de mi à fin novembre, avec érables et ginkgos.",
+  transport: "Depuis Osaka-Namba, la ligne Kintetsu arrive en environ 40 min à la gare Kintetsu-Nara, à 5 min du parc (plus pratique que la gare JR). Tout se fait ensuite à pied ou en bus local.",
+  hotel: null,
+  quarters: [
+    {
+      id: "nara-park", n: "Parc de Nara", jp: "奈良公園",
+      intro: "Le grand parc où vivent les cerfs, avec le Tōdai-ji, le Kōfuku-ji et le sanctuaire Kasuga.",
+      hist: "Le parc regroupe les grands sanctuaires de la capitale du VIIIe siècle. Huit sites de Nara sont classés au patrimoine mondial de l’Unesco.",
+      places: [
+        { id: "todaiji", n: "Tōdai-ji", jp: "東大寺", st: "東大寺", d: "Le Daibutsu-den était, jusqu’en 2004, la plus grande construction en bois du monde : il abrite le Grand Bouddha de 15 m. Derrière une colonne, un trou de la taille de la narine du Bouddha : y passer garantit l’illumination (et attire les enfants).", h: "De novembre à mars, généralement de 8 h à 17 h. Entrée payante.", a: "Allée de gravier depuis la grande porte Nandaimon. Une entrée latérale accessible permet d’éviter le seuil du Daibutsu-den. Prêt de fauteuils roulants possible." },
+        { id: "kofukuji", n: "Kōfuku-ji", jp: "興福寺", st: "興福寺", d: "Temple familial des puissants Fujiwara, avec sa pagode à cinq étages (actuellement en restauration) et un musée national aux statues bouddhiques extraordinaires, dont l’Ashura aux trois visages.", h: "De 9 h à 17 h environ.", a: "Enceinte plate en gravier, musée accessible." },
+        { id: "kasuga", n: "Kasuga Taisha", jp: "春日大社", st: "春日", d: "Sanctuaire vermillon dans la forêt, avec 3 000 lanternes de pierre et de bronze. Dans la salle Fujinami-ya, la pénombre est éclairée de lanternes, comme lors des fêtes de février et août.", h: "Enceinte de 6 h 30 à 17 h environ.", a: "Longue allée en pente en gravier depuis le parc (environ 20 min). Le sanctuaire a des marches." },
+        { id: "deer", n: "Les cerfs", jp: "鹿", st: "鹿", d: "On achète des shika senbei (biscuits pour cerfs, environ 200 ¥) dans les stands. Saluez le cerf : il s’incline souvent en retour ! Attention, ils peuvent mordiller vêtements et papiers, et deviennent insistants quand ils voient les biscuits.", h: "Partout dans le parc.", a: "Les cerfs peuvent bousculer : tenez les biscuits hors de vue et distribuez-les vite." },
+        { id: "isuien", n: "Jardin Isui-en", jp: "依水園", st: "依水園", d: "Jardin de promenade qui emprunte la vue de la porte du Tōdai-ji et des collines. L’un des plus beaux jardins du Japon et souvent paisible. Thé matcha sur place.", h: "Fermé le mardi. De 9 h 30 à 16 h 30.", a: "Chemins de terre, petites pentes et pas japonais." }
+      ],
+      eat: ["Kakinoha-zushi (sushi enveloppé dans une feuille de kaki)", "Mochi pilés à toute vitesse chez Nakatanidō (une démonstration spectaculaire)", "Kudzu (gelée de racine) en dessert"],
+      tips: ["Arrivez vers 9 h et faites le Tōdai-ji en premier, avant les groupes scolaires.", "Le parcours classique : gare Kintetsu-Nara, Kōfuku-ji, Tōdai-ji, Kasuga Taisha, puis retour par Naramachi."],
+      acc: "Le parc est vaste, avec des distances importantes et du gravier. Les bus locaux (boucle du parc) sont accessibles et évitent de longues marches."
+    },
+    {
+      id: "naramachi", n: "Naramachi", jp: "ならまち",
+      intro: "L’ancien quartier marchand, avec ses maisons en bois étroites et profondes, ses cafés et ses artisans.",
+      hist: "Ce quartier s’est développé autour de l’ancien temple Gangō-ji, l’un des plus anciens du Japon, dont les tuiles d’origine datent du VIe siècle.",
+      places: [
+        { id: "gangoji", n: "Gangō-ji", jp: "元興寺", st: "元興寺", d: "Petit temple classé à l’Unesco avec des tuiles qui comptent parmi les plus anciennes du Japon, et des centaines de petites statues de pierre.", h: "De 9 h à 17 h.", a: "Gravier et seuil." },
+        { id: "naramachi-streets", n: "Ruelles de Naramachi", jp: "ならまち格子の家", st: "格子", d: "Maisons à treillis de bois, dont une se visite gratuitement (Koshi-no-ie). Des singes de chiffon rouges (migawari-zaru) pendent aux portes pour éloigner le malheur.", h: "Accès libre.", a: "Ruelles plates mais étroites." }
+      ],
+      eat: ["Cafés installés dans des maisons machiya", "Saké de Nara (Harushika propose des dégustations)"],
+      tips: ["Terminez la journée à Naramachi pour un goûter tranquille avant le train."],
+      acc: "Quartier plat, à 10 min à pied de la gare Kintetsu-Nara."
+    }
+  ]
+});
+
+CITIES.push({
+  id: "kawaguchiko", n: "Kawaguchiko", jp: "河口湖", color: "fuji",
+  dates: "23–24/11",
+  intro: "Le lac le plus fréquenté des Cinq Lacs du Fuji, avec le volcan qui se reflète dans l’eau par temps calme. Vous y êtes en plein festival des feuilles d’automne, avec un hôtel onsen au bord du lac : un des grands moments du voyage.",
+  hist: "Le Fuji (3 776 m) est une montagne sacrée vénérée depuis des siècles, et un pèlerinage dont l’ascension se faisait en habit blanc. Sa dernière éruption remonte à 1707. Les Cinq Lacs sont nés de coulées de lave qui ont barré des rivières. Le Fuji est inscrit au patrimoine mondial depuis 2013 comme « lieu sacré et source d’inspiration artistique » : c’est lui qu’Hokusai a peint dans ses Trente-six vues.",
+  season: "Le Festival des feuilles d’automne de Fujikawaguchiko a lieu du 7 au 29 novembre 2026, avec un couloir d’érables illuminé du coucher du soleil jusqu’à 21 h. Le pic des couleurs autour du lac tombe généralement fin novembre : en 2025, il s’est étendu du 18 au 26 novembre. Le Fuji est souvent mieux visible tôt le matin, avant que les nuages ne montent. Il fait froid : proche de 0 °C la nuit.",
+  transport: "Depuis Tokyo, le train Fuji Excursion part de Shinjuku, et des bus express partent de Shinjuku ou Tokyo. Le 23/11 étant férié, réservez ! Sur place, les bus touristiques Red Line et Green Line font le tour du lac. Votre hôtel est près de la gare de Kawaguchiko.",
+  hotel: { n: "Fujikawaguchiko Onsen Konansō", jp: "富士河口湖温泉 湖南荘", addr: "4020 Funatsu, Fujikawaguchiko-machi, Yamanashi 401-0301", addrJp: "〒401-0301 山梨県南都留郡富士河口湖町船津4020", tel: "0555-72-2166", note: "Ryokan au bord du lac, à environ 8–10 min à pied de la gare. Navette depuis la gare de Kawaguchiko entre 14 h 30 et 19 h 30 environ, sur appel : téléphonez à l’arrivée. Check-in 15 h, check-out 10 h. Grands bains avec vue sur le Fuji, bain de pieds sur le toit et bains privatifs (kashikiri) à réserver sur place. Le ryokan propose aussi des chambres « flat room » sans marche." },
+  quarters: [
+    {
+      id: "kawaguchiko-east", n: "Rive est et Funatsu", jp: "船津",
+      intro: "Le quartier de votre ryokan, autour de la gare : promenade du lac, téléphérique et bateaux.",
+      hist: "Funatsu signifie « port des bateaux » : c’était l’embarcadère principal du lac, et le point de départ des pèlerins du Fuji arrivant de Tokyo.",
+      places: [
+        { id: "ropeway", n: "Téléphérique Kachi Kachi", jp: "河口湖天上山公園カチカチ山ロープウェイ", st: "天上山", d: "En 3 minutes, on monte au mont Tenjō pour une vue grandiose sur le Fuji et le lac. Le nom vient d’un conte populaire mettant en scène un lapin et un tanuki. Au sommet, on goûte le dango au lapin.", h: "De 9 h 30 à 16 h 30 environ en hiver. Files d’attente longues le jour férié.", a: "La gare de départ a des marches selon les accès. Le sommet a des chemins en terre. Renseignez-vous au guichet." },
+        { id: "lakeside", n: "Promenade du lac", jp: "河口湖畔", st: "湖畔", d: "Le bord du lac devant votre hôtel, avec le Fuji en face. C’est là qu’il faut être au lever du soleil, vers 6 h 30, pour le Fuji rosé et peut-être son reflet dans l’eau.", h: "Accès libre.", a: "Promenade plate et goudronnée sur une bonne partie de la rive." },
+        { id: "bike", n: "Tour du lac à vélo", jp: "サイクリング", st: "自転車", d: "Le tour complet fait environ 20 km et prend 2 à 3 h en prenant son temps. Les loueurs près de la gare proposent des vélos électriques, bien utiles pour les quelques côtes. On longe le couloir des érables et le parc Ōishi.", h: "Location à la journée, rendre avant 17 h environ.", a: "Non adapté à un handicap moteur. Alternative : les bus touristiques Red Line et Green Line, qui font le tour du lac." }
+      ],
+      eat: ["Hōtō (nouilles mijotées au miso et potiron) chez Hōtō Fudō, dans un étonnant bâtiment en forme de nuage", "Kaiseki au ryokan", "Shingen-mochi (gâteau de riz au sucre roux et soja grillé)"],
+      tips: ["Profitez des bains du ryokan au lever du soleil : la vue sur le Fuji depuis l’eau chaude est inoubliable.", "Le soir du 23/11, prenez le bus jusqu’au couloir des érables illuminé (jusqu’à 21 h). Attention, le dernier bus repart tôt : vérifiez l’horaire, sinon prévoyez un taxi."],
+      acc: "Le ryokan dispose de toilettes accessibles et d’une chambre sans marche. La promenade du lac est plate."
+    },
+    {
+      id: "kawaguchiko-north", n: "Rive nord", jp: "北岸",
+      intro: "Le côté le plus beau pour voir le Fuji au-dessus du lac, avec le couloir des érables et le parc Ōishi.",
+      hist: "La rive nord fait face au Fuji, d’où des points de vue parfaits utilisés par les peintres et les photographes depuis l’ère Meiji.",
+      places: [
+        { id: "momiji-kairo", n: "Couloir des érables (Momiji Kairo)", jp: "紅葉回廊", st: "紅葉", d: "Un tunnel d’environ 60 érables géants le long d’un ruisseau, cœur du festival des feuilles d’automne : stands de nourriture, artisans, et illumination magique le soir jusqu’à 21 h. Le 23/11, vous êtes dans la bonne fenêtre pour le pic des couleurs.", h: "Festival du 7 au 29/11/2026. Arrêt de bus Kubota Itchiku Bijutsukan (Red Line).", a: "Allée plate en terre et graviers, très fréquentée le jour férié." },
+        { id: "oishi", n: "Parc Ōishi", jp: "大石公園", st: "大石", d: "Jardin en bord de lac avec la vue la plus classique sur le Fuji au-dessus de l’eau. En automne, les buissons de kochia (kokia) virent au rouge vif.", h: "Accès libre. Arrêt Kawaguchiko Shizen Seikatsukan (Red Line).", a: "Allées plates et goudronnées, toilettes accessibles au centre d’accueil. Un des lieux les plus accessibles de la région." },
+        { id: "itchiku", n: "Musée Itchiku Kubota", jp: "久保田一竹美術館", st: "一竹", d: "Musée dédié à l’artiste qui consacra sa vie à des kimonos teints formant ensemble un paysage du Fuji. Bâtiments et jardin très originaux.", h: "Fermé le mardi en hiver. De 10 h à 16 h 30 environ.", a: "Jardin en pente avec marches. Le bâtiment principal est en partie accessible." }
+      ],
+      eat: ["Stands du festival : brochettes, patates douces rôties, amazake chaud"],
+      tips: ["Combinez le parc Ōishi en fin d’après-midi et le couloir des érables à la tombée de la nuit, quand les lumières s’allument."],
+      acc: "Le parc Ōishi est le plus accessible. Les bus Red Line sont des bus de ligne classiques : demandez au chauffeur pour la rampe."
+    },
+    {
+      id: "chureito", n: "Pagode Chūreitō", jp: "新倉山浅間公園",
+      intro: "La pagode rouge à cinq étages surplombant la ville de Fujiyoshida avec le Fuji derrière : l’image la plus célèbre du Japon.",
+      hist: "La pagode est un mémorial aux morts de Fujiyoshida, construit en 1963. Sa célébrité mondiale est récente, liée aux réseaux sociaux.",
+      places: [
+        { id: "chureito-pagoda", n: "Chūreitō", jp: "忠霊塔", st: "忠霊塔", d: "On monte environ 400 marches jusqu’à la plateforme d’observation. Le matin est préférable pour la lumière et la visibilité du Fuji. À 2 stations de Kawaguchiko par le train Fujikyū (gare de Shimoyoshida).", h: "Accès libre.", a: "Un chemin en pente existe à côté de l’escalier, mais il reste long et raide. Ce point de vue est difficile en fauteuil." }
+      ],
+      eat: ["Yoshida udon, nouilles très fermes de Fujiyoshida"],
+      tips: ["Le 24/11 au matin, avant de rentrer à Tokyo : Chūreitō à 8 h, puis train depuis Shimoyoshida."],
+      acc: "Peu accessible. Alternative : la vue sur le Fuji depuis le parc Ōishi ou votre ryokan."
+    }
+  ]
+});
+
+CITIES.push({
+  id: "escapades", n: "Escapades", jp: "日帰り旅行", color: "escape",
+  dates: "25–27/11 (options)",
+  intro: "Les excursions possibles depuis Tokyo pour vos derniers jours : la côte des samouraïs de Kamakura, l’île d’Enoshima, et les montagnes thermales de Hakone.",
+  hist: "Kamakura fut la capitale du premier shogunat (1185–1333). Hakone était une étape sur la route du Tōkaidō entre Edo et Kyoto, avec un poste de contrôle où l’on vérifiait les voyageurs.",
+  season: "Fin novembre, les érables de Kamakura sont au début de leur pic, et le Fuji est souvent visible depuis la côte d’Enoshima par temps sec. À Hakone, le pic des couleurs en altitude est plutôt début à mi-novembre : fin novembre, ce sera plus avancé, mais encore beau en bas des vallées.",
+  transport: "Kamakura : environ 1 h depuis Tokyo par la ligne JR Yokosuka ou Shōnan-Shinjuku. Enoshima est relié à Kamakura par le petit train Enoden. Hakone : train Romancecar depuis Shinjuku (environ 1 h 30) ; le Hakone Free Pass couvre la boucle complète.",
+  hotel: null,
+  quarters: [
+    {
+      id: "kamakura", n: "Kamakura", jp: "鎌倉",
+      intro: "Ancienne capitale des samouraïs en bord de mer, avec son Grand Bouddha en plein air et des temples nichés dans les collines.",
+      hist: "Minamoto no Yoritomo choisit Kamakura en 1192 pour sa position défensive, entre mer et collines. La ville compta jusqu’à 200 000 habitants. Le zen, prisé des guerriers, y a laissé de grands temples.",
+      places: [
+        { id: "daibutsu", n: "Grand Bouddha (Kōtoku-in)", jp: "鎌倉大仏", st: "大仏", d: "Bouddha Amida en bronze de 11 m, en plein air depuis qu’un tsunami a emporté son temple en 1498. On peut entrer à l’intérieur de la statue pour quelques yens.", h: "De 8 h à 17 h environ.", a: "Enceinte plate, la statue est visible sans marche. L’intérieur de la statue n’est accessible que par un escalier étroit." },
+        { id: "hasedera", n: "Hase-dera", jp: "長谷寺", st: "長谷寺", d: "Temple à flanc de colline avec une Kannon en bois de 9 m et une vue sur la baie. Les centaines de petites statues jizō sont touchantes.", h: "De 8 h à 16 h 30 en hiver.", a: "Le niveau inférieur et ses jardins sont accessibles, le reste du temple se fait par escaliers. Le temple indique un ascenseur ou une pente pour atteindre la terrasse principale : à vérifier sur place." },
+        { id: "tsurugaoka", n: "Tsurugaoka Hachiman-gū", jp: "鶴岡八幡宮", st: "八幡宮", d: "Le grand sanctuaire des Minamoto, au bout d’une longue avenue. On y croise souvent des mariages traditionnels.", h: "Accès libre.", a: "Avenue d’accès plate. Le sanctuaire principal est en haut d’un grand escalier, mais une pente de service permet parfois l’accès : demander au personnel." },
+        { id: "komachi", n: "Komachi-dōri", jp: "小町通り", st: "小町", d: "Rue commerçante animée entre la gare et le sanctuaire : glaces, croquettes, artisans.", h: "De 10 h à 18 h environ.", a: "Rue plate, bondée le week-end." }
+      ],
+      eat: ["Shirasu-don (bol de minuscules poissons blancs), spécialité locale", "Hato sablé, biscuit en forme de pigeon"],
+      tips: ["Prenez l’Enoden de Kamakura à Hase pour le Grand Bouddha, puis continuez vers Enoshima."],
+      acc: "Kamakura est en partie plat (avenue et Komachi). Le Grand Bouddha est le site le plus accessible."
+    },
+    {
+      id: "enoshima", n: "Enoshima", jp: "江の島",
+      intro: "Une petite île reliée par un pont, avec des sanctuaires, des grottes, un phare et, par temps clair, le Fuji au-dessus de la mer.",
+      hist: "L’île est consacrée depuis le VIe siècle à Benzaiten, déesse de la musique et de la beauté. Elle fut un lieu de pèlerinage très populaire à l’époque Edo.",
+      places: [
+        { id: "enoshima-island", n: "Île d’Enoshima", jp: "江の島", st: "江島", d: "On traverse le pont, on remonte la rue des boutiques jusqu’aux sanctuaires, puis on grimpe à la tour phare Sea Candle pour la vue sur la baie et le Fuji. Les grottes Iwaya, de l’autre côté, sont éclairées à la bougie.", h: "Accès libre, Sea Candle payante.", a: "Île très escarpée. Des escalators payants (Enoshima Escar) aident à monter jusqu’en haut, mais la descente et les grottes sont faites d’escaliers." },
+        { id: "enoden", n: "Train Enoden", jp: "江ノ電", st: "江ノ電", d: "Un petit train de 1902 qui longe la mer et passe au ras des maisons. Le passage à niveau de Kamakura-Kōkōmae, face à la mer, est célèbre grâce au manga Slam Dunk.", h: "Train toutes les 12 minutes environ.", a: "Certaines petites gares ont des marches. Les principales (Kamakura, Fujisawa) sont accessibles." }
+      ],
+      eat: ["Tako senbei, galette géante de poulpe écrasé"],
+      tips: ["Le coucher du soleil derrière le Fuji depuis le pont d’Enoshima est magnifique par temps clair."],
+      acc: "Le pont d’accès est plat. L’île elle-même est difficile pour un fauteuil."
+    },
+    {
+      id: "hakone", n: "Hakone", jp: "箱根",
+      intro: "Région montagneuse de sources chaudes, avec un volcan fumant, un lac et une boucle de transports pittoresques.",
+      hist: "Hakone était le poste de contrôle le plus redouté du Tōkaidō : on y fouillait les voyageurs pour empêcher armes et fugitifs de circuler. Ses onsen attirent les habitants de Tokyo depuis des siècles.",
+      places: [
+        { id: "owakudani", n: "Ōwakudani", jp: "大涌谷", st: "大涌谷", d: "La « grande vallée bouillonnante » aux fumerolles soufrées, au cœur d’un volcan actif. On y mange les œufs noirs cuits dans les sources : chacun ajouterait sept ans de vie !", h: "Accessible via le téléphérique de Hakone, fermé en cas d’activité volcanique.", a: "Le téléphérique et la terrasse principale sont accessibles." },
+        { id: "ashi", n: "Lac Ashi et sanctuaire de Hakone", jp: "芦ノ湖・箱根神社", st: "芦ノ湖", d: "Croisière en « bateau pirate » sur le lac, avec le Fuji en toile de fond par temps clair, et le torii rouge du sanctuaire de Hakone, les pieds dans l’eau.", h: "Bateaux toutes les 30 min à 1 h environ.", a: "Les bateaux sont accessibles. Le torii au bord de l’eau se trouve en bas d’un escalier." },
+        { id: "open-air", n: "Musée en plein air de Hakone", jp: "彫刻の森美術館", st: "彫刻", d: "Sculptures monumentales dans un parc de montagne, avec un pavillon entier dédié à Picasso et un bain de pieds chaud.", h: "De 9 h à 17 h.", a: "Le parc a des pentes, mais un circuit accessible et un prêt de fauteuils roulants." }
+      ],
+      eat: ["Œufs noirs d’Ōwakudani", "Soba de montagne"],
+      tips: ["Avec Kawaguchiko quelques jours plus tôt, vous aurez déjà vu le Fuji. Hakone vaut surtout pour les onsen et la boucle en transports. Si vous préférez rester à Tokyo, Kamakura est une excursion plus légère."],
+      acc: "La boucle Romancecar, téléphérique et bateau est assez accessible, mais le petit train à crémaillère Hakone Tozan a des gares avec marches. Le bus est une alternative."
+    }
+  ]
+});
+
+const DAYS = [
+  { d: "2026-11-06", city: "travel", title: "Départ de Paris", items: [
+      { t: "12:00", x: "Arrivée à Roissy-CDG, enregistrement Air France" },
+      { t: "15:00", x: "Vol AF 162, Paris CDG → Tokyo Haneda" }
+    ],
+    tips: ["Remplissez Visit Japan Web si ce n’est pas fait, et enregistrez les QR codes en capture d’écran.", "Dans l’avion, réglez votre montre sur l’heure du Japon et essayez de dormir pendant la « nuit » japonaise."] },
+  { d: "2026-11-07", city: "tokyo", title: "Arrivée à Tokyo, Ueno", items: [
+      { t: "12:00", x: "Atterrissage à Haneda (4 h du matin en France)" },
+      { t: "13:00", x: "Immigration et douane avec les QR codes Visit Japan Web. Retrait de yens au distributeur et Suica." },
+      { t: "13:30", x: "Train jusqu’à Ueno : Keikyū jusqu’à Shinagawa, puis JR Yamanote ou Keihin-Tōhoku jusqu’à Ueno ou Okachimachi (environ 50 min)." },
+      { t: "15:00", x: "Check-in à l’hôtel Crown Hills Ueno Premier" },
+      { t: "16:00", x: "Balade au parc d’Ueno et à l’étang Shinobazu au coucher du soleil", p: "ueno-park" },
+      { t: "18:00", x: "Premier dîner sans façon à Ameyoko", p: "ameyoko" }
+    ],
+    tips: ["Tenez jusqu’à 21 h pour caler votre horloge interne.", "Avec beaucoup de bagages ou des difficultés à marcher, un taxi depuis Haneda prend environ 30 à 45 min (compter environ 10 000 ¥)."] },
+  { d: "2026-11-08", city: "tokyo", title: "Asakusa et Skytree", items: [
+      { t: "08:00", x: "Sensō-ji avant la foule du dimanche, et Nakamise-dōri", p: "sensoji" },
+      { t: "10:30", x: "Petite pause gourmande sur Nakamise (on mange sur place)", p: "nakamise" },
+      { t: "12:00", x: "Déjeuner tempura ou soba dans Asakusa" },
+      { t: "14:00", x: "Promenade dans le parc Sumida, passerelle Sumida River Walk", p: "sumida-park" },
+      { t: "15:00", x: "Optionnel : Mukōjima Hyakka-en, selon l’énergie (feuillage pas encore au pic)", p: "mukojima" },
+      { t: "16:00", x: "Tokyo Skytree pour le coucher du soleil (vers 16 h 40)", p: "skytree" },
+      { t: "19:00", x: "Retour au Sensō-ji illuminé, presque désert", p: "sensoji" }
+    ],
+    tips: ["Ligne Ginza depuis Ueno jusqu’à Asakusa : 5 stations, 6 min.", "Le 8/11 est un dimanche, attendez-vous à du monde partout dès 10 h."] },
+  { d: "2026-11-09", city: "tokyo", title: "Akihabara et Kanda", items: [
+      { t: "09:30", x: "Sanctuaire Kanda Myōjin, avant l’ouverture des boutiques", p: "kanda-myojin" },
+      { t: "10:15", x: "Yushima Seidō, le temple confucéen voisin", p: "yushima-seido" },
+      { t: "11:00", x: "Akihabara Electric Town : jeux rétro, figurines, gashapon, arcades", p: "electric-town" },
+      { t: "13:00", x: "Déjeuner rāmen ou curry" },
+      { t: "15:00", x: "Marché Chabara et arcade d’artisans 2k540", p: "chabara" },
+      { t: "18:00", x: "Soirée libre, retour à pied ou en une station vers Ueno" }
+    ],
+    tips: ["Lundi : le Musée national de Tokyo est fermé. Gardez-le pour un autre jour si vous voulez y aller.", "Pensez à préparer les valises ce soir : départ pour Kanazawa demain."] },
+  { d: "2026-11-10", city: "kanazawa", title: "Shinkansen pour Kanazawa", items: [
+      { t: "09:30", x: "Check-out et marche jusqu’à la gare d’Ueno (prévoir une marge : la gare est grande)" },
+      { t: "10:00", x: "Hokuriku Shinkansen Ueno → Kanazawa. Le Kagayaki (le plus rapide, environ 2 h 30) n’a que des places réservées ; le Hakutaka est 25 à 30 min plus long." },
+      { t: "12:45", x: "Arrivée à Kanazawa. Photo de la porte Tsuzumi-mon. Dépôt des bagages à l’hôtel LINNAS." },
+      { t: "13:30", x: "Déjeuner kaisendon au marché Ōmichō, à 4 min de l’hôtel", p: "omicho-market" },
+      { t: "14:30", x: "Jardin Kenroku-en et ses cordes yukitsuri (environ 2 h, fermeture à 17 h)", p: "kenroku" },
+      { t: "16:30", x: "Musée d’art contemporain du XXIe siècle (ouvert jusqu’à 18 h)", p: "21c" },
+      { t: "18:15", x: "Retour à l’hôtel pour le check-in, puis dîner oden ou nodoguro dans le centre" }
+    ],
+    tips: ["Achetez un ekiben (bentō de gare) à Ueno pour le train.", "Le château de Kanazawa est à côté du jardin : son parc gratuit peut se traverser en fin de journée."] },
+  { d: "2026-11-11", city: "kyoto", title: "Kanazawa le matin, puis Kyoto", items: [
+      { t: "07:30", x: "Higashi Chaya tôt le matin, quand les rues sont vides", p: "higashi-chaya" },
+      { t: "09:00", x: "Glace à la feuille d’or chez Hakuza", p: "hakuza" },
+      { t: "09:45", x: "Check-out avant 10 h" },
+      { t: "10:00", x: "Petit tour au marché Ōmichō", p: "omicho-market" },
+      { t: "11:30", x: "Train Kanazawa → Tsuruga en shinkansen, puis Limited Express Thunderbird jusqu’à Kyoto (environ 2 h 10 avec la correspondance)." },
+      { t: "14:00", x: "Arrivée à Kyoto, check-in à l’hôtel" },
+      { t: "17:00", x: "Première soirée à Pontochō et au bord de la rivière Kamo", p: "pontocho" }
+    ],
+    tips: ["La correspondance à Tsuruga se fait sur le même bâtiment, mais il faut changer d’étage : le personnel JR aide volontiers.", "Les billets se prennent d’un seul tenant Kanazawa → Kyoto."] },
+  { d: "2026-11-12", city: "kyoto", title: "Uji, musée Nintendo, Kiyomizu et Gion", items: [
+      { t: "08:00", x: "Train pour Uji (JR Nara, environ 20 min)" },
+      { t: "08:30", x: "Byōdō-in, le pavillon du Phénix", p: "byodoin" },
+      { t: "09:30", x: "Rue du thé, et le Kōshō-ji par la montée du Kotozaka", p: "koshoji" },
+      { t: "10:30", x: "Train jusqu’à Ogura (Kintetsu)" },
+      { t: "11:00", x: "Musée Nintendo (réservation à 11 h)", p: "nintendo" },
+      { t: "14:00", x: "Retour à Kyoto, taxi jusqu’au Kiyomizu-dera", p: "kiyomizu" },
+      { t: "16:00", x: "Descente par Sannenzaka et Ninenzaka jusqu’à la pagode Yasaka", p: "ninenzaka" },
+      { t: "17:00", x: "Gion au crépuscule : Hanamikoji et le canal Shirakawa", p: "hanamikoji" },
+      { t: "18:00", x: "Sanctuaire Yasaka illuminé de lanternes", p: "yasaka-shrine" }
+    ],
+    tips: ["Journée chargée : le Byōdō-in ouvre à 8 h 30, c’est le bon moment pour en profiter calmement.", "Votre programme évoquait « Kyoto Nord » : il pourrait plutôt tenir le 14/11 avec le Kinkaku-ji."] },
+  { d: "2026-11-13", city: "kyoto", title: "Fushimi Inari, temples du nord-est et teamLab", items: [
+      { t: "07:00", x: "Fushimi Inari au lever du jour, avant la foule", p: "fushimi-inari" },
+      { t: "10:00", x: "Petit-déjeuner, puis taxi ou train vers le Nanzen-ji", p: "nanzenji" },
+      { t: "11:30", x: "Eikan-dō, le temple des érables", p: "eikando" },
+      { t: "12:30", x: "Déjeuner yudōfu près du Nanzen-ji" },
+      { t: "14:00", x: "Chemin de la philosophie jusqu’au Ginkaku-ji", p: "tetsugaku" },
+      { t: "15:00", x: "Ginkaku-ji", p: "ginkakuji" },
+      { t: "17:00", x: "teamLab Biovortex, près de la gare de Kyoto (dernière entrée 19 h 30, prévoir 3 h)", p: "biovortex" },
+      { t: "20:30", x: "Dîner rāmen au 10e étage de la gare de Kyoto", p: "kyoto-tower" }
+    ],
+    tips: ["Si la fatigue se fait sentir, supprimez le Ginkaku-ji plutôt que teamLab."] },
+  { d: "2026-11-14", city: "osaka", title: "Kinkaku-ji, puis Osaka", items: [
+      { t: "08:00", x: "Check-out. Bagages en consigne à la gare de Kyoto ou envoyés directement à l’hôtel d’Osaka." },
+      { t: "09:00", x: "Kinkaku-ji dès l’ouverture (samedi, donc foule après 10 h)", p: "kinkakuji" },
+      { t: "10:15", x: "Ryōan-ji et son jardin de pierres, à 20 min à pied", p: "ryoanji" },
+      { t: "12:30", x: "Déjeuner, puis récupération des bagages" },
+      { t: "14:00", x: "Train Kyoto → Osaka (JR Special Rapid, environ 30 min)" },
+      { t: "15:00", x: "Check-in à l’hôtel d’Osaka" },
+      { t: "17:30", x: "Dōtonbori à la tombée de la nuit, takoyaki et okonomiyaki", p: "dotonbori" },
+      { t: "19:30", x: "Ruelle Hōzen-ji Yokochō", p: "hozenji" }
+    ],
+    tips: ["Les services « hands-free » (sur le site de la gare de Kyoto) livrent les valises le jour même à votre hôtel d’Osaka : très pratique."] },
+  { d: "2026-11-15", city: "osaka", title: "Journée libre à Osaka", free: true, items: [
+      { t: "09:00", x: "Idée : château d’Osaka et jardin Nishinomaru", p: "osaka-castle" },
+      { t: "12:00", x: "Idée : déjeuner au marché Kuromon", p: "kuromon" },
+      { t: "14:00", x: "Idée : Shinsekai et kushikatsu", p: "tsutenkaku" },
+      { t: "16:00", x: "Idée : coucher du soleil depuis Abeno Harukas 300", p: "harukas" }
+    ],
+    tips: ["Autres idées dans l’onglet Osaka, sous-onglet « Idées pour les jours libres » : Minoo, Kobe, Himeji, Arashiyama.", "C’est un dimanche : gardez la journée tranquille en ville et réservez l’excursion lointaine au mercredi 18/11."] },
+  { d: "2026-11-16", city: "nara", title: "Nara et ses cerfs", items: [
+      { t: "08:30", x: "Kintetsu de Namba jusqu’à Kintetsu-Nara (environ 40 min)" },
+      { t: "09:15", x: "Kōfuku-ji et son musée national", p: "kofukuji" },
+      { t: "10:00", x: "Rencontre avec les cerfs, biscuits shika senbei", p: "deer" },
+      { t: "10:30", x: "Tōdai-ji et le Grand Bouddha", p: "todaiji" },
+      { t: "12:30", x: "Déjeuner kakinoha-zushi" },
+      { t: "14:00", x: "Kasuga Taisha et ses lanternes", p: "kasuga" },
+      { t: "16:00", x: "Ruelles de Naramachi et goûter", p: "naramachi-streets" },
+      { t: "17:30", x: "Retour à Osaka" }
+    ],
+    tips: ["Le jardin Isui-en est fermé le mardi, mais le 16/11 est un lundi : vous pouvez y aller !"] },
+  { d: "2026-11-17", city: "osaka", title: "Universal Studios Japan", items: [
+      { t: "07:30", x: "Départ vers la gare JR Universal City" },
+      { t: "08:00", x: "Arrivée devant les portes 30 à 45 min avant l’ouverture", p: "usj" },
+      { t: "08:30", x: "Super Nintendo World en premier si votre billet le permet, sinon réservez l’accès horaire dans l’appli USJ" },
+      { t: "11:00", x: "Déjeuner décalé pour éviter les files" },
+      { t: "18:00", x: "Parade et ambiance nocturne" }
+    ],
+    tips: ["Téléchargez l’appli USJ avant, et activez-la le jour J.", "Pour un accompagnement handicap, passez d’abord au Guest Services à l’entrée."] },
+  { d: "2026-11-18", city: "osaka", title: "Journée libre", free: true, items: [
+      { t: "", x: "Idée : château de Himeji, le plus beau château original du Japon", p: "himeji" },
+      { t: "", x: "Idée : Kobe, son bœuf et son port", p: "kobe" },
+      { t: "", x: "Idée : Tōfuku-ji à Kyoto, pic des érables probable", p: "tofukuji" },
+      { t: "", x: "Idée : Arashiyama et sa forêt de bambous", p: "arashiyama" },
+      { t: "", x: "Idée : aquarium Kaiyukan et grande roue (en cas de pluie)", p: "kaiyukan" }
+    ],
+    tips: ["Préparez les valises ce soir : départ pour Tokyo demain."] },
+  { d: "2026-11-19", city: "tokyo", title: "Shinkansen pour Tokyo", items: [
+      { t: "10:00", x: "Check-out et métro jusqu’à Shin-Osaka" },
+      { t: "11:00", x: "Tōkaidō Shinkansen Nozomi, Shin-Osaka → Tokyo (environ 2 h 30). Réservez un siège E côté fenêtre pour voir le Fuji !" },
+      { t: "13:30", x: "Arrivée à Tokyo, check-in à l’hôtel" },
+      { t: "16:00", x: "Après-midi tranquille, ou Musée national de Tokyo s’il n’a pas été fait", p: "tnm" }
+    ],
+    tips: ["Le Fuji apparaît environ 40 min avant Tokyo, vers Shin-Fuji, si le temps est clair.", "Ajoutez votre hôtel de Tokyo pour cette seconde partie dans l’onglet Tokyo."] },
+  { d: "2026-11-20", city: "tokyo", title: "teamLab Planets et Roppongi", items: [
+      { t: "09:00", x: "teamLab Planets à Toyosu (prévoir un pantalon à retrousser)", p: "teamlab-planets" },
+      { t: "11:30", x: "Déjeuner sushis au marché de Toyosu (fermé certains mercredis, ouvert le vendredi)", p: "toyosu-market" },
+      { t: "14:00", x: "Azabudai Hills", p: "azabudai" },
+      { t: "15:00", x: "Tour de Tokyo et Zōjō-ji", p: "tokyo-tower" },
+      { t: "16:30", x: "Roppongi Hills et Tokyo City View au coucher du soleil", p: "roppongi-hills" },
+      { t: "18:00", x: "Illuminations de Keyakizaka et dîner à Roppongi" }
+    ],
+    tips: [] },
+  { d: "2026-11-21", city: "tokyo", title: "Shinjuku et Shibuya", items: [
+      { t: "09:00", x: "Jardin Shinjuku Gyoen et ses feuillages (fermé le lundi, ouvert le samedi)", p: "gyoen" },
+      { t: "11:30", x: "Sanctuaire Meiji", p: "meiji-jingu" },
+      { t: "13:00", x: "Takeshita-dōri et Omotesandō", p: "takeshita" },
+      { t: "14:30", x: "Allée des ginkgos de Gaien, si les feuilles sont jaunes", p: "gaien-ginkgo" },
+      { t: "16:15", x: "Shibuya Sky au coucher du soleil (réservé)", p: "shibuya-sky" },
+      { t: "17:30", x: "Carrefour de Shibuya et Hachikō", p: "crossing" },
+      { t: "19:30", x: "Retour à Shinjuku : Omoide Yokochō, Golden Gai", p: "omoide" }
+    ],
+    tips: ["Journée longue : n’hésitez pas à couper par un taxi entre Omotesandō et Gaien."] },
+  { d: "2026-11-22", city: "tokyo", title: "Temples et sanctuaires", items: [
+      { t: "09:00", x: "Sanctuaire Nezu et son tunnel de torii", p: "nezu-jinja" },
+      { t: "10:30", x: "Yanaka : cimetière et vieilles rues", p: "yanaka-cemetery" },
+      { t: "12:00", x: "Yanaka Ginza, déjeuner de croquettes", p: "yanaka-ginza" },
+      { t: "15:00", x: "Option : Gōtoku-ji, le temple des chats porte-bonheur", p: "gotokuji" },
+      { t: "17:00", x: "Jardin Rikugi-en illuminé (si les illuminations ont commencé)", p: "rikugien" }
+    ],
+    tips: ["Préparez un petit sac pour la nuit à Kawaguchiko : beaucoup d’hôtels gardent les grosses valises, à demander à votre hôtel de Tokyo.", "Si vous changez d’hôtel, les services takkyūbin (Yamato) peuvent transférer les valises."] },
+  { d: "2026-11-23", city: "kawaguchiko", title: "Kawaguchiko et le festival des érables", items: [
+      { t: "08:00", x: "Départ de Tokyo vers Kawaguchiko (train Fuji Excursion ou bus express, réservés : jour férié)" },
+      { t: "10:30", x: "Arrivée à Kawaguchiko, dépôt des bagages au ryokan Konansō" },
+      { t: "11:30", x: "Déjeuner hōtō, les nouilles du Fuji" },
+      { t: "13:00", x: "Tour du lac à vélo ou en bus Red Line", p: "bike" },
+      { t: "15:00", x: "Parc Ōishi, la vue classique sur le Fuji", p: "oishi" },
+      { t: "16:30", x: "Couloir des érables à la tombée de la nuit (illuminé jusqu’à 21 h)", p: "momiji-kairo" },
+      { t: "18:30", x: "Dîner kaiseki et onsen au ryokan" }
+    ],
+    tips: ["Kinrō Kansha no Hi : jour férié national. Les Japonais sont en week-end prolongé, d’où la foule. Vérifiez l’heure du dernier bus depuis le couloir des érables.", "Pour l’arrivée au ryokan, une navette part de la gare sur appel (0555-72-2166)."] },
+  { d: "2026-11-24", city: "kawaguchiko", title: "Fuji au lever du soleil, retour à Tokyo", items: [
+      { t: "06:30", x: "Lever du soleil sur le Fuji, depuis le bain ou la promenade du lac", p: "lakeside" },
+      { t: "08:00", x: "Pagode Chūreitō (nombreuses marches) ou téléphérique Kachi Kachi", p: "chureito-pagoda" },
+      { t: "10:00", x: "Check-out avant 10 h" },
+      { t: "12:00", x: "Retour vers Tokyo" }
+    ],
+    tips: ["Le Fuji est en général plus dégagé tôt le matin : ne traînez pas !"] },
+  { d: "2026-11-25", city: "escapades", title: "Kamakura et Enoshima", items: [
+      { t: "08:30", x: "Train pour Kamakura (environ 1 h)" },
+      { t: "09:45", x: "Tsurugaoka Hachiman-gū et Komachi-dōri", p: "tsurugaoka" },
+      { t: "11:30", x: "Enoden jusqu’à Hase : le Grand Bouddha", p: "daibutsu" },
+      { t: "12:30", x: "Hase-dera et sa vue sur la baie", p: "hasedera" },
+      { t: "14:00", x: "Déjeuner shirasu-don" },
+      { t: "15:00", x: "Enoden jusqu’à Enoshima, coucher du soleil sur le Fuji", p: "enoshima-island" }
+    ],
+    tips: ["Mercredi, en semaine : idéal pour éviter la foule du week-end."] },
+  { d: "2026-11-26", city: "escapades", title: "Hakone ou journée libre", free: true, items: [
+      { t: "", x: "Idée : boucle de Hakone, Ōwakudani et lac Ashi", p: "owakudani" },
+      { t: "", x: "Idée : allée des ginkgos de Gaien, au sommet de ses couleurs", p: "gaien-ginkgo" },
+      { t: "", x: "Idée : marché de Toyosu et jardins de Tokyo", p: "toyosu-market" }
+    ],
+    tips: ["Le voyage est intense : une journée plus calme avant le retour fait du bien."] },
+  { d: "2026-11-27", city: "tokyo", title: "Dernière journée libre", free: true, items: [
+      { t: "", x: "Idée : derniers achats à Akihabara, Ginza ou Kappabashi", p: "electric-town" },
+      { t: "", x: "Idée : Rikugi-en illuminé le soir", p: "rikugien" },
+      { t: "", x: "Préparer les valises et regrouper les achats détaxés à présenter à la douane" }
+    ],
+    tips: ["Gardez les achats détaxés intacts et accessibles : la douane peut demander à les voir avant le remboursement de la taxe.", "Ce soir, un dernier dîner mémorable : c’est le moment de vous offrir un omakase sushi ou un wagyū."] },
+  { d: "2026-11-28", city: "travel", title: "Retour en France", items: [
+      { t: "09:30", x: "Check-out, train ou taxi vers Haneda Terminal 3 (environ 50 min)" },
+      { t: "10:45", x: "Arrivée à Haneda T3 : douane pour le remboursement de la taxe sur les achats détaxés (prévoir du temps)" },
+      { t: "13:55", x: "Vol AF 163, Haneda → Paris CDG" },
+      { t: "20:25", x: "Arrivée à Paris CDG, Terminal 2E" }
+    ],
+    tips: ["Vérifiez que votre assistance Air France Saphir est bien confirmée si nécessaire.", "Gardez des pièces et billets de yen en souvenir, ou dépensez-les dans les boutiques de l’aéroport."] }
+];
+
+(function () {
+  "use strict";
+
+  const TRIP_START = "2026-11-06";
+  const TRIP_END = "2026-11-28";
+  const STORE_KEY = "carnet-japon-v1";
+  const CITY_LABEL = { travel: "Voyage", tokyo: "Tokyo", kanazawa: "Kanazawa", kyoto: "Kyoto", osaka: "Osaka", nara: "Nara", kawaguchiko: "Kawaguchiko", escapades: "Escapades" };
+  const CITY_COLOR = { travel: "travel", tokyo: "tokyo", kanazawa: "kanazawa", kyoto: "kyoto", osaka: "osaka", nara: "nara", kawaguchiko: "fuji", escapades: "escape" };
+  const MOODS = ["😍", "😊", "😌", "😴", "🥵", "🤯"];
+  const WEATHER = ["☀️", "⛅", "☁️", "🌧️", "❄️", "🌬️"];
+  const EXP_CATS = ["Repas", "Transport", "Visites", "Achats", "Hébergement", "Autre"];
+
+  /* ---------- État ---------- */
+  const defaults = () => ({
+    v: 1,
+    nav: { tab: "today", city: "tokyo", quarter: {}, jtab: "essentials", ctab: "journal", openDay: null, todayView: null, planFilter: "all" },
+    visited: {}, done: {}, dayNotes: {}, prep: {}, hotels: {},
+    entries: [], expenses: [], rate: 170, scale: 1, theme: "auto", simDate: ""
+  });
+  let S = defaults();
+  let memoryOnly = false;
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) { const p = JSON.parse(raw); S = Object.assign(defaults(), p); S.nav = Object.assign(defaults().nav, p.nav || {}); }
+  } catch (e) { memoryOnly = true; }
+  let saveTimer = null;
+  function save() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { memoryOnly = true; }
+    }, 150);
+  }
+
+  /* ---------- Index des lieux ---------- */
+  const PLACES = {};
+  CITIES.forEach(c => c.quarters.forEach(q => q.places.forEach(p => { PLACES[p.id] = { p, c, q }; })));
+  const CITY = {};
+  CITIES.forEach(c => { CITY[c.id] = c; });
+
+  /* ---------- Utilitaires ---------- */
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  const $ = (sel, el) => (el || document).querySelector(sel);
+  const pad = n => String(n).padStart(2, "0");
+  const isoOf = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+  const parseISO = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const todayISO = () => S.simDate || isoOf(new Date());
+  const daysBetween = (a, b) => Math.round((parseISO(b) - parseISO(a)) / 86400000);
+  const WD = ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."];
+  const WDL = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  const MON = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  const longDate = iso => { const d = parseISO(iso); return WDL[d.getDay()] + " " + d.getDate() + " " + MON[d.getMonth()]; };
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const yen = n => Math.round(n).toLocaleString("fr-FR") + " ¥";
+  const eur = n => n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  const mapsUrl = (q) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+  function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h); }
+
+  function toast(msg) {
+    const t = document.createElement("div");
+    t.className = "toast"; t.setAttribute("role", "status"); t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2600);
+  }
+
+  /* ---------- Icônes ---------- */
+  const I = {
+    today: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>',
+    plan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M7.5 13.5h3M7.5 17h6"/></svg>',
+    city: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5h18M5 4.5h14M6.5 7.5V20M17.5 7.5V20M4 20h16M10 20v-5h4v5"/></svg>',
+    japan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none"/></svg>',
+    book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11.5A2.5 2.5 0 0 1 19 6.5V20H7.5A2.5 2.5 0 0 1 5 17.5z"/><path d="M5 17.5A2.5 2.5 0 0 1 7.5 15H19M9 8h6"/></svg>',
+    speak: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
+    show: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+    map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>',
+    gear: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>',
+    left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14.5 6l-6 6 6 6"/></svg>',
+    right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9.5 6l6 6-6 6"/></svg>',
+    pen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 20l1-4.5L16 4.5l3.5 3.5L8.5 19z"/></svg>',
+    phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3.5h3l1.5 4.5-2 1.5a11 11 0 0 0 6 6l1.5-2 4.5 1.5v3a2 2 0 0 1-2 2A16.5 16.5 0 0 1 4 5.5a2 2 0 0 1 2-2z"/></svg>'
+  };
+
+  /* ---------- Tampons hanko ---------- */
+  function stampSVG(text, seed) {
+    const chars = Array.from(text);
+    const rot = (hash(seed) % 17) - 8;
+    const ascii = /^[\x00-\x7F]+$/.test(text);
+    let t = "";
+    const ts = 'font-family="Zen Old Mincho, Hiragino Mincho ProN, Noto Serif JP, serif" font-weight="700" fill="currentColor" text-anchor="middle" dominant-baseline="central"';
+    if (ascii) t = `<text x="50" y="51" font-size="24" ${ts}>${esc(text)}</text>`;
+    else if (chars.length === 1) t = `<text x="50" y="51" font-size="44" ${ts}>${esc(chars[0])}</text>`;
+    else if (chars.length === 2) t = `<text x="50" y="35" font-size="28" ${ts}>${esc(chars[0])}</text><text x="50" y="66" font-size="28" ${ts}>${esc(chars[1])}</text>`;
+    else if (chars.length === 3) t = chars.map((c, i) => `<text x="50" y="${29 + i * 21.5}" font-size="21" ${ts}>${esc(c)}</text>`).join("");
+    else t = `<text x="62" y="37" font-size="23" ${ts}>${esc(chars[0])}</text><text x="62" y="64" font-size="23" ${ts}>${esc(chars[1])}</text><text x="38" y="37" font-size="23" ${ts}>${esc(chars[2])}</text><text x="38" y="64" font-size="23" ${ts}>${esc(chars.slice(3).join(""))}</text>`;
+    return `<svg class="stamp" viewBox="0 0 100 100" aria-hidden="true" style="color:var(--hanko)"><g filter="url(#ink)" transform="rotate(${rot} 50 50)"><circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="4.5"/><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="1.4"/>${t}</g></svg>`;
+  }
+
+  /* ---------- Photos (IndexedDB) ---------- */
+  let dbp = null;
+  function db() {
+    if (dbp) return dbp;
+    dbp = new Promise((res, rej) => {
+      try {
+        const r = indexedDB.open("carnet-japon", 1);
+        r.onupgradeneeded = () => r.result.createObjectStore("photos");
+        r.onsuccess = () => res(r.result);
+        r.onerror = () => rej(r.error);
+      } catch (e) { rej(e); }
+    });
+    return dbp;
+  }
+  const memPhotos = {};
+  async function putPhoto(id, blob) {
+    try { const d = await db(); await new Promise((res, rej) => { const tx = d.transaction("photos", "readwrite"); tx.objectStore("photos").put(blob, id); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); }
+    catch (e) { memPhotos[id] = blob; }
+  }
+  async function getPhoto(id) {
+    if (memPhotos[id]) return memPhotos[id];
+    try { const d = await db(); return await new Promise((res) => { const r = d.transaction("photos").objectStore("photos").get(id); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); }); }
+    catch (e) { return null; }
+  }
+  async function delPhoto(id) {
+    delete memPhotos[id];
+    try { const d = await db(); d.transaction("photos", "readwrite").objectStore("photos").delete(id); } catch (e) { /* rien */ }
+  }
+  const urlCache = {};
+  async function photoURL(id) {
+    if (urlCache[id]) return urlCache[id];
+    const b = await getPhoto(id);
+    if (!b) return null;
+    urlCache[id] = URL.createObjectURL(b);
+    return urlCache[id];
+  }
+  function hydratePhotos(root) {
+    (root || document).querySelectorAll("img[data-photo]").forEach(async img => {
+      const u = await photoURL(img.dataset.photo);
+      if (u) img.src = u; else img.alt = "Photo introuvable";
+    });
+  }
+  function compress(file) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      const u = URL.createObjectURL(file);
+      img.onload = () => {
+        const max = 1400;
+        let w = img.naturalWidth, h = img.naturalHeight;
+        if (Math.max(w, h) > max) { const k = max / Math.max(w, h); w = Math.round(w * k); h = Math.round(h * k); }
+        const cv = document.createElement("canvas"); cv.width = w; cv.height = h;
+        cv.getContext("2d").drawImage(img, 0, 0, w, h);
+        URL.revokeObjectURL(u);
+        cv.toBlob(b => b ? res(b) : rej(new Error("compression")), "image/jpeg", 0.8);
+      };
+      img.onerror = () => { URL.revokeObjectURL(u); rej(new Error("image illisible")); };
+      img.src = u;
+    });
+  }
+  const blobToDataURL = b => new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(b); });
+  const dataURLToBlob = async d => (await fetch(d)).blob();
+
+  /* ---------- Voix ---------- */
+  function speak(text) {
+    if (!("speechSynthesis" in window)) { toast("La lecture vocale n’est pas disponible sur cet appareil."); return; }
+    const voices = speechSynthesis.getVoices();
+    const v = voices.find(x => /^ja/i.test(x.lang));
+    if (!v && voices.length) toast("Aucune voix japonaise installée : ajoutez-en une dans les réglages du téléphone.");
+    const u = new SpeechSynthesisUtterance(text.replace(/[…]/g, "、"));
+    u.lang = "ja-JP"; u.rate = 0.85; if (v) u.voice = v;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }
+  if ("speechSynthesis" in window) { try { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => {}; } catch (e) { /* rien */ } }
+
+  /* ---------- Hôtels ---------- */
+  function hotelsForCity(cid) {
+    const c = CITY[cid];
+    const out = [];
+    if (!c || !c.hotel) return out;
+    if (cid === "tokyo") {
+      out.push({ key: null, h: c.hotel, label: "7 au 10 novembre" });
+      out.push({ key: "tokyo2", h: S.hotels.tokyo2 || null, label: "19 au 28 novembre", editable: true });
+    } else if (c.hotel.addr) {
+      out.push({ key: null, h: S.hotels[cid] || c.hotel, editKey: cid, editable: true });
+    } else {
+      out.push({ key: cid, h: S.hotels[cid] || null, editable: true });
+    }
+    return out;
+  }
+  function hotelForDay(day) {
+    if (!day || !CITY[day.city] || !CITY[day.city].hotel) return null;
+    const list = hotelsForCity(day.city);
+    if (day.city === "tokyo" && day.d >= "2026-11-19") return list[1];
+    return list[0];
+  }
+  function hotelCard(entry, cid) {
+    const h = entry.h;
+    const key = entry.key || entry.editKey || cid;
+    if (!h) {
+      return `<div class="card hotel c-${CITY_COLOR[cid]}"><div class="spread"><div><h4>Votre hôtel${entry.label ? " (" + esc(entry.label) + ")" : ""}</h4><p class="muted small" style="margin:0">Ajoutez le nom et l’adresse pour pouvoir la montrer à un chauffeur de taxi.</p></div></div><div class="row wrap" style="margin-top:10px"><button class="btn small accent" data-act="edit-hotel" data-key="${esc(key)}">Ajouter l’hôtel</button></div></div>`;
+    }
+    return `<div class="card hotel c-${CITY_COLOR[cid]}">
+      ${entry.label ? `<div class="small muted">${esc(entry.label)}</div>` : ""}
+      <h4>${esc(h.n)}</h4>
+      ${h.jp ? `<div class="jp muted">${esc(h.jp)}</div>` : ""}
+      ${h.addr ? `<p class="small" style="margin:8px 0 2px">${esc(h.addr)}</p>` : ""}
+      ${h.addrJp ? `<div class="addr-jp">${esc(h.addrJp)}</div>` : ""}
+      ${h.note ? `<p class="small muted" style="margin:8px 0 0">${esc(h.note)}</p>` : ""}
+      <div class="row wrap" style="margin-top:12px">
+        ${h.addrJp || h.jp ? `<button class="btn small accent" data-act="show-hotel" data-key="${esc(key)}" data-default="${entry.key ? "" : "1"}">${I.show} Montrer au chauffeur</button>` : ""}
+        ${h.addr || h.addrJp ? `<a class="btn small" href="${mapsUrl(h.addrJp || h.addr)}" target="_blank" rel="noopener">${I.map} Itinéraire</a>` : ""}
+        ${h.tel ? `<a class="btn small" href="tel:${esc(h.tel.replace(/[^0-9+]/g, ""))}">${I.phone} ${esc(h.tel)}</a>` : ""}
+        ${entry.editable ? `<button class="btn small" data-act="edit-hotel" data-key="${esc(key)}">Modifier</button>` : ""}
+      </div></div>`;
+  }
+  function getHotel(key, isDefault) {
+    if (key === "tokyo2") return S.hotels.tokyo2;
+    if (S.hotels[key]) return S.hotels[key];
+    return CITY[key] && CITY[key].hotel;
+  }
+
+  /* ---------- Superpositions ---------- */
+  function closeOverlay() { document.querySelectorAll(".overlay, .sheet").forEach(e => e.remove()); document.body.classList.remove("book-open"); document.body.style.overflow = ""; }
+  function showBig(ja, sub, fr) {
+    closeOverlay();
+    const o = document.createElement("div");
+    o.className = "overlay"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true"); o.setAttribute("aria-label", "Texte à montrer");
+    o.innerHTML = `<button class="btn close" data-act="close">Fermer</button>
+      <div class="show-big"><div class="ja${ja.length > 18 ? " long" : ""}" lang="ja">${esc(ja)}</div>${sub ? `<div class="sub" lang="ja">${esc(sub)}</div>` : ""}${fr ? `<div class="fr">${esc(fr)}</div>` : ""}</div>
+      <div class="row" style="justify-content:center"><button class="btn" data-act="speak" data-text="${esc(ja)}">${I.speak} Écouter</button></div>`;
+    document.body.appendChild(o); document.body.style.overflow = "hidden";
+    $(".close", o).focus();
+  }
+  function sheet(html, label) {
+    closeOverlay();
+    const o = document.createElement("div");
+    o.className = "sheet";
+    o.innerHTML = `<div class="sheet-in" role="dialog" aria-modal="true" aria-label="${esc(label || "")}">${html}</div>`;
+    o.addEventListener("click", e => { if (e.target === o) closeOverlay(); });
+    document.body.appendChild(o); document.body.style.overflow = "hidden";
+    const f = o.querySelector("input, textarea, select, button"); if (f) f.focus();
+    return o;
+  }
+
+  /* ---------- Composants ---------- */
+  function placeLink(id, label) {
+    if (!id || !PLACES[id]) return esc(label);
+    return `<button class="place-link" data-act="go-place" data-id="${esc(id)}">${esc(label)}</button>`;
+  }
+  function scheduleHTML(day, di) {
+    const items = day.items.map((it, ii) => {
+      const k = di + "-" + ii; const done = !!S.done[k];
+      return `<li class="${done ? "done" : ""}"><input type="checkbox" aria-label="Fait" data-act="toggle-done" data-k="${k}" ${done ? "checked" : ""}><span class="time">${esc(it.t || "")}</span><span class="txt">${it.p ? placeLink(it.p, it.x) : esc(it.x)}</span></li>`;
+    }).join("");
+    return `<ul class="sched">${items}</ul>
+      ${day.tips && day.tips.length ? `<ul class="bul tips muted">${day.tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
+      <label class="field" style="margin-top:14px"><span>Mes notes pour ce jour</span><textarea data-note="${day.d}" placeholder="Réservations, idées, horaires…">${esc(S.dayNotes[day.d] || "")}</textarea></label>
+      <button class="btn small" data-act="new-entry" data-date="${day.d}" data-city="${day.city}">${I.pen} Écrire la page du ${parseISO(day.d).getDate()}/11</button>`;
+  }
+  function placeCard(p, q, c) {
+    const v = S.visited[p.id];
+    return `<article class="card place c-${c.color}" id="pl-${esc(p.id)}">
+      <div><h4>${esc(p.n)}</h4><div class="jp-name" lang="ja">${esc(p.jp)}</div></div>
+      <button class="stamp-btn" data-act="stamp" data-id="${esc(p.id)}" aria-pressed="${v ? "true" : "false"}" aria-label="${v ? "Visité le " + esc(longDate(v)) + ", retirer le tampon" : "Marquer comme visité"}">
+        ${v ? stampSVG(p.st || p.jp.slice(0, 2), p.id) : `<span class="hint">J’y suis allé</span>`}
+      </button>
+      <div class="body">
+        <p style="margin:8px 0 0">${esc(p.d)}</p>
+        ${p.h ? `<div class="meta"><strong>Infos pratiques</strong>${esc(p.h)}</div>` : ""}
+        ${p.a ? `<div class="meta acc"><strong>Accessibilité</strong>${esc(p.a)}</div>` : ""}
+      </div>
+      <div class="place-actions">
+        <button class="btn small" data-act="show" data-ja="${esc(p.jp)}" data-fr="${esc(p.n)}">${I.show} Montrer</button>
+        <a class="btn small" href="${mapsUrl(p.jp + " " + c.jp)}" target="_blank" rel="noopener">${I.map} Carte</a>
+      </div>
+    </article>`;
+  }
+  function converterHTML() {
+    return `<div class="card"><h4>Convertisseur</h4>
+      <div class="conv" style="margin-top:8px">
+        <input type="number" inputmode="decimal" id="conv-yen" aria-label="Montant en yens" placeholder="¥">
+        <span class="muted">¥ ⇄ €</span>
+        <input type="number" inputmode="decimal" id="conv-eur" aria-label="Montant en euros" placeholder="€">
+      </div>
+      <p class="small muted" style="margin:8px 0 0">Taux utilisé : 1 € = ${esc(S.rate)} ¥. <button class="place-link" data-act="goto" data-tab="book" data-ctab="settings">Ajuster</button></p></div>`;
+  }
+
+  /* ---------- Vues ---------- */
+  function viewToday() {
+    const t = todayISO();
+    let html = "";
+    if (t < TRIP_START && S.nav.todayView == null) {
+      const n = daysBetween(t, TRIP_START);
+      const doneCount = JAPAN.prep.filter((_, i) => S.prep[i]).length;
+      html += `<div class="hero-day c-travel"><div class="count">${n === 1 ? "Demain" : "Dans " + n + " jours"}</div>
+        <h2 class="view-title">Départ pour le Japon</h2>
+        <p class="lead">Vendredi 6 novembre, vol AF 162 à 15 h depuis Roissy-CDG. Atterrissage à Haneda le samedi à midi, heure de Tokyo.</p></div>
+        <div class="row wrap" style="margin-bottom:16px"><button class="btn accent c-tokyo" data-act="preview-day" data-i="0">Voir le jour 1</button><button class="btn" data-act="goto" data-tab="plan">Tout le planning</button></div>
+        <div class="card"><div class="spread"><h4>Avant de partir</h4><span class="small muted">${doneCount} / ${JAPAN.prep.length}</span></div>
+        <div class="progress" aria-hidden="true"><i style="width:${Math.round(doneCount / JAPAN.prep.length * 100)}%"></i></div>
+        ${JAPAN.prep.map((p, i) => `<label class="check${S.prep[i] ? " done" : ""}"><input type="checkbox" data-act="toggle-prep" data-i="${i}" ${S.prep[i] ? "checked" : ""}><span>${esc(p)}</span></label>`).join("")}</div>`;
+      html += converterHTML();
+      return html;
+    }
+    if (t > TRIP_END && S.nav.todayView == null) {
+      const nv = Object.keys(S.visited).length;
+      html += `<div class="hero-day"><div class="count">Le voyage est terminé</div><h2 class="view-title">Okaerinasai, bon retour !</h2>
+        <p class="lead">${S.entries.length} pages de carnet, ${nv} tampons collectés. C’est le moment de rassembler vos souvenirs.</p></div>
+        <div class="row wrap"><button class="btn primary" data-act="book">Créer mon carnet de voyage</button><button class="btn" data-act="goto" data-tab="book" data-ctab="stamps">Voir mes tampons</button></div>`;
+      return html;
+    }
+    let idx = S.nav.todayView != null ? S.nav.todayView : daysBetween(TRIP_START, t);
+    idx = Math.max(0, Math.min(DAYS.length - 1, idx));
+    const day = DAYS[idx];
+    const isReal = day.d === t;
+    const cc = CITY_COLOR[day.city];
+    html += `<div class="hero-day c-${cc}"><div class="count">Jour ${idx + 1} sur ${DAYS.length}${isReal ? "" : ", aperçu"}</div>
+      <h2 class="view-title">${esc(day.title)}</h2>
+      <div class="where">${esc(longDate(day.d))}, ${esc(CITY_LABEL[day.city])}</div></div>
+      <div class="daynav"><button class="btn small" data-act="today-step" data-d="-1" ${idx === 0 ? "disabled" : ""} aria-label="Jour précédent">${I.left} Veille</button>
+      ${!isReal && t >= TRIP_START && t <= TRIP_END ? `<button class="btn small" data-act="today-reset">Aujourd’hui</button>` : (!isReal ? `<button class="btn small" data-act="today-reset">Retour</button>` : "")}
+      <button class="btn small" data-act="today-step" data-d="1" ${idx === DAYS.length - 1 ? "disabled" : ""} aria-label="Jour suivant">Lendemain ${I.right}</button></div>
+      <div class="card c-${cc}">${scheduleHTML(day, idx)}</div>`;
+    const ho = hotelForDay(day);
+    if (ho) html += `<h3>Hôtel du soir</h3>` + hotelCard(ho, day.city);
+    const ents = S.entries.filter(e => e.date === day.d);
+    if (ents.length) html += `<h3>Dans le carnet ce jour-là</h3>` + ents.map(entryHTML).join("");
+    html += `<h3>Pratique</h3>` + converterHTML();
+    return html;
+  }
+
+  function viewPlan() {
+    const t = todayISO();
+    const f = S.nav.planFilter;
+    const cities = ["all", "tokyo", "kanazawa", "kyoto", "osaka", "nara", "kawaguchiko", "escapades"];
+    let html = `<h2 class="view-title">Planning</h2><p class="muted">Du 6 au 28 novembre, ${DAYS.length} jours. Touchez un jour pour voir le détail.</p>
+      <div class="scroller" role="group" aria-label="Filtrer par ville">${cities.map(c => `<button class="chip c-${c === "all" ? "travel" : CITY_COLOR[c]}" data-act="plan-filter" data-c="${c}" aria-pressed="${f === c}">${c === "all" ? "Tous les jours" : esc(CITY_LABEL[c])}</button>`).join("")}</div>`;
+    DAYS.forEach((day, i) => {
+      if (f !== "all" && day.city !== f) return;
+      const d = parseISO(day.d);
+      const open = S.nav.openDay === i;
+      const cls = (day.d === t ? " today" : "") + (day.d < t && t <= TRIP_END ? " past" : "");
+      html += `<div class="day c-${CITY_COLOR[day.city]}${cls}" id="day-${i}">
+        <div class="day-date"><span class="dn">${d.getDate()}</span><span class="dw">${WD[d.getDay()]}</span></div>
+        <div class="day-card"><button data-act="open-day" data-i="${i}" aria-expanded="${open}">
+          <span class="city-tag">${esc(CITY_LABEL[day.city])}</span>${day.free ? `<span class="badge">Libre</span>` : ""}${day.d === t ? `<span class="badge">Aujourd’hui</span>` : ""}
+          <h4>${esc(day.title)}</h4></button>
+          ${open ? `<div class="day-body">${scheduleHTML(day, i)}</div>` : ""}
+        </div></div>`;
+    });
+    return html;
+  }
+
+  function viewCities() {
+    const c = CITY[S.nav.city] || CITIES[0];
+    const qid = S.nav.quarter[c.id] || c.quarters[0].id;
+    const q = c.quarters.find(x => x.id === qid) || c.quarters[0];
+    let html = `<div class="scroller" role="group" aria-label="Choisir une ville">${CITIES.map(x => `<button class="chip c-${x.color}" data-act="city" data-id="${x.id}" aria-pressed="${x.id === c.id}">${esc(x.n)} <span class="jp" lang="ja">${esc(x.jp)}</span></button>`).join("")}</div>
+      <div class="c-${c.color}"><div class="city-head"><span class="kanji" lang="ja" aria-hidden="true">${esc(c.jp)}</span><h2 class="view-title">${esc(c.n)}</h2><div class="city-dates">${esc(c.dates)}</div></div>
+      <div class="prose"><p class="lead">${esc(c.intro)}</p></div>
+      <details class="fold"><summary>Un peu d’histoire</summary><div class="prose"><p>${esc(c.hist)}</p></div></details>
+      <details class="fold" open><summary>En novembre</summary><div class="prose"><p>${esc(c.season)}</p></div></details>
+      <details class="fold"><summary>Se déplacer</summary><div class="prose"><p>${esc(c.transport)}</p></div></details>
+      ${c.hotel ? `<h3>Hôtel</h3>` + hotelsForCity(c.id).map(e => hotelCard(e, c.id)).join("") : ""}
+      <h3>Quartiers</h3>
+      <div class="tabs" role="tablist" aria-label="Quartiers">${c.quarters.map(x => `<button class="tab" role="tab" data-act="quarter" data-id="${x.id}" aria-selected="${x.id === q.id}">${esc(x.n)}</button>`).join("")}</div>
+      <div role="tabpanel">
+        <div class="spread"><div><h3 style="margin-top:0">${esc(q.n)}</h3></div><span class="jp muted" lang="ja" style="font-size:1.3rem">${esc(q.jp)}</span></div>
+        <div class="prose"><p>${esc(q.intro)}</p></div>
+        <details class="fold"><summary>Histoire du quartier</summary><div class="prose"><p>${esc(q.hist)}</p></div></details>
+        <h3>À voir</h3>
+        ${q.places.map(p => placeCard(p, q, c)).join("")}
+        ${q.eat && q.eat.length ? `<h3>À goûter</h3><ul class="bul">${q.eat.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
+        ${q.tips && q.tips.length ? `<h3>Conseils</h3><ul class="bul">${q.tips.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
+        ${q.acc ? `<h3>Accessibilité du quartier</h3><div class="meta acc">${esc(q.acc)}</div>` : ""}
+      </div></div>`;
+    return html;
+  }
+
+  function viewJapan() {
+    const tabs = [["essentials", "Essentiels"], ["phrases", "Phrases utiles"], ["access", "Accessibilité"], ["culture", "Culture"], ["history", "Histoire"], ["food", "Cuisine"], ["sos", "Urgences"], ["prep", "Préparatifs"]];
+    const jt = S.nav.jtab;
+    let html = `<div class="c-travel"><h2 class="view-title">Japon <span class="jp muted" lang="ja" style="font-size:1.3rem">日本</span></h2>
+      <div class="tabs" role="tablist">${tabs.map(([k, l]) => `<button class="tab" role="tab" data-act="jtab" data-k="${k}" aria-selected="${jt === k}">${l}</button>`).join("")}</div><div role="tabpanel">`;
+    if (jt === "essentials") html += JAPAN.essentials.map(e => `<div class="card flat"><h4>${esc(e.t)}</h4><p style="margin:0">${esc(e.b)}</p></div>`).join("");
+    if (jt === "phrases") {
+      html += `<p class="muted">Touchez « Montrer » pour afficher la phrase en grand à votre interlocuteur, ou « Écouter » pour l’entendre prononcée.</p>`;
+      JAPAN.phraseGroups.forEach(g => {
+        html += `<h3>${esc(g.g)}</h3>` + g.items.map(([fr, ja, ro]) => `<div class="phrase"><div class="fr">${esc(fr)}</div><div class="ja" lang="ja">${esc(ja)}</div><div class="ro">${esc(ro)}</div>
+          <div class="acts"><button class="btn small" data-act="show" data-ja="${esc(ja)}" data-sub="${esc(ro)}" data-fr="${esc(fr)}" aria-label="Montrer : ${esc(fr)}">${I.show}</button><button class="btn small" data-act="speak" data-text="${esc(ja)}" aria-label="Écouter : ${esc(fr)}">${I.speak}</button></div></div>`).join("");
+      });
+    }
+    if (jt === "access") {
+      html += `<p class="lead">Le Japon est un des pays les mieux équipés au monde pour les déplacements en fauteuil ou avec des difficultés à marcher, surtout dans les transports. Les sites anciens demandent plus d’anticipation.</p>`;
+      html += JAPAN.access.map(e => `<div class="card flat c-tokyo"><h4>${esc(e.t)}</h4><p style="margin:0">${esc(e.b)}</p></div>`).join("");
+      html += `<h3>Phrases d’accessibilité</h3>` + JAPAN.phraseGroups.find(g => g.g === "Accessibilité").items.map(([fr, ja, ro]) => `<div class="phrase"><div class="fr">${esc(fr)}</div><div class="ja" lang="ja">${esc(ja)}</div><div class="ro">${esc(ro)}</div><div class="acts"><button class="btn small" data-act="show" data-ja="${esc(ja)}" data-sub="${esc(ro)}" data-fr="${esc(fr)}" aria-label="Montrer">${I.show}</button><button class="btn small" data-act="speak" data-text="${esc(ja)}" aria-label="Écouter">${I.speak}</button></div></div>`).join("");
+      html += `<p class="small muted" style="margin-top:14px">Chaque lieu de l’onglet Villes comporte une note d’accessibilité. Les informations évoluent : en cas de doute, demandez au personnel sur place.</p>`;
+    }
+    if (jt === "culture") html += JAPAN.culture.map(e => `<div class="card flat"><h4>${esc(e.t)}</h4><p style="margin:0">${esc(e.b)}</p></div>`).join("");
+    if (jt === "history") html += JAPAN.history.map(e => `<div class="era"><div><h4>${esc(e.era)}</h4><div class="yr">${esc(e.years)}</div></div><p style="margin:0">${esc(e.b)}</p></div>`).join("");
+    if (jt === "food") {
+      html += `<p class="muted">Les plats à connaître, et les mots à repérer sur les menus.</p>` + JAPAN.food.map(([n, ja, d]) => `<div class="food"><span class="ja" lang="ja">${esc(ja)}</span><h4>${esc(n)}</h4><p class="small" style="margin:0">${esc(d)}</p></div>`).join("");
+      html += `<h3>Décoder un menu</h3><div class="words">${JAPAN.foodWords.map(([f, ja, r]) => `<div><span class="ja" lang="ja">${esc(ja)}</span><span class="small">${esc(f)}</span> <span class="small muted">${esc(r)}</span></div>`).join("")}</div>`;
+    }
+    if (jt === "sos") html += JAPAN.emergency.map(e => `<div class="card flat"><h4>${esc(e.t)}</h4><a class="tel" href="tel:${esc(e.n.replace(/[^0-9]/g, ""))}">${esc(e.n)}</a><p class="small" style="margin:4px 0 0">${esc(e.b)}</p></div>`).join("") + `<h3>Phrases d’urgence</h3>` + JAPAN.phraseGroups.find(g => g.g === "Urgences").items.map(([fr, ja, ro]) => `<div class="phrase"><div class="fr">${esc(fr)}</div><div class="ja" lang="ja">${esc(ja)}</div><div class="ro">${esc(ro)}</div><div class="acts"><button class="btn small" data-act="show" data-ja="${esc(ja)}" data-sub="${esc(ro)}" data-fr="${esc(fr)}" aria-label="Montrer">${I.show}</button></div></div>`).join("");
+    if (jt === "prep") {
+      const dc = JAPAN.prep.filter((_, i) => S.prep[i]).length;
+      html += `<div class="card"><div class="spread"><h4>Liste de préparation</h4><span class="small muted">${dc} / ${JAPAN.prep.length}</span></div><div class="progress" aria-hidden="true"><i style="width:${Math.round(dc / JAPAN.prep.length * 100)}%"></i></div>${JAPAN.prep.map((p, i) => `<label class="check${S.prep[i] ? " done" : ""}"><input type="checkbox" data-act="toggle-prep" data-i="${i}" ${S.prep[i] ? "checked" : ""}><span>${esc(p)}</span></label>`).join("")}</div>`;
+    }
+    return html + "</div></div>";
+  }
+
+  function entryHTML(e) {
+    const c = CITY_COLOR[e.city] || "travel";
+    const q = e.city && CITY[e.city] && e.quarter ? CITY[e.city].quarters.find(x => x.id === e.quarter) : null;
+    return `<article class="card entry c-${c}">
+      <div class="spread"><div><div class="when">${esc(longDate(e.date))}${e.time ? ", " + esc(e.time) : ""}</div><h4>${esc(CITY_LABEL[e.city] || "")}${q ? ", " + esc(q.n) : ""}</h4></div><div class="mood" aria-label="Humeur et météo">${esc(e.mood || "")} ${esc(e.weather || "")}</div></div>
+      ${e.text ? `<div class="text">${esc(e.text)}</div>` : ""}
+      ${e.photos && e.photos.length ? `<div class="photos">${e.photos.map(id => `<img data-photo="${esc(id)}" alt="Photo du carnet" loading="lazy">`).join("")}</div>` : ""}
+      ${e.geo ? `<p class="small" style="margin:8px 0 0"><a href="${mapsUrl(e.geo.lat + "," + e.geo.lng)}" target="_blank" rel="noopener">Position enregistrée</a></p>` : ""}
+      <div class="row no-print" style="margin-top:10px"><button class="btn small" data-act="edit-entry" data-id="${esc(e.id)}">Modifier</button></div>
+    </article>`;
+  }
+
+  function viewBook() {
+    const tabs = [["journal", "Journal"], ["stamps", "Tampons"], ["expenses", "Dépenses"], ["settings", "Réglages"]];
+    const ct = S.nav.ctab;
+    let html = `<h2 class="view-title">Carnet <span class="jp muted" lang="ja" style="font-size:1.3rem">旅日記</span></h2>
+      <div class="tabs" role="tablist">${tabs.map(([k, l]) => `<button class="tab" role="tab" data-act="ctab" data-k="${k}" aria-selected="${ct === k}">${l}</button>`).join("")}</div><div role="tabpanel">`;
+    if (ct === "journal") {
+      html += `<div class="row wrap" style="margin-bottom:14px"><button class="btn primary" data-act="new-entry">${I.pen} Nouvelle page</button><button class="btn" data-act="book">Créer mon carnet</button></div>`;
+      if (!S.entries.length) html += `<div class="empty"><span class="jp" lang="ja">旅</span>Votre carnet est vide. Écrivez une première page : ce que vous avez vu, goûté, ressenti. Vous pourrez ajouter des photos.</div>`;
+      else {
+        const sorted = S.entries.slice().sort((a, b) => (b.date + (b.time || "")).localeCompare(a.date + (a.time || "")));
+        html += sorted.map(entryHTML).join("");
+      }
+    }
+    if (ct === "stamps") {
+      const all = Object.values(PLACES);
+      const n = all.filter(x => S.visited[x.p.id]).length;
+      html += `<div class="row" style="margin-bottom:6px"><span class="stamp-count">${n}</span><span class="muted">tampons sur ${all.length} lieux.<br>Marquez un lieu « J’y suis allé » dans l’onglet Villes.</span></div>`;
+      CITIES.forEach(c => {
+        html += `<h3 class="c-${c.color}" style="color:var(--c)">${esc(c.n)}</h3><div class="stamps">`;
+        c.quarters.forEach(q => q.places.forEach(p => {
+          const v = S.visited[p.id];
+          html += `<button class="cell" data-act="go-place" data-id="${esc(p.id)}"><div class="slot${v ? " on" : ""}">${v ? stampSVG(p.st || p.jp.slice(0, 2), p.id) : `<span class="jp" lang="ja">${esc(Array.from(p.st || p.jp)[0])}</span>`}</div>${esc(p.n)}${v ? `<br>${parseISO(v).getDate()}/${parseISO(v).getMonth() + 1}` : ""}</button>`;
+        }));
+        html += `</div>`;
+      });
+    }
+    if (ct === "expenses") {
+      const tot = S.expenses.reduce((s, e) => s + (Number(e.yen) || 0), 0);
+      html += `<div class="card"><h4>Ajouter une dépense</h4>
+        <div class="row" style="margin-top:8px"><input type="number" inputmode="decimal" id="exp-yen" placeholder="Montant en ¥" aria-label="Montant en yens"><select id="exp-cat" aria-label="Catégorie">${EXP_CATS.map(c => `<option>${c}</option>`).join("")}</select></div>
+        <div class="row" style="margin-top:8px"><input type="text" id="exp-label" placeholder="Quoi ? (ex. rāmen à Ueno)" aria-label="Description"><button class="btn primary" data-act="add-exp">Ajouter</button></div></div>
+        <div class="total"><span>Total</span><span>${yen(tot)}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">≈ ${eur(tot / S.rate)}</span></span></div>`;
+      const byCat = {};
+      S.expenses.forEach(e => { byCat[e.cat] = (byCat[e.cat] || 0) + (Number(e.yen) || 0); });
+      if (S.expenses.length) html += `<p class="small muted">${Object.entries(byCat).map(([k, v]) => `${esc(k)} : ${yen(v)}`).join(" ; ")}</p>`;
+      html += S.expenses.slice().reverse().map(e => `<div class="exp"><div>${esc(e.label || e.cat)}<div class="sub">${esc(longDate(e.date))}, ${esc(e.cat)}</div></div><div class="amt">${yen(e.yen)}<div class="sub">${eur(e.yen / S.rate)}</div><button class="place-link small" data-act="del-exp" data-id="${esc(e.id)}">Supprimer</button></div></div>`).join("");
+      if (!S.expenses.length) html += `<div class="empty">Aucune dépense enregistrée pour l’instant.</div>`;
+    }
+    if (ct === "settings") {
+      html += `<div class="card"><h4>Taux de change</h4><label class="field"><span>Combien de yens pour 1 € ?</span><input type="number" inputmode="decimal" id="set-rate" value="${esc(S.rate)}"></label><p class="small muted" style="margin:0">Vérifiez le taux du jour avant de partir : l’appli fonctionne hors ligne et ne le met pas à jour seule.</p></div>
+        <div class="card"><h4>Affichage</h4>
+          <div class="row wrap" style="margin:8px 0"><span>Taille du texte</span><button class="btn small" data-act="scale" data-d="-0.1" aria-label="Réduire le texte">A−</button><button class="btn small" data-act="scale" data-d="0.1" aria-label="Agrandir le texte">A+</button></div>
+          <div class="row wrap"><span>Thème</span>${[["auto", "Automatique"], ["light", "Clair"], ["dark", "Sombre"]].map(([k, l]) => `<button class="chip c-travel" data-act="theme" data-k="${k}" aria-pressed="${S.theme === k}">${l}</button>`).join("")}</div></div>
+        <div class="card"><h4>Sauvegarde</h4><p class="small">Vos données restent sur ce téléphone. Exportez régulièrement une sauvegarde (avec les photos) pour ne rien perdre, et pour la garder après le voyage.</p>
+          <div class="row wrap"><button class="btn primary" data-act="export">Exporter la sauvegarde</button><label class="btn">Importer une sauvegarde<input type="file" accept="application/json,.json" id="import-file" hidden></label></div>
+          ${memoryOnly ? `<p class="small" style="color:var(--hanko);margin:10px 0 0">Le stockage n’est pas disponible ici : vos données seront perdues à la fermeture. Installez l’appli sur l’écran d’accueil.</p>` : ""}</div>
+        <div class="card"><h4>Installer sur le téléphone</h4><p class="small" style="margin:0">Sur iPhone, ouvrez l’appli dans Safari, touchez le bouton Partager puis « Sur l’écran d’accueil ». Sur Android, dans Chrome, menu ⋮ puis « Installer l’application ». Une fois installée, elle fonctionne sans connexion.</p></div>
+        <div class="card"><h4>Tester une date</h4><p class="small">Pour voir l’onglet Aujourd’hui comme pendant le voyage. Laissez vide pour utiliser la vraie date.</p><input type="date" id="set-sim" value="${esc(S.simDate)}" min="2026-10-01" max="2026-12-31" aria-label="Date simulée"></div>
+        <div class="card"><h4>Tout effacer</h4><p class="small">Supprime le journal, les photos, les tampons et les notes de ce téléphone.</p><button class="btn danger" data-act="reset">Effacer toutes les données</button></div>`;
+    }
+    return html + "</div>";
+  }
+
+  /* ---------- Éditeurs ---------- */
+  let draft = null;
+  function openEntry(e) {
+    const isNew = !e;
+    draft = e ? JSON.parse(JSON.stringify(e)) : { id: uid(), date: todayISO(), time: new Date().toTimeString().slice(0, 5), city: "", quarter: "", mood: "", weather: "", text: "", photos: [], geo: null };
+    if (isNew) {
+      const dd = DAYS.find(d => d.d === draft.date);
+      if (dd && CITY[dd.city]) draft.city = dd.city;
+      if (draft.date < TRIP_START || draft.date > TRIP_END) draft.date = draft.date < TRIP_START ? TRIP_START : TRIP_END;
+    }
+    renderEntrySheet(isNew);
+  }
+  function renderEntrySheet(isNew) {
+    const c = CITY[draft.city];
+    const html = `<h3>${isNew ? "Nouvelle page" : "Modifier la page"}</h3>
+      <div class="row"><label class="field" style="flex:1"><span>Date</span><input type="date" id="en-date" value="${esc(draft.date)}"></label><label class="field" style="width:120px"><span>Heure</span><input type="text" id="en-time" value="${esc(draft.time || "")}" inputmode="numeric" placeholder="14:30"></label></div>
+      <div class="row"><label class="field" style="flex:1"><span>Ville</span><select id="en-city"><option value="">—</option>${CITIES.map(x => `<option value="${x.id}" ${x.id === draft.city ? "selected" : ""}>${esc(x.n)}</option>`).join("")}</select></label>
+      <label class="field" style="flex:1"><span>Quartier</span><select id="en-quarter"><option value="">—</option>${c ? c.quarters.map(q => `<option value="${q.id}" ${q.id === draft.quarter ? "selected" : ""}>${esc(q.n)}</option>`).join("") : ""}</select></label></div>
+      <div class="field"><span style="display:block;font-size:.85rem;font-weight:700;margin-bottom:4px">Humeur</span><div class="pick">${MOODS.map(m => `<button type="button" data-act="pick" data-f="mood" data-v="${m}" aria-pressed="${draft.mood === m}">${m}</button>`).join("")}</div></div>
+      <div class="field"><span style="display:block;font-size:.85rem;font-weight:700;margin-bottom:4px">Météo</span><div class="pick">${WEATHER.map(m => `<button type="button" data-act="pick" data-f="weather" data-v="${m}" aria-pressed="${draft.weather === m}">${m}</button>`).join("")}</div></div>
+      <label class="field"><span>Ce que je veux retenir</span><textarea id="en-text" rows="7" placeholder="Ce qu’on a vu, goûté, ressenti, la phrase drôle du jour…">${esc(draft.text)}</textarea></label>
+      <div class="field"><span style="display:block;font-size:.85rem;font-weight:700;margin-bottom:4px">Photos</span>
+        <div class="photos" id="en-photos">${draft.photos.map(id => `<div class="photo-thumb"><img data-photo="${esc(id)}" alt="Photo"><button data-act="rm-photo" data-id="${esc(id)}" aria-label="Retirer la photo">×</button></div>`).join("")}</div>
+        <label class="btn small" style="margin-top:8px">Ajouter des photos<input type="file" accept="image/*" multiple id="en-files" hidden></label></div>
+      <div class="field"><button type="button" class="btn small" data-act="geo">${I.map} ${draft.geo ? "Position enregistrée, actualiser" : "Ajouter ma position"}</button></div>
+      <div class="row wrap" style="margin-top:6px"><button class="btn primary" data-act="save-entry">Enregistrer la page</button><button class="btn" data-act="close">Annuler</button>${isNew ? "" : `<button class="btn danger" data-act="del-entry">Supprimer</button>`}</div>`;
+    const o = sheet(html, isNew ? "Nouvelle page" : "Modifier la page");
+    o.dataset.isNew = isNew ? "1" : "";
+    hydratePhotos(o);
+  }
+  function readDraft() {
+    const g = id => { const el = $("#" + id); return el ? el.value : ""; };
+    draft.date = g("en-date") || draft.date; draft.time = g("en-time"); draft.city = g("en-city"); draft.quarter = g("en-quarter"); draft.text = g("en-text");
+  }
+
+  function editHotel(key) {
+    const h = getHotel(key) || {};
+    const blank = !h.addr && !h.addrJp;
+    sheet(`<h3>Hôtel</h3>
+      <label class="field"><span>Nom</span><input type="text" id="ho-n" value="${esc(blank && !S.hotels[key] ? "" : h.n || "")}"></label>
+      <label class="field"><span>Nom en japonais (facultatif)</span><input type="text" id="ho-jp" value="${esc(h.jp || "")}" lang="ja"></label>
+      <label class="field"><span>Adresse</span><input type="text" id="ho-addr" value="${esc(h.addr || "")}"></label>
+      <label class="field"><span>Adresse en japonais (à copier depuis la réservation ou Google Maps)</span><input type="text" id="ho-addrjp" value="${esc(h.addrJp || "")}" lang="ja"></label>
+      <label class="field"><span>Téléphone</span><input type="text" id="ho-tel" value="${esc(h.tel || "")}" inputmode="tel"></label>
+      <label class="field"><span>Notes (check-in, code, réservation…)</span><textarea id="ho-note">${esc(h.note || "")}</textarea></label>
+      <div class="row wrap"><button class="btn primary" data-act="save-hotel" data-key="${esc(key)}">Enregistrer</button><button class="btn" data-act="close">Annuler</button></div>`, "Hôtel");
+  }
+
+  /* ---------- Carnet imprimable ---------- */
+  function openBook() {
+    closeOverlay();
+    const o = document.createElement("div");
+    o.className = "overlay";
+    o.setAttribute("role", "dialog"); o.setAttribute("aria-label", "Mon carnet de voyage");
+    const nv = Object.keys(S.visited).length;
+    let h = `<div class="row no-print" style="justify-content:space-between;margin-bottom:16px"><button class="btn" data-act="close">Fermer</button><button class="btn primary" data-act="print">Imprimer ou enregistrer en PDF</button></div>
+      <div style="max-width:680px;margin:0 auto;width:100%">
+      <div style="text-align:center;padding:30px 0 20px"><div class="jp" lang="ja" style="font-size:3.4rem;color:var(--hanko);line-height:1">日本の旅</div><h2 class="view-title">Carnet de voyage au Japon</h2><p class="muted">Du 6 au 28 novembre 2026. ${S.entries.length} pages, ${nv} tampons.</p></div>`;
+    DAYS.forEach(day => {
+      const ents = S.entries.filter(e => e.date === day.d);
+      const stamps = Object.entries(S.visited).filter(([, d]) => d === day.d).map(([id]) => PLACES[id]).filter(Boolean);
+      if (!ents.length && !stamps.length && !S.dayNotes[day.d]) return;
+      h += `<section class="c-${CITY_COLOR[day.city]}" style="margin-bottom:26px;break-inside:avoid-page"><div class="small muted">${esc(longDate(day.d))}</div><h3 style="margin-top:0;color:var(--c)">${esc(day.title)}</h3>`;
+      if (stamps.length) h += `<div class="row wrap" style="gap:6px;margin-bottom:10px">${stamps.map(x => `<div style="width:62px;height:62px" title="${esc(x.p.n)}">${stampSVG(x.p.st || x.p.jp.slice(0, 2), x.p.id)}</div>`).join("")}</div>`;
+      if (S.dayNotes[day.d]) h += `<p class="muted small" style="white-space:pre-wrap">${esc(S.dayNotes[day.d])}</p>`;
+      h += ents.map(entryHTML).join("") + `</section>`;
+    });
+    if (!S.entries.length && !nv) h += `<div class="empty">Le carnet se remplira au fil de vos pages et de vos tampons.</div>`;
+    h += `</div>`;
+    o.innerHTML = h;
+    document.body.appendChild(o); document.body.classList.add("book-open"); document.body.style.overflow = "hidden";
+    hydratePhotos(o);
+  }
+
+  /* ---------- Export / import ---------- */
+  async function exportData() {
+    const ids = [];
+    S.entries.forEach(e => (e.photos || []).forEach(id => ids.push(id)));
+    const photos = {};
+    for (const id of ids) { const b = await getPhoto(id); if (b) photos[id] = await blobToDataURL(b); }
+    const data = JSON.stringify({ app: "carnet-japon", exported: new Date().toISOString(), state: S, photos });
+    const blob = new Blob([data], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "carnet-japon-" + isoOf(new Date()) + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast("Sauvegarde exportée.");
+  }
+  async function importData(file) {
+    try {
+      const j = JSON.parse(await file.text());
+      if (j.app !== "carnet-japon" || !j.state) throw new Error("format");
+      for (const [id, d] of Object.entries(j.photos || {})) await putPhoto(id, await dataURLToBlob(d));
+      S = Object.assign(defaults(), j.state); S.nav = Object.assign(defaults().nav, j.state.nav || {});
+      save(); applyPrefs(); render(); toast("Sauvegarde importée.");
+    } catch (e) { toast("Ce fichier n’est pas une sauvegarde du carnet."); }
+  }
+
+  /* ---------- Rendu ---------- */
+  const TITLES = { today: "Aujourd’hui", plan: "Planning", cities: "Villes", japan: "Le Japon", book: "Mon carnet" };
+  function render(keepScroll) {
+    const y = window.scrollY;
+    const tab = S.nav.tab;
+    $("#title").textContent = TITLES[tab];
+    const m = $("#main");
+    m.innerHTML = tab === "today" ? viewToday() : tab === "plan" ? viewPlan() : tab === "cities" ? viewCities() : tab === "japan" ? viewJapan() : viewBook();
+    document.querySelectorAll(".nav button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
+    hydratePhotos(m);
+    if (keepScroll) window.scrollTo(0, y);
+  }
+  function go(tab, extra) {
+    S.nav.tab = tab; Object.assign(S.nav, extra || {}); save(); render(); window.scrollTo(0, 0);
+  }
+  function applyPrefs() {
+    document.documentElement.style.setProperty("--scale", S.scale);
+    if (S.theme === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", S.theme);
+  }
+  function clocks() {
+    const o = { hour: "2-digit", minute: "2-digit" };
+    try {
+      $("#clk-jp").textContent = new Date().toLocaleTimeString("fr-FR", Object.assign({ timeZone: "Asia/Tokyo" }, o));
+      $("#clk-fr").textContent = new Date().toLocaleTimeString("fr-FR", Object.assign({ timeZone: "Europe/Paris" }, o));
+    } catch (e) { /* rien */ }
+  }
+
+  /* ---------- Événements ---------- */
+  document.addEventListener("click", async ev => {
+    const el = ev.target.closest("[data-act]");
+    if (!el) return;
+    const a = el.dataset.act, d = el.dataset;
+    if (el.tagName === "INPUT" && el.type === "checkbox") return;
+    switch (a) {
+      case "tab": go(d.tab); break;
+      case "goto": go(d.tab, d.ctab ? { ctab: d.ctab } : {}); break;
+      case "city": S.nav.city = d.id; save(); render(); window.scrollTo(0, 0); break;
+      case "quarter": S.nav.quarter[S.nav.city] = d.id; save(); render(true); break;
+      case "jtab": S.nav.jtab = d.k; save(); render(true); break;
+      case "ctab": S.nav.ctab = d.k; save(); render(true); break;
+      case "plan-filter": S.nav.planFilter = d.c; save(); render(true); break;
+      case "open-day": { const i = +d.i; S.nav.openDay = S.nav.openDay === i ? null : i; save(); render(true); break; }
+      case "today-step": { const base = S.nav.todayView != null ? S.nav.todayView : Math.max(0, Math.min(DAYS.length - 1, daysBetween(TRIP_START, todayISO()))); S.nav.todayView = Math.max(0, Math.min(DAYS.length - 1, base + Number(d.d))); save(); render(); break; }
+      case "today-reset": S.nav.todayView = null; save(); render(); break;
+      case "preview-day": S.nav.todayView = +d.i; save(); render(); window.scrollTo(0, 0); break;
+      case "go-place": {
+        const x = PLACES[d.id]; if (!x) break;
+        S.nav.tab = "cities"; S.nav.city = x.c.id; S.nav.quarter[x.c.id] = x.q.id; save(); closeOverlay(); render();
+        const t = document.getElementById("pl-" + d.id);
+        if (t) { t.scrollIntoView({ block: "start" }); t.style.boxShadow = "0 0 0 3px var(--c)"; setTimeout(() => { t.style.boxShadow = ""; }, 1600); }
+        break;
+      }
+      case "stamp": {
+        if (S.visited[d.id]) { if (!confirm("Retirer ce tampon ?")) break; delete S.visited[d.id]; save(); render(true); break; }
+        S.visited[d.id] = todayISO(); save(); render(true);
+        const s = document.querySelector(`[data-act="stamp"][data-id="${CSS.escape(d.id)}"] .stamp`);
+        if (s) s.classList.add("pressed");
+        if (navigator.vibrate) navigator.vibrate(30);
+        break;
+      }
+      case "show": showBig(d.ja, d.sub || "", d.fr || ""); break;
+      case "speak": speak(d.text); break;
+      case "close": closeOverlay(); break;
+      case "print": window.print(); break;
+      case "book": openBook(); break;
+      case "show-hotel": {
+        const h = getHotel(d.key); if (!h) break;
+        showBig(h.addrJp || h.jp, h.addrJp ? h.jp : "", "Cet hôtel, s’il vous plaît : この住所までお願いします");
+        break;
+      }
+      case "edit-hotel": editHotel(d.key); break;
+      case "save-hotel": {
+        const v = id => $("#" + id).value.trim();
+        const h = { n: v("ho-n") || "Mon hôtel", jp: v("ho-jp"), addr: v("ho-addr"), addrJp: v("ho-addrjp"), tel: v("ho-tel"), note: v("ho-note") };
+        S.hotels[d.key] = h; save(); closeOverlay(); render(true); toast("Hôtel enregistré.");
+        break;
+      }
+      case "new-entry": {
+        openEntry(null);
+        if (d.date) { draft.date = d.date; if (d.city && CITY[d.city]) draft.city = d.city; renderEntrySheet(true); }
+        break;
+      }
+      case "edit-entry": { const e = S.entries.find(x => x.id === d.id); if (e) openEntry(e); break; }
+      case "pick": readDraft(); draft[d.f] = draft[d.f] === d.v ? "" : d.v; el.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === el && draft[d.f] ? "true" : "false")); break;
+      case "rm-photo": readDraft(); draft.photos = draft.photos.filter(x => x !== d.id); el.parentElement.remove(); break;
+      case "geo": {
+        readDraft();
+        if (!navigator.geolocation) { toast("La localisation n’est pas disponible."); break; }
+        el.disabled = true; el.textContent = "Localisation…";
+        navigator.geolocation.getCurrentPosition(p => { draft.geo = { lat: +p.coords.latitude.toFixed(5), lng: +p.coords.longitude.toFixed(5) }; el.disabled = false; el.textContent = "Position enregistrée, actualiser"; toast("Position ajoutée."); },
+          () => { el.disabled = false; el.textContent = "Ajouter ma position"; toast("Position introuvable : vérifiez l’autorisation de localisation."); }, { enableHighAccuracy: true, timeout: 15000 });
+        break;
+      }
+      case "save-entry": {
+        readDraft();
+        const old = S.entries.find(x => x.id === draft.id);
+        if (old) { (old.photos || []).filter(p => !draft.photos.includes(p)).forEach(delPhoto); Object.assign(old, draft); }
+        else S.entries.push(draft);
+        save(); closeOverlay(); render(true); toast("Page enregistrée dans le carnet.");
+        break;
+      }
+      case "del-entry": {
+        if (!confirm("Supprimer cette page et ses photos ?")) break;
+        const e = S.entries.find(x => x.id === draft.id);
+        if (e) (e.photos || []).forEach(delPhoto);
+        S.entries = S.entries.filter(x => x.id !== draft.id); save(); closeOverlay(); render(true);
+        break;
+      }
+      case "add-exp": {
+        const y = parseFloat($("#exp-yen").value);
+        if (!y) { toast("Indiquez un montant en yens."); break; }
+        S.expenses.push({ id: uid(), date: todayISO(), yen: y, cat: $("#exp-cat").value, label: $("#exp-label").value.trim() });
+        save(); render(true); break;
+      }
+      case "del-exp": S.expenses = S.expenses.filter(x => x.id !== d.id); save(); render(true); break;
+      case "scale": S.scale = Math.max(0.85, Math.min(1.4, Math.round((S.scale + Number(d.d)) * 100) / 100)); applyPrefs(); save(); break;
+      case "theme": S.theme = d.k; applyPrefs(); save(); render(true); break;
+      case "export": exportData(); break;
+      case "reset": {
+        if (!confirm("Effacer définitivement le journal, les photos, les tampons et les notes ?")) break;
+        S.entries.forEach(e => (e.photos || []).forEach(delPhoto));
+        const nav = S.nav; S = defaults(); S.nav = Object.assign(nav, { tab: "today", todayView: null });
+        save(); applyPrefs(); render(); toast("Données effacées.");
+        break;
+      }
+    }
+  });
+
+  document.addEventListener("change", async ev => {
+    const el = ev.target;
+    if (el.dataset.act === "toggle-done") { if (el.checked) S.done[el.dataset.k] = true; else delete S.done[el.dataset.k]; el.closest("li").classList.toggle("done", el.checked); save(); }
+    if (el.dataset.act === "toggle-prep") { if (el.checked) S.prep[el.dataset.i] = true; else delete S.prep[el.dataset.i]; save(); render(true); }
+    if (el.id === "en-city") { readDraft(); draft.quarter = ""; const c = CITY[draft.city]; $("#en-quarter").innerHTML = `<option value="">—</option>` + (c ? c.quarters.map(q => `<option value="${q.id}">${esc(q.n)}</option>`).join("") : ""); }
+    if (el.id === "en-files") {
+      readDraft();
+      const files = Array.from(el.files || []);
+      const box = $("#en-photos");
+      for (const f of files) {
+        try {
+          const b = await compress(f); const id = "ph-" + uid();
+          await putPhoto(id, b); draft.photos.push(id);
+          const div = document.createElement("div"); div.className = "photo-thumb";
+          div.innerHTML = `<img data-photo="${id}" alt="Photo"><button data-act="rm-photo" data-id="${id}" aria-label="Retirer la photo">×</button>`;
+          box.appendChild(div); hydratePhotos(div);
+        } catch (e) { toast("Une photo n’a pas pu être ajoutée."); }
+      }
+      el.value = "";
+    }
+    if (el.id === "set-rate") { const r = parseFloat(el.value); if (r > 0) { S.rate = r; save(); toast("Taux enregistré."); } }
+    if (el.id === "set-sim") { S.simDate = el.value || ""; S.nav.todayView = null; save(); toast(el.value ? "Date de test : " + longDate(el.value) : "Retour à la vraie date."); }
+    if (el.id === "import-file" && el.files[0]) importData(el.files[0]);
+  });
+
+  document.addEventListener("input", ev => {
+    const el = ev.target;
+    if (el.dataset.note) { if (el.value.trim()) S.dayNotes[el.dataset.note] = el.value; else delete S.dayNotes[el.dataset.note]; save(); }
+    if (el.id === "conv-yen") { const v = parseFloat(el.value); $("#conv-eur").value = v ? (v / S.rate).toFixed(2) : ""; }
+    if (el.id === "conv-eur") { const v = parseFloat(el.value); $("#conv-yen").value = v ? Math.round(v * S.rate) : ""; }
+  });
+  document.addEventListener("keydown", ev => { if (ev.key === "Escape") closeOverlay(); });
+
+  /* ---------- Démarrage ---------- */
+  document.querySelectorAll(".nav button").forEach(b => { b.innerHTML = I[b.dataset.icon] + "<span>" + b.dataset.label + "</span>"; });
+  $("#settings-btn").innerHTML = I.gear;
+  applyPrefs(); render(); clocks(); setInterval(clocks, 30000);
+  if ("serviceWorker" in navigator && /^https:$/.test(location.protocol)) {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* pas de mode hors ligne ici */ });
+  }
+})();
+
+</script>
+</body>
+</html>
