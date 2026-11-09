@@ -302,6 +302,18 @@ label.field > span { display: block; font-size: .85rem; font-weight: 700; margin
   .entry { break-inside: avoid; }
 }
 
+/* Tampons à collectionner */
+.cstamp { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 10px 12px; margin: 8px 0; }
+.cstamp.got { border-color: var(--hanko); background: var(--hanko-soft); }
+.cs-seal { width: 64px; height: 64px; border-radius: 50%; border: 2px dashed var(--line); background: var(--paper); display: grid; place-items: center; padding: 0; cursor: pointer; color: var(--muted); }
+.cs-seal[aria-pressed="true"] { border: none; background: transparent; }
+.cs-seal .hint { font-size: .78rem; line-height: 1.1; text-align: center; padding: 4px; }
+.cs-seal .stamp { width: 64px; height: 64px; }
+.cs-kind { font-size: .8rem; color: var(--muted); }
+.cs-name { font-weight: 700; margin: 2px 0; }
+.cs-name .jp-name { font-weight: 400; font-size: .9rem; color: var(--muted); }
+.cstamp .place-actions { margin-top: 8px; }
+
 </style>
 </head>
 <body>
@@ -1182,6 +1194,111 @@ const DAYS = [
     tips: ["Vérifiez que votre assistance Air France Saphir est bien confirmée si nécessaire.", "Gardez des pièces et billets de yen en souvenir, ou dépensez-les dans les boutiques de l’aéroport."] }
 ];
 
+/* Tampons à collectionner sur place, par quartier de l’itinéraire.
+   k : "eki" (tampon de gare), "site" (tampon commémoratif d’un lieu), "goshuin" (calligraphie de temple ou de sanctuaire).
+   Les emplacements changent parfois : en cas de doute, demander au personnel (phrase dans l’appli). */
+const STAMP_KINDS = {
+  eki: { n: "Tampon de gare", jp: "駅スタンプ", ico: "🚉", ask: "スタンプはどこにありますか？", askFr: "Où se trouve le tampon ?" },
+  site: { n: "Tampon du site", jp: "記念スタンプ", ico: "🏯", ask: "記念スタンプはありますか？", askFr: "Y a-t-il un tampon souvenir ?" },
+  goshuin: { n: "Goshuin", jp: "御朱印", ico: "⛩️", ask: "御朱印をお願いします。", askFr: "Un goshuin, s’il vous plaît." }
+};
+const STAMPS = [
+  // Tokyo — Ueno
+  { id: "s-ueno-eki", q: "ueno", k: "eki", n: "Gare JR d’Ueno", jp: "上野駅", where: "Dans la gare, près des portiques ou du bureau de la gare. Juste à côté de votre hôtel.", note: "Le motif fait souvent référence aux pandas du zoo d’Ueno." },
+  { id: "s-ueno-toshogu", q: "ueno", k: "goshuin", n: "Ueno Tōshō-gū", jp: "上野東照宮", where: "Au comptoir du sanctuaire, dans le parc d’Ueno.", note: "Sanctuaire doré dédié à Tokugawa Ieyasu." },
+  // Tokyo — Asakusa
+  { id: "s-sensoji", q: "asakusa", k: "goshuin", n: "Sensō-ji", jp: "浅草寺", where: "Au bureau des goshuin, à côté du pavillon principal.", note: "Souvent une file d’attente : venir tôt le matin." },
+  { id: "s-asakusa-tic", q: "asakusa", k: "site", n: "Centre d’information touristique d’Asakusa", jp: "浅草文化観光センター", where: "Face à la porte Kaminarimon, au rez-de-chaussée.", note: "Une terrasse gratuite au 8e étage offre une belle vue sur Sensō-ji et la Skytree." },
+  { id: "s-skytree", q: "asakusa", k: "site", n: "Tokyo Skytree", jp: "東京スカイツリー", where: "Sur les plates-formes d’observation (Tembo Deck).", note: "Plusieurs motifs différents selon les étages." },
+  // Tokyo — Akihabara
+  { id: "s-akiba-eki", q: "akihabara", k: "eki", n: "Gare JR d’Akihabara", jp: "秋葉原駅", where: "Près des portiques principaux ou du bureau de la gare." },
+  { id: "s-kanda", q: "akihabara", k: "goshuin", n: "Kanda Myōjin", jp: "神田明神", where: "Au bureau des amulettes, face au sanctuaire principal.", note: "Le sanctuaire des geeks : certaines amulettes protègent les ordinateurs." },
+  // Tokyo — Toyosu et Roppongi
+  { id: "s-tokyotower", q: "toyosu-roppongi", k: "site", n: "Tour de Tokyo", jp: "東京タワー", where: "Sur la plate-forme principale d’observation." },
+  { id: "s-zojoji", q: "toyosu-roppongi", k: "goshuin", n: "Zōjō-ji", jp: "増上寺", where: "Au bureau des goshuin, près du pavillon principal, au pied de la tour de Tokyo." },
+  // Tokyo — Shinjuku
+  { id: "s-shinjuku-eki", q: "shinjuku", k: "eki", n: "Gare JR de Shinjuku", jp: "新宿駅", where: "Gare immense : demandez au bureau de la gare ou à un employé où se trouve le tampon." },
+  { id: "s-hanazono", q: "shinjuku", k: "goshuin", n: "Hanazono-jinja", jp: "花園神社", where: "Au comptoir du sanctuaire, juste à côté du Golden Gai." },
+  // Tokyo — Shibuya et Harajuku
+  { id: "s-shibuya-eki", q: "shibuya", k: "eki", n: "Gare JR de Shibuya", jp: "渋谷駅", where: "Près des portiques JR ou du bureau de la gare.", note: "Le motif représente souvent Hachikō." },
+  { id: "s-harajuku-eki", q: "shibuya", k: "eki", n: "Gare JR de Harajuku", jp: "原宿駅", where: "Près des portiques, en face de l’entrée du sanctuaire Meiji." },
+  { id: "s-meiji", q: "shibuya", k: "goshuin", n: "Sanctuaire Meiji", jp: "明治神宮", where: "Au bureau des goshuin, à droite du sanctuaire principal." },
+  // Tokyo — Yanaka et Nezu
+  { id: "s-nippori-eki", q: "yanaka", k: "eki", n: "Gare JR de Nippori", jp: "日暮里駅", where: "Près des portiques ou du bureau de la gare. C’est la gare d’accès à Yanaka." },
+  { id: "s-nezu", q: "yanaka", k: "goshuin", n: "Sanctuaire Nezu", jp: "根津神社", where: "Au bureau du sanctuaire, près du bâtiment principal." },
+  { id: "s-gotokuji", q: "yanaka", k: "goshuin", n: "Gōtoku-ji", jp: "豪徳寺", where: "Au bureau du temple, près du pavillon principal.", note: "Le temple des maneki-neko, les chats porte-bonheur." },
+  // Kanazawa
+  { id: "s-kanazawa-eki", q: "omicho", k: "eki", n: "Gare JR de Kanazawa", jp: "金沢駅", where: "Dans la gare, près des portiques ou du bureau de la gare.", note: "Le motif reprend souvent la porte Tsuzumi-mon, en forme de tambour." },
+  { id: "s-oyama", q: "omicho", k: "goshuin", n: "Sanctuaire Oyama", jp: "尾山神社", where: "Au bureau du sanctuaire, après la porte à vitraux." },
+  { id: "s-kanazawa-castle", q: "kenrokuen", k: "site", n: "Château de Kanazawa", jp: "金沢城", where: "Généralement au bureau d’accueil du parc du château : demandez sur place.", note: "Il fait partie des « 100 châteaux célèbres du Japon », qui ont chacun leur tampon officiel." },
+  // Kyoto — Uji
+  { id: "s-uji-eki", q: "uji", k: "eki", n: "Gare JR d’Uji", jp: "宇治駅", where: "Près des portiques ou du bureau de la gare." },
+  { id: "s-byodoin", q: "uji", k: "goshuin", n: "Byōdō-in", jp: "平等院", where: "Au bureau des goshuin du temple, dans l’enceinte.", note: "Le pavillon du Phénix figure sur les pièces de 10 yens." },
+  { id: "s-ujigami", q: "uji", k: "goshuin", n: "Sanctuaire Ujigami", jp: "宇治上神社", where: "Au comptoir du sanctuaire.", note: "L’un des plus anciens sanctuaires shintō du Japon." },
+  // Kyoto — Higashiyama
+  { id: "s-kiyomizu", q: "higashiyama", k: "goshuin", n: "Kiyomizu-dera", jp: "清水寺", where: "Au bureau des goshuin, sur le parcours de visite.", note: "Le temple en propose plusieurs différents." },
+  { id: "s-yasaka", q: "higashiyama", k: "goshuin", n: "Sanctuaire Yasaka", jp: "八坂神社", where: "Au bureau du sanctuaire, près du pavillon principal." },
+  // Kyoto — Fushimi
+  { id: "s-inari-eki", q: "fushimi", k: "eki", n: "Gare JR d’Inari", jp: "稲荷駅", where: "Dans la petite gare, juste en face de l’entrée du sanctuaire." },
+  { id: "s-fushimi", q: "fushimi", k: "goshuin", n: "Fushimi Inari Taisha", jp: "伏見稲荷大社", where: "Au bureau du sanctuaire, près du bâtiment principal, en bas de la montagne.", note: "Inutile de monter au sommet pour l’obtenir." },
+  // Kyoto — Gare
+  { id: "s-kyoto-eki", q: "kyoto-station", k: "eki", n: "Gare JR de Kyoto", jp: "京都駅", where: "Gare très grande : demandez au bureau de la gare ou à l’information touristique." },
+  { id: "s-toji", q: "kyoto-station", k: "goshuin", n: "Tō-ji", jp: "東寺", where: "Au bureau des goshuin du temple." },
+  { id: "s-kyoto-tower", q: "kyoto-station", k: "site", n: "Tour de Kyoto", jp: "京都タワー", where: "À la plate-forme d’observation." },
+  // Kyoto — Nord-Est
+  { id: "s-nanzenji", q: "kyoto-ne", k: "goshuin", n: "Nanzen-ji", jp: "南禅寺", where: "Au bureau des goshuin, près du pavillon principal." },
+  { id: "s-eikando", q: "kyoto-ne", k: "goshuin", n: "Eikan-dō", jp: "永観堂", where: "Au bureau des goshuin, sur le parcours de visite." },
+  { id: "s-ginkakuji", q: "kyoto-ne", k: "goshuin", n: "Ginkaku-ji", jp: "銀閣寺", where: "Au bureau des goshuin, dans l’enceinte du temple." },
+  // Kyoto — Nord-Ouest
+  { id: "s-kinkakuji", q: "kyoto-nw", k: "goshuin", n: "Kinkaku-ji", jp: "金閣寺", where: "Au bureau des goshuin, vers la fin du parcours de visite." },
+  { id: "s-ryoanji", q: "kyoto-nw", k: "goshuin", n: "Ryōan-ji", jp: "龍安寺", where: "Au bureau du temple, dans l’enceinte." },
+  // Osaka
+  { id: "s-hozenji", q: "namba", k: "goshuin", n: "Hōzen-ji", jp: "法善寺", where: "Au petit comptoir du temple, dans la ruelle Hōzen-ji Yokochō.", note: "On y asperge d’eau la statue couverte de mousse du Fudō." },
+  { id: "s-tennoji-eki", q: "shinsekai", k: "eki", n: "Gare JR de Tennōji", jp: "天王寺駅", where: "Près des portiques ou du bureau de la gare." },
+  { id: "s-tsutenkaku", q: "shinsekai", k: "site", n: "Tour Tsūtenkaku", jp: "通天閣", where: "À la plate-forme d’observation." },
+  { id: "s-shitennoji", q: "shinsekai", k: "goshuin", n: "Shitennō-ji", jp: "四天王寺", where: "Au bureau des goshuin du temple.", note: "L’un des plus anciens temples bouddhistes du Japon ; il en propose plusieurs." },
+  { id: "s-osakajo-eki", q: "osakajo", k: "eki", n: "Gare JR d’Ōsakajōkōen", jp: "大阪城公園駅", where: "Près des portiques ou du bureau de la gare." },
+  { id: "s-osaka-castle", q: "osakajo", k: "site", n: "Château d’Osaka", jp: "大阪城", where: "Dans le donjon, généralement près de l’accueil : demandez sur place.", note: "Tampon officiel des « 100 châteaux célèbres du Japon »." },
+  { id: "s-osaka-eki", q: "umeda", k: "eki", n: "Gare JR d’Osaka", jp: "大阪駅", where: "Gare très grande : demandez au bureau de la gare." },
+  { id: "s-himeji", q: "daytrips-osaka", k: "site", n: "Château de Himeji", jp: "姫路城", where: "Généralement à l’entrée ou à la sortie du château : demandez sur place.", note: "Tampon officiel des « 100 châteaux célèbres du Japon »." },
+  { id: "s-tofukuji", q: "daytrips-osaka", k: "goshuin", n: "Tōfuku-ji", jp: "東福寺", where: "Au bureau des goshuin du temple." },
+  // Nara
+  { id: "s-nara-eki", q: "nara-park", k: "eki", n: "Gare JR de Nara", jp: "奈良駅", where: "Près des portiques ou du bureau de la gare." },
+  { id: "s-todaiji", q: "nara-park", k: "goshuin", n: "Tōdai-ji", jp: "東大寺", where: "Au bureau des goshuin près du pavillon du Grand Bouddha.", note: "D’autres pavillons du temple ont leurs propres goshuin." },
+  { id: "s-kofukuji", q: "nara-park", k: "goshuin", n: "Kōfuku-ji", jp: "興福寺", where: "Au bureau des goshuin, près du pavillon octogonal Nan’endō." },
+  { id: "s-kasuga", q: "nara-park", k: "goshuin", n: "Kasuga Taisha", jp: "春日大社", where: "Au bureau du sanctuaire, à l’entrée de l’enceinte principale." },
+  { id: "s-gangoji", q: "naramachi", k: "goshuin", n: "Gangō-ji", jp: "元興寺", where: "À l’accueil du temple." },
+  // Kawaguchiko
+  { id: "s-kawaguchiko-eki", q: "kawaguchiko-east", k: "eki", n: "Gare de Kawaguchiko", jp: "河口湖駅", where: "Dans la gare de la ligne Fujikyū, près des guichets." },
+  { id: "s-shimoyoshida-eki", q: "chureito", k: "eki", n: "Gare de Shimoyoshida", jp: "下吉田駅", where: "Dans la gare de la ligne Fujikyū, la gare d’accès à la pagode." },
+  { id: "s-arakura", q: "chureito", k: "goshuin", n: "Sanctuaire Arakura Fuji Sengen", jp: "新倉富士浅間神社", where: "Au comptoir du sanctuaire, en bas de l’escalier qui mène à la pagode.", note: "Pas besoin de monter les marches pour l’obtenir." },
+  // Escapades — Kamakura
+  { id: "s-kamakura-eki", q: "kamakura", k: "eki", n: "Gare JR de Kamakura", jp: "鎌倉駅", where: "Près des portiques ou du bureau de la gare." },
+  { id: "s-tsurugaoka", q: "kamakura", k: "goshuin", n: "Tsurugaoka Hachiman-gū", jp: "鶴岡八幡宮", where: "Au bureau du sanctuaire, près du bâtiment principal." },
+  { id: "s-daibutsu", q: "kamakura", k: "goshuin", n: "Kōtoku-in (Grand Bouddha)", jp: "高徳院", where: "Au comptoir du temple, près du Grand Bouddha." },
+  { id: "s-hasedera", q: "kamakura", k: "goshuin", n: "Hase-dera", jp: "長谷寺", where: "Au bureau des goshuin, dans l’enceinte du temple." },
+  // Escapades — Enoshima
+  { id: "s-enoden", q: "enoshima", k: "eki", n: "Gares de l’Enoden", jp: "江ノ電の駅", where: "La plupart des gares de la petite ligne Enoden ont leur propre tampon : à collectionner en chemin.", note: "Commencez par la gare d’Enoshima." },
+  { id: "s-enoshima-jinja", q: "enoshima", k: "goshuin", n: "Sanctuaire d’Enoshima", jp: "江島神社", where: "Au bureau du sanctuaire, sur l’île." },
+  // Escapades — Hakone
+  { id: "s-yumoto-eki", q: "hakone", k: "eki", n: "Gare de Hakone-Yumoto", jp: "箱根湯本駅", where: "Près des portiques de la gare." },
+  { id: "s-hakone-jinja", q: "hakone", k: "goshuin", n: "Sanctuaire de Hakone", jp: "箱根神社", where: "Au bureau du sanctuaire, en haut de l’escalier.", note: "Le célèbre torii rouge les pieds dans le lac Ashi." }
+];
+const STAMP_GUIDE = {
+  intro: "Au Japon, on collectionne les tampons comme des souvenirs de voyage. Il en existe trois grandes sortes, qui ne se recueillent pas de la même façon.",
+  kinds: [
+    { k: "eki", t: "Les tampons de gare et des sites, gratuits et en libre-service. Presque toutes les gares tenues par du personnel en ont un, avec un motif propre au lieu ; beaucoup de tours, de châteaux et d’offices de tourisme aussi. Le tampon et l’encreur sont posés sur un petit pupitre, souvent près des portiques ou du bureau de la gare, parfois à l’intérieur des portiques. Apportez un carnet à pages blanches, ou utilisez les feuilles parfois mises à disposition. Faites un essai d’encre sur un coin de papier, et appuyez fort, bien à plat." },
+    { k: "goshuin", t: "Les goshuin, calligraphies tracées à l’encre par un moine ou un employé du sanctuaire, avec un ou plusieurs sceaux rouges. Ce ne sont pas des souvenirs touristiques, mais la trace d’une visite de prière. On les demande au bureau des goshuin (御朱印所 ou 納経所), en général de 9 h à 16 h ou 17 h, contre une offrande de 300 à 500 yens environ, en espèces. On tend son carnet de goshuin, le goshuinchō, ouvert à la bonne page, que l’on achète dans les temples ou sanctuaires pour 1 000 à 2 000 yens environ. Quand il y a foule, on reçoit parfois une feuille déjà écrite, le kakioki, à coller ensuite." }
+  ],
+  tips: [
+    "Gardez des carnets séparés : beaucoup de temples refusent d’écrire un goshuin sur une page où figurent des tampons de gare.",
+    "Visitez ou saluez d’abord le temple ou le sanctuaire avant de demander le goshuin.",
+    "On ne photographie pas le moine pendant qu’il écrit, sauf s’il l’accepte.",
+    "Les pupitres à tampons sont souvent à hauteur de table ou de comptoir. Si l’un d’eux est hors de portée, demandez de l’aide au personnel : la phrase est dans chaque fiche.",
+    "Les emplacements changent parfois. Si vous trouvez un tampon qui n’est pas dans la liste, ajoutez-le dans le quartier avec le bouton « Ajouter un tampon trouvé ici »."
+  ]
+};
+
 (function () {
   "use strict";
 
@@ -1197,8 +1314,9 @@ const DAYS = [
   /* ---------- État ---------- */
   const defaults = () => ({
     v: 1,
-    nav: { tab: "today", city: "tokyo", quarter: {}, jtab: "essentials", ctab: "journal", openDay: null, todayView: null, planFilter: "all" },
+    nav: { tab: "today", city: "tokyo", quarter: {}, jtab: "essentials", ctab: "journal", stab: "collect", openDay: null, todayView: null, planFilter: "all" },
     visited: {}, done: {}, dayNotes: {}, prep: {}, hotels: {},
+    collect: {}, myStamps: [],
     entries: [], expenses: [], rate: 170, scale: 1, theme: "auto", simDate: ""
   });
   let S = defaults();
@@ -1220,6 +1338,11 @@ const DAYS = [
   CITIES.forEach(c => c.quarters.forEach(q => q.places.forEach(p => { PLACES[p.id] = { p, c, q }; })));
   const CITY = {};
   CITIES.forEach(c => { CITY[c.id] = c; });
+  const QUARTER = {};
+  CITIES.forEach(c => c.quarters.forEach(q => { QUARTER[q.id] = { q, c }; }));
+  // Tous les tampons à collectionner : la liste fournie, plus ceux ajoutés par l’utilisateur.
+  const allStamps = () => STAMPS.concat((S.myStamps || []).map(x => Object.assign({ mine: true }, x))).filter(x => QUARTER[x.q]);
+  const stampsOf = qid => allStamps().filter(x => x.q === qid);
 
   /* ---------- Utilitaires ---------- */
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
@@ -1455,6 +1578,35 @@ const DAYS = [
       </div>
     </article>`;
   }
+  function cstampHTML(s, compact) {
+    const K = STAMP_KINDS[s.k] || STAMP_KINDS.site;
+    const got = S.collect[s.id];
+    const city = QUARTER[s.q] ? QUARTER[s.q].c : null;
+    const seal = Array.from(s.jp || s.n).filter(ch => /[\u3040-\u30ff\u4e00-\u9fff]/.test(ch)).slice(0, 2).join("") || K.jp.slice(0, 2);
+    return `<div class="cstamp${got ? " got" : ""}" id="cs-${esc(s.id)}">
+      <button class="cs-seal" data-act="collect" data-id="${esc(s.id)}" aria-pressed="${got ? "true" : "false"}" aria-label="${got ? "Récupéré le " + esc(longDate(got.d)) + ". Toucher pour annuler" : "Marquer comme récupéré"}">${got ? stampSVG(seal, s.id) : `<span class="hint">Je l’ai</span>`}</button>
+      <div class="cs-body">
+        <div class="cs-kind">${K.ico} ${esc(K.n)}${s.mine ? " · ajouté par moi" : ""}</div>
+        <div class="cs-name">${esc(s.n)}${s.jp ? ` <span class="jp-name" lang="ja">${esc(s.jp)}</span>` : ""}</div>
+        ${got ? `<div class="small" style="color:var(--hanko)">Récupéré le ${esc(longDate(got.d))}</div>` : ""}
+        ${!compact && s.where ? `<div class="meta"><strong>Où le trouver</strong>${esc(s.where)}</div>` : ""}
+        ${!compact && s.note ? `<p class="small muted" style="margin:6px 0 0">${esc(s.note)}</p>` : ""}
+        <div class="place-actions">
+          <button class="btn small" data-act="show" data-ja="${esc(K.ask)}" data-sub="${esc(s.jp || "")}" data-fr="${esc(K.askFr)}">${I.show} Demander</button>
+          ${s.jp ? `<a class="btn small" href="${mapsUrl(s.jp + " " + (city ? city.jp : ""))}" target="_blank" rel="noopener">${I.map} Carte</a>` : ""}
+          ${compact ? `<button class="btn small" data-act="go-quarter" data-q="${esc(s.q)}" data-id="${esc(s.id)}">Détails</button>` : ""}
+          ${s.mine ? `<button class="place-link small" data-act="del-mystamp" data-id="${esc(s.id)}">Supprimer</button>` : ""}
+        </div>
+      </div>
+    </div>`;
+  }
+  function quarterStampsHTML(q) {
+    const list = stampsOf(q.id);
+    const n = list.filter(x => S.collect[x.id]).length;
+    return `<h3>Tampons à récupérer <span class="small muted" style="font-family:var(--f-body);font-weight:400">${list.length ? n + " / " + list.length : ""}</span></h3>
+      ${list.length ? list.map(x => cstampHTML(x, false)).join("") : `<p class="small muted">Pas de tampon repéré à l’avance dans ce quartier. Si vous en trouvez un, ajoutez-le ci-dessous.</p>`}
+      <div class="row wrap" style="margin:6px 0 4px"><button class="btn small" data-act="add-mystamp" data-q="${esc(q.id)}">＋ Ajouter un tampon trouvé ici</button><button class="btn small" data-act="goto" data-tab="book" data-ctab="stamps">Comment collectionner ?</button></div>`;
+  }
   function converterHTML() {
     return `<div class="card"><h4>Convertisseur</h4>
       <div class="conv" style="margin-top:8px">
@@ -1485,7 +1637,7 @@ const DAYS = [
     if (t > TRIP_END && S.nav.todayView == null) {
       const nv = Object.keys(S.visited).length;
       html += `<div class="hero-day"><div class="count">Le voyage est terminé</div><h2 class="view-title">Okaerinasai, bon retour !</h2>
-        <p class="lead">${S.entries.length} pages de carnet, ${nv} tampons collectés. C’est le moment de rassembler vos souvenirs.</p></div>
+        <p class="lead">${S.entries.length} pages de carnet, ${nv} lieux tamponnés et ${Object.keys(S.collect || {}).length} tampons récupérés. C’est le moment de rassembler vos souvenirs.</p></div>
         <div class="row wrap"><button class="btn primary" data-act="book">Créer mon carnet de voyage</button><button class="btn" data-act="goto" data-tab="book" data-ctab="stamps">Voir mes tampons</button></div>`;
       return html;
     }
@@ -1501,6 +1653,12 @@ const DAYS = [
       ${!isReal && t >= TRIP_START && t <= TRIP_END ? `<button class="btn small" data-act="today-reset">Aujourd’hui</button>` : (!isReal ? `<button class="btn small" data-act="today-reset">Retour</button>` : "")}
       <button class="btn small" data-act="today-step" data-d="1" ${idx === DAYS.length - 1 ? "disabled" : ""} aria-label="Jour suivant">Lendemain ${I.right}</button></div>
       <div class="card c-${cc}">${scheduleHTML(day, idx)}</div>`;
+    const dayQ = [...new Set(day.items.map(it => it.p && PLACES[it.p] ? PLACES[it.p].q.id : null).filter(Boolean))];
+    const dayStamps = dayQ.flatMap(stampsOf);
+    if (dayStamps.length) {
+      const got = dayStamps.filter(x => S.collect[x.id]).length;
+      html += `<h3>Tampons à récupérer aujourd’hui <span class="small muted" style="font-family:var(--f-body);font-weight:400">${got} / ${dayStamps.length}</span></h3>` + dayStamps.map(x => cstampHTML(x, true)).join("");
+    }
     const ho = hotelForDay(day);
     if (ho) html += `<h3>Hôtel du soir</h3>` + hotelCard(ho, day.city);
     const ents = S.entries.filter(e => e.date === day.d);
@@ -1550,6 +1708,7 @@ const DAYS = [
         <details class="fold"><summary>Histoire du quartier</summary><div class="prose"><p>${esc(q.hist)}</p></div></details>
         <h3>À voir</h3>
         ${q.places.map(p => placeCard(p, q, c)).join("")}
+        ${quarterStampsHTML(q)}
         ${q.eat && q.eat.length ? `<h3>À goûter</h3><ul class="bul">${q.eat.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
         ${q.tips && q.tips.length ? `<h3>Conseils</h3><ul class="bul">${q.tips.map(e => `<li>${esc(e)}</li>`).join("")}</ul>` : ""}
         ${q.acc ? `<h3>Accessibilité du quartier</h3><div class="meta acc">${esc(q.acc)}</div>` : ""}
@@ -1602,6 +1761,29 @@ const DAYS = [
     </article>`;
   }
 
+  function collectBookHTML() {
+    const all = allStamps();
+    const n = all.filter(x => S.collect[x.id]).length;
+    let h = `<div class="row" style="margin-bottom:6px"><span class="stamp-count">${n}</span><span class="muted">tampons récupérés sur ${all.length}.<br>Touchez « Je l’ai » quand vous avez un tampon dans votre carnet.</span></div>
+      <div class="progress" aria-hidden="true"><i style="width:${all.length ? Math.round(n / all.length * 100) : 0}%"></i></div>
+      <details class="fold"><summary>Comment collectionner les tampons</summary><div class="prose"><p>${esc(STAMP_GUIDE.intro)}</p>
+        ${STAMP_GUIDE.kinds.map(x => `<p><strong>${STAMP_KINDS[x.k].ico} ${esc(STAMP_KINDS[x.k].n)}${x.k === "eki" ? " et du site" : ""}</strong> <span class="jp muted" lang="ja">${esc(STAMP_KINDS[x.k].jp)}</span><br>${esc(x.t)}</p>`).join("")}
+        <ul class="bul">${STAMP_GUIDE.tips.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+        <div class="row wrap">${Object.values(STAMP_KINDS).map(K => `<button class="btn small" data-act="show" data-ja="${esc(K.ask)}" data-fr="${esc(K.askFr)}">${I.show} ${esc(K.askFr)}</button>`).join("")}<button class="btn small" data-act="show" data-ja="書き置きでも大丈夫です。" data-fr="Une feuille déjà écrite me convient.">${I.show} Une feuille déjà écrite me convient</button></div>
+      </div></details>`;
+    CITIES.forEach(c => {
+      const cl = all.filter(x => QUARTER[x.q].c.id === c.id);
+      if (!cl.length) return;
+      const cn = cl.filter(x => S.collect[x.id]).length;
+      h += `<h3 class="c-${c.color}" style="color:var(--c)">${esc(c.n)} <span class="small muted" style="font-family:var(--f-body);font-weight:400">${cn} / ${cl.length}</span></h3>`;
+      c.quarters.forEach(q => {
+        const ql = cl.filter(x => x.q === q.id);
+        if (!ql.length) return;
+        h += `<div class="cs-quarter c-${c.color}"><div class="small" style="font-weight:700;margin:10px 0 4px">${esc(q.n)}</div>${ql.map(x => cstampHTML(x, true)).join("")}</div>`;
+      });
+    });
+    return h;
+  }
   function viewBook() {
     const tabs = [["journal", "Journal"], ["stamps", "Tampons"], ["expenses", "Dépenses"], ["settings", "Réglages"]];
     const ct = S.nav.ctab;
@@ -1616,6 +1798,11 @@ const DAYS = [
       }
     }
     if (ct === "stamps") {
+      const st = S.nav.stab === "places" ? "places" : "collect";
+      html += `<div class="row wrap" style="margin-bottom:12px">${[["collect", "Tampons à collectionner"], ["places", "Mes lieux visités"]].map(([k, l]) => `<button class="chip c-travel" data-act="stab" data-k="${k}" aria-pressed="${st === k}">${l}</button>`).join("")}</div>`;
+      if (st === "collect") html += collectBookHTML();
+    }
+    if (ct === "stamps" && S.nav.stab === "places") {
       const all = Object.values(PLACES);
       const n = all.filter(x => S.visited[x.p.id]).length;
       html += `<div class="row" style="margin-bottom:6px"><span class="stamp-count">${n}</span><span class="muted">tampons sur ${all.length} lieux.<br>Marquez un lieu « J’y suis allé » dans l’onglet Villes.</span></div>`;
@@ -1803,6 +1990,47 @@ const DAYS = [
         S.nav.tab = "cities"; S.nav.city = x.c.id; S.nav.quarter[x.c.id] = x.q.id; save(); closeOverlay(); render();
         const t = document.getElementById("pl-" + d.id);
         if (t) { t.scrollIntoView({ block: "start" }); t.style.boxShadow = "0 0 0 3px var(--c)"; setTimeout(() => { t.style.boxShadow = ""; }, 1600); }
+        break;
+      }
+      case "collect": {
+        if (S.collect[d.id]) { if (!confirm("Retirer ce tampon de votre collection ?")) break; delete S.collect[d.id]; save(); render(true); break; }
+        S.collect[d.id] = { d: todayISO() }; save(); render(true);
+        const s = document.querySelector(`[data-act="collect"][data-id="${CSS.escape(d.id)}"] .stamp`);
+        if (s) s.classList.add("pressed");
+        if (navigator.vibrate) navigator.vibrate(30);
+        break;
+      }
+      case "stab": S.nav.stab = d.k; save(); render(true); break;
+      case "go-quarter": {
+        const x = QUARTER[d.q]; if (!x) break;
+        S.nav.tab = "cities"; S.nav.city = x.c.id; S.nav.quarter[x.c.id] = x.q.id; save(); closeOverlay(); render();
+        const t = document.getElementById("cs-" + d.id);
+        if (t) { t.scrollIntoView({ block: "center" }); t.style.boxShadow = "0 0 0 3px var(--c)"; setTimeout(() => { t.style.boxShadow = ""; }, 1600); }
+        break;
+      }
+      case "add-mystamp": {
+        const x = QUARTER[d.q]; if (!x) break;
+        sheet(`<h3>Ajouter un tampon</h3><p class="small muted">${esc(x.c.n)}, ${esc(x.q.n)}</p>
+          <label class="field"><span>Nom du lieu</span><input type="text" id="ms-n" placeholder="ex. Gare d’Okachimachi"></label>
+          <label class="field"><span>Nom en japonais (facultatif)</span><input type="text" id="ms-jp" lang="ja"></label>
+          <label class="field"><span>Type</span><select id="ms-k">${Object.entries(STAMP_KINDS).map(([k, K]) => `<option value="${k}">${K.ico} ${esc(K.n)}</option>`).join("")}</select></label>
+          <label class="field"><span>Où se trouve-t-il ? (facultatif)</span><input type="text" id="ms-where"></label>
+          <label class="check"><input type="checkbox" id="ms-got" checked><span>Je l’ai déjà récupéré</span></label>
+          <div class="row wrap" style="margin-top:10px"><button class="btn primary" data-act="save-mystamp" data-q="${esc(d.q)}">Ajouter</button><button class="btn" data-act="close">Annuler</button></div>`, "Ajouter un tampon");
+        break;
+      }
+      case "save-mystamp": {
+        const n = ($("#ms-n") || {}).value || ""; if (!n.trim()) { toast("Indiquez au moins le nom du lieu."); break; }
+        const id = "m-" + uid();
+        S.myStamps = S.myStamps || [];
+        S.myStamps.push({ id, q: d.q, k: $("#ms-k").value, n: n.trim(), jp: $("#ms-jp").value.trim(), where: $("#ms-where").value.trim() });
+        if ($("#ms-got").checked) S.collect[id] = { d: todayISO() };
+        save(); closeOverlay(); render(true); toast("Tampon ajouté.");
+        break;
+      }
+      case "del-mystamp": {
+        if (!confirm("Supprimer ce tampon que vous aviez ajouté ?")) break;
+        S.myStamps = (S.myStamps || []).filter(x => x.id !== d.id); delete S.collect[d.id]; save(); render(true);
         break;
       }
       case "stamp": {
